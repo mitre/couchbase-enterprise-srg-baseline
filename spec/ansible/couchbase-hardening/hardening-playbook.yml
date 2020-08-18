@@ -1,3 +1,11 @@
 - hosts: localhost
-  roles:
-    - nginx-hardening
+  tasks:
+    - name: Start service couchbase-server, if not started
+      service:
+        name: couchbase-server
+        state: started
+    - name: Setup new cluster
+      shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c localhost --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
+
+  # roles:
+  #   - couchbase-hardening

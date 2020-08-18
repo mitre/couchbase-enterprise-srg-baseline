@@ -4,6 +4,6 @@
       service:
         name: couchbase-server
         state: started
-    # - name: Setup new cluster
-    #   command: "couchbase-cli cluster-init -c localhost --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
+    - name: Setup new cluster
+      shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c 127.0.0.1 --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
 
