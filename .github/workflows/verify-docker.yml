@@ -49,6 +49,8 @@ jobs:
       run: bundle exec inspec check .
     - name: Test-Kitchen - Couchbase Enterprise 6.0.2
       run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-1604-couchbase-enterprise-602 || true
+    - name: Check for results
+      run: ls -la spec/results
     - name: Display our ${{ matrix.suite }} results summary - Couchbase Enterprise 6.0.2
       run: bundle exec inspec_tools summary -j spec/results/ubuntu-1604-couchbase-enterprise-602-${{ matrix.suite }}-test-result.json --json-counts | jq .
     - name: Ensure the scan meets our ${{ matrix.suite }} results threshold - Couchbase Enterprise 6.0.2
