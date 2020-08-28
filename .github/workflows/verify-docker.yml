@@ -58,7 +58,7 @@ jobs:
     - name: Display our ${{ matrix.suite }} results summary - Couchbase Enterprise 6.6.0
       run: bundle exec inspec_tools summary -j spec/results/ubuntu-16.04-couchbase-enterprise-6.6.0-${{ matrix.suite }}-test-result.json --json-counts | jq .
     - name: Ensure the scan meets our ${{ matrix.suite }} results threshold - Couchbase Enterprise 6.6.0
-      run: bundle exec inspec_tools compliance -j spec/results/ubuntu-16.04-couchbase-enterprise-6.6.2-${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
+      run: bundle exec inspec_tools compliance -j spec/results/ubuntu-16.04-couchbase-enterprise-6.6.0-${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
     - name: Save Test Result JSON
       uses: actions/upload-artifact@v2
       with:

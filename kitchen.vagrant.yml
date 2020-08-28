@@ -33,6 +33,7 @@
           - remote: sudo yum install -y couchbase-server-6.0.2-2413
           - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
           - remote: sudo systemctl status couchbase-server
+          - remote: sleep 10
       driver:
         box: bento/centos-7
 
@@ -44,6 +45,7 @@
           - remote: sudo yum install -y couchbase-server-6.6.0-7909
           - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
           - remote: sudo systemctl status couchbase-server
+          - remote: sleep 10
       driver:
         box: bento/centos-7
 
