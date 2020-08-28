@@ -36,18 +36,16 @@
       driver:
         box: bento/centos-7
 
-    # - name: rhel-7-couchbase-6.5.1-enterprise
-    #   lifecycle:
-    #     post_create:
-    #       - remote: curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
-    #       - remote: sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm
-    #       - remote: sudo yum install -y couchbase-server-6.5.1-6299
-    #       - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
-    #       - remote: sudo systemctl status couchbase-server
-    #       - remote: sleep 10
-    #       - remote: couchbase-cli cluster-init -c localhost --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256
-    #   driver:
-    #     box: bento/centos-7
+    - name: rhel-7-couchbase-6.6.0-enterprise
+      lifecycle:
+        post_create:
+          - remote: curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
+          - remote: sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm
+          - remote: sudo yum install -y couchbase-server-6.6.0-7909
+          - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
+          - remote: sudo systemctl status couchbase-server
+      driver:
+        box: bento/centos-7
 
   suites:
     - name: hardened
@@ -56,14 +54,14 @@
       verifier:
         reporter:
           - cli
-          - json:spec/results/hardened-test-result.json
+          - json:spec/results/%{platform}-hardened-test-result.json
     - name: vanilla
       provisioner:
         playbook: spec/ansible/couchbase-hardening/vanilla-playbook.yml
       verifier:
         reporter:
           - cli
-          - json:spec/results/vanilla-test-result.json
+          - json:spec/results/%{platform}-vanilla-test-result.json
   
   
   

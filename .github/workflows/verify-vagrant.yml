@@ -48,14 +48,22 @@ jobs:
           bundle exec inspec json . | jq . > profile.json
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
-      - name: Run kitchen test
+      - name: Run kitchen test - Couchbase Enterprise 6.0.2
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-7-couchbase-602-enterprise || true
       - name: Check Kitchen log
         run: cat .kitchen/logs/kitchen.log
-      - name: Display our ${{ matrix.suite }} results summary
-        run: bundle exec inspec_tools summary -j spec/results/${{ matrix.suite }}-test-result.json --json-counts | jq .
-      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-        run: bundle exec inspec_tools compliance -j spec/results/${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
+      - name: Display our ${{ matrix.suite }} results summary - Couchbase Enterprise 6.0.2
+        run: bundle exec inspec_tools summary -j spec/results/rhel-7-couchbase-6.0.2-enterprise-${{ matrix.suite }}-test-result.json --json-counts | jq .
+      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold - Couchbase Enterprise 6.0.2
+        run: bundle exec inspec_tools compliance -j spec/results/rhel-7-couchbase-6.0.2-enterprise-${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
+      - name: Run kitchen test - Couchbase Enterprise 6.6.0
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-7-couchbase-660-enterprise || true
+      - name: Check Kitchen log
+        run: cat .kitchen/logs/kitchen.log
+      - name: Display our ${{ matrix.suite }} results summary - Couchbase Enterprise 6.6.0
+        run: bundle exec inspec_tools summary -j spec/results/rhel-7-couchbase-6.6.0-enterprise-${{ matrix.suite }}-test-result.json --json-counts | jq .
+      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold - Couchbase Enterprise 6.6.0
+        run: bundle exec inspec_tools compliance -j spec/results/rhel-7-couchbase-6.6.0-enterprise-${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml  
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v2
         with:
