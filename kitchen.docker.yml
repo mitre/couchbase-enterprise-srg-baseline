@@ -47,7 +47,7 @@
       verifier:
         reporter:
           - cli
-          - json:spec/results/%platform-hardened-test-result.json
+          - json:spec/results/%{platform}-hardened-test-result.json
   
     - name: vanilla
       provisioner:
@@ -55,7 +55,7 @@
       verifier:
         reporter:
           - cli
-          - json:spec/results/%platform-vanilla-test-result.json
+          - json:spec/results/%{platform}-vanilla-test-result.json
   
       
   
