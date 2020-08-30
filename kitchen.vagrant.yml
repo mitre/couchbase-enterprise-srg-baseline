@@ -3,7 +3,10 @@
     name: vagrant
     driver_config:
       ssl_verify_mode: ":verify_none"
-  
+
+  transport:
+    max_ssh_sessions: 1
+
   provisioner:
     name: ansible_playbook
     hosts: all
