@@ -1,42 +1,40 @@
 # encoding: UTF-8
-
-control 'V-32399' do
-  title 'The DBMS must protect its audit features from unauthorized removal.'
-  desc  "Protecting audit data also includes identifying and protecting the
-tools used to view and manipulate log data. Therefore, protecting audit tools
-is necessary to prevent unauthorized operation on audit data.
-
-    Applications providing tools to interface with audit data will leverage
-user permissions and roles identifying the user accessing the tools and the
-corresponding rights the user enjoys in order make access decisions regarding
-the deletion of audit tools.
-
-    Audit tools include, but are not limited to, vendor-provided and open
-source audit tools needed to successfully view and manipulate audit information
-system activity and records. Audit tools include custom queries and report
-generators.
+control "V-32399" do
+  desc  "rationale", ""
+  desc  "check", "
+    Only a user with Full Admin role can change auditing controls.
+    As the Full Admin, get a list of all RBAC users with the following command:
+    $ couchbase-cli user-manage -c  <localhost>:<port>  -u <Full Admin> -p
+<Password> --list
+    If any users have the \"admin\" role that should not, this is a finding.
+    Additionally, the permissions of the config file should also be verified.
+This can be done by running the following command:
+     $ ls -la /opt/couchbase/etc/couchbase/static_config
+    Review the ownership and permissions. If anyone other than couchbase is the
+owner and group owner, this is a finding. If permissions are not set to 600,
+this is a finding.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Review the access permissions to tools used to view or modify audit log
-data. These tools may include features within the DBMS itself or software
-external to the database.
-
-    If appropriate permissions and access controls to prevent unauthorized
-removal are not applied to these tools, this is a finding.
+  desc  "fix", "
+    Remove users who should not have Full Admin role. To manage the roles this
+can be done by running the following command (Note: Do not include the
+\"admin\" role in command):
+    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+     -p <Password> --set --rbac-username <user> --rbac-password <password> \\
+     --rbac-name <name> --roles <roles> \\
+     --auth-domain <domain>
+    As the root or sudo user, assign the correct permissions to the config file
+fun the following commands:
+      $ sudo chown -R couchbase:couchbase
+/opt/couchbase/etc/couchbase/static_config
+      $ sudo chmod 600 /opt/couchbase/etc/couchbase/static_config
   "
-  desc  'fix', "Apply or modify access controls and permissions (both within
-the DBMS and in the file system/operating system) to tools used to view or
-modify audit log data. Ensure that tools may be removed by authorized personnel
-only."
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000123-DB-000204'
-  tag gid: 'V-32399'
-  tag rid: 'SV-42736r3_rule'
-  tag stig_id: 'SRG-APP-000123-DB-000204'
-  tag fix_id: 'F-36314r2_fix'
-  tag cci: ['CCI-001495']
-  tag nist: ['AU-9']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000123-DB-000204"
+  tag "gid": "V-32399"
+  tag "rid": "SV-42736r3_rule"
+  tag "stig_id": "SRG-APP-000123-DB-000204"
+  tag "fix_id": "F-36314r2_fix"
+  tag "cci": ["CCI-001495"]
+  tag "nist": ["AU-9", "Rev_4"]
 end
-

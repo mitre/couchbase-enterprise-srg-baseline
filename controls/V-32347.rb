@@ -1,60 +1,44 @@
 # encoding: UTF-8
-
-control 'V-32347' do
-  title "The DBMS must protect against a user falsely repudiating having
-performed organization-defined actions."
-  desc  "Non-repudiation of actions taken is required in order to maintain data
-integrity. Examples of particular actions taken by individuals include creating
-information, sending a message, approving information (e.g., indicating
-concurrence or signing a contract), and receiving a message.
-
-    Non-repudiation protects against later claims by a user of not having
-created, modified, or deleted a particular data item or collection of data in
-the database.
-
-    In designing a database, the organization must define the types of data and
-the user actions that must be protected from repudiation. The implementation
-must then include building audit features into the application data tables and
-configuring the DBMS's audit tools to capture the necessary audit trail. Design
-and implementation also must ensure that applications pass individual user
-identification to the DBMS, even where the application connects to the DBMS
-with a standard, shared account.
-  "
-  desc  'rationale', ''
-  desc  'check', "
+control "V-32347" do
+  desc  "rationale", ""
+  desc  "check", "
     Review system documentation to determine the data and the actions on data
 that need to be protected from repudiation by means of audit trails.
-
-    Review DBMS settings to determine whether users can be identified as
-individuals when using shared accounts. If the individual user who is using a
-shared account cannot be identified, this is a finding.
-
-    Review the design and the contents of the application data tables. If they
-do not include the necessary audit data, this is a finding.
-
-    Review the configuration of audit logs to determine whether auditing
-includes details identifying the individual user. If it does not, this is a
-finding.
+    When enabled, Couchbase can identify a unique user for each record.
+    Couchbase Server 6.5.0 and earlier -
+      As root or a sudo user, verify that the \"audit.log\" file exists in the
+var/lib/couchbase/logs directory of the Couchbase application home (example:
+/opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
+    Couchbase Server Version 6.51 and later -
+      As the Full Admin, verify that auditing is enabled by executing the
+following command:
+       $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
+<Password> --get-settings
+      Verify from the output that \"Audit enabled\" is set to \"true\". If
+\"Audit enabled\" is not set to true, this is finding.
   "
-  desc  'fix', "
+  desc  "fix", "
     Use accounts assigned to individual users. Where the application connects
-to the DBMS using a standard, shared account, ensure that it also captures the
-individual user identification and passes it to the DBMS.
-
-    Modify application database tables and all supporting code to capture the
-necessary audit data.
-
-    Modify the configuration of audit logs to include details identifying the
-individual user.
+to Couchbase using a standard, shared account, ensure that it also captures the
+individual user identification and passes it to Couchbase.
+    Couchbase Server 6.5.0 and earlier -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+--audit-log-path /opt/couchbase/var/lib/couchbase/logs
+    Couchbase Server Version 6.51 and later -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
   "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000080-DB-000063'
-  tag gid: 'V-32347'
-  tag rid: 'SV-42684r4_rule'
-  tag stig_id: 'SRG-APP-000080-DB-000063'
-  tag fix_id: 'F-36261r3_fix'
-  tag cci: ['CCI-000166']
-  tag nist: ['AU-10']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000080-DB-000063"
+  tag "gid": "V-32347"
+  tag "rid": "SV-42684r4_rule"
+  tag "stig_id": "SRG-APP-000080-DB-000063"
+  tag "fix_id": "F-36261r3_fix"
+  tag "cci": ["CCI-000166"]
+  tag "nist": ["AU-10", "Rev_4"]
 end
-
