@@ -22,7 +22,6 @@ local time with an offset from UTC.
 timeline of events can get skewed. This makes forensic analysis of the logs
 much less reliable.
   "
-  desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following
 fields by default:

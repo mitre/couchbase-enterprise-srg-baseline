@@ -8,7 +8,6 @@ unintended information transfer via shared system resources. Permitting only
 Couchbase processes and authorized, administrative users to have access to the
 files where the database resides helps ensure that those files are not shared
 inappropriately and are not open to backdoor access and manipulation."
-  desc  "rationale", ""
   desc  "check", "
     Review the permissions granted to users by the operating system/file system
 on the database files, database log files and database backup files.

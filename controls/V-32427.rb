@@ -18,7 +18,6 @@ changes, including upgrades and modifications.
     Unmanaged changes that occur to the database software libraries or
 configuration can lead to unauthorized or compromised installations.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the database for definitions of application executable objects
 stored external to the database.

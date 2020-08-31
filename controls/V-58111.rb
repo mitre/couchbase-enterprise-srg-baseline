@@ -12,7 +12,6 @@ audit logs.
 timeout) or result from a system or network failure. To the greatest extent
 possible, all disconnections must be logged.
   "
-  desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging
 logins and logouts with timestamps by default.

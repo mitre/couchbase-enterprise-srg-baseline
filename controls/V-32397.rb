@@ -23,7 +23,6 @@ view and manipulate audit information system activity and records.
 logs for system weaknesses or weaknesses in the auditing itself. An attacker
 could also manipulate logs to hide evidence of malicious activity.
   "
-  desc  "rationale", ""
   desc  "check", "
     Only a user with Full Admin role can change auditing controls.
     As the Full Admin, get a list of all RBAC users with the following command:

@@ -15,7 +15,6 @@ be as simple as denying access to a file based on the application of file
 permissions (access restriction). Audit items may consist of lists of actions
 blocked by access restrictions or changes identified after the fact.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that audit records can be produced
 when the system denies or fails to complete attempts to change the

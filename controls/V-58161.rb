@@ -12,7 +12,6 @@ government since this provides assurance they have been tested and validated.
 Requirements For Cryptographic Modules. Note that the product's cryptographic
 modules must be validated and certified by NIST as FIPS-compliant.
   "
-  desc  "rationale", ""
   desc  "check", "
     As the system administrator, run the following:
     $ openssl version

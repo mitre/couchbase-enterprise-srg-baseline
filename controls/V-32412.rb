@@ -15,7 +15,6 @@ actions being taken by unauthorized individuals.
     Conversely, if critical tables or other objects rely on unauthorized owner
 accounts, these objects may be lost when an account is removed.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review system documentation to identify accounts authorized to own database
 objects. Review accounts that own objects in the database(s).

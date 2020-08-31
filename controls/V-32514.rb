@@ -24,7 +24,6 @@ domain and with additional access controls.
 management is presented on an interface available for users, information on
 Couchbase settings may be inadvertently made available to the user.
   "
-  desc  "rationale", ""
   desc  "check", "
     Check Couchbase settings and vendor documentation to verify that
 administrative functionality is separate from user functionality.

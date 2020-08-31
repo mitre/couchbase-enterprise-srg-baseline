@@ -10,7 +10,6 @@ response to events.
 
     Couchbase must provide a unified tool for audit configuration.
   "
-  desc  "rationale", ""
   desc  "check", "
     Couchbase allows centralized configuration of auditing through the web
 console.

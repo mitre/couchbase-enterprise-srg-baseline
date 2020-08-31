@@ -16,7 +16,6 @@ policies, regulations, and standards.
 requirement addresses the compatibility of a Couchbase with the encryption
 devices.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase is deployed in an unclassified environment, this is not
 applicable (NA).

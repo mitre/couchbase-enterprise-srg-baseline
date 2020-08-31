@@ -20,7 +20,6 @@ immediately to avoid further downtime or unaudited transactions.
 these messages immediately (i.e., the time from event detection to alert occurs
 in seconds or less).
   "
-  desc  "rationale", ""
   desc  "check", "
     As the Full Admin, log into the cluster to and use the following
 documentation to review email alert settings (based on version) or use the

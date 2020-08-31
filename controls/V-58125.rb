@@ -16,7 +16,6 @@ on the overall security of the system.
 obtain access to system components for the purposes of initiating changes,
 including upgrades and modifications.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase vendor documentation with respect to its ability to
 enforce access restrictions associated with changes to the configuration of

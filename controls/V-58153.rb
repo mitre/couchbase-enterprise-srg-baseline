@@ -16,7 +16,6 @@ maintained at every step of the data transfer and handling process.
     When transmitting data, Couchbase, associated applications, and
 infrastructure must leverage transmission protection mechanisms.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the system information/specification for information indicating a
 strict requirement for data integrity and confidentiality when data is being

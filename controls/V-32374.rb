@@ -14,7 +14,6 @@ potentially harmful event.
 limited to, user database tables, primary key values, user names, or process
 identifiers.
   "
-  desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following
 fields by default:

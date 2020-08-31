@@ -16,7 +16,6 @@ limited to:
     DELETE
     EXECUTE
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that administrative users can
 specify database objects for which access must be audited and can specify which

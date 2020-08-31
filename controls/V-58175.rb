@@ -16,7 +16,6 @@ outdated modules.
     A transition period may be necessary when both the old and the new software
 are required. This should be taken into account in the planning.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the list of components and features installed with the Couchbase.
     If unused components are installed and are not documented and authorized,

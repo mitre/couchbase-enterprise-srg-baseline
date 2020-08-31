@@ -13,7 +13,6 @@ GRANT, REVOKE, and DENY commands.
     To aid in diagnosis, it is necessary to keep track of failed attempts in
 addition to the successful ones.
   "
-  desc  "rationale", ""
   desc  "check", "
     If there is no distinction in Couchbase's security architecture between
 modifying permissions on the one hand, and adding and deleting permissions on

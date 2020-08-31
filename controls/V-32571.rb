@@ -37,7 +37,6 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  "rationale", ""
   desc  "check", "
     Check Couchbase settings and custom database code to determine if detailed
 error messages are ever displayed to unauthorized individuals.

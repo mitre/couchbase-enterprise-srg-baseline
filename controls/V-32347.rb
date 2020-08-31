@@ -20,7 +20,6 @@ Design and implementation also must ensure that applications pass individual
 user identification to Couchbase, even where the application connects to
 Couchbase with a standard, shared account.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review system documentation to determine the data and the actions on data
 that need to be protected from repudiation by means of audit trails.

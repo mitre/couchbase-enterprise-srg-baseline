@@ -29,7 +29,6 @@ objective is to have a complete audit trail of all administrative activity.
     To aid in diagnosis, it is necessary to keep track of failed attempts in
 addition to the successful ones.
   "
-  desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing configuration includes
 certain privilege events by default. The Full Admin can specify functionality

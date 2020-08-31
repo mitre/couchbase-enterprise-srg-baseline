@@ -7,7 +7,6 @@ user account."
 Once a PKI certificate has been validated, it must be mapped to a Couchbase
 user account for the authenticated identity to be meaningful to Couchbase and
 useful for authorization decisions."
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase is not using PKI-based authentication, this check is Not
 Applicable (NA).

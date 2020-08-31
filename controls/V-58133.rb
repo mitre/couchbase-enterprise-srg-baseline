@@ -6,7 +6,6 @@ services deemed by the organization to be nonsecure, in accord with the Ports,
 Protocols, and Services Management (PPSM) guidance."
   desc  "Use of nonsecure network functions, ports, protocols, and services
 exposes the system to avoidable threats."
-  desc  "rationale", ""
   desc  "check", "
     Review the network functions, ports, protocols, and services in the
 Couchbase config:

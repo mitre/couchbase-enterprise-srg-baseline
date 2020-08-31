@@ -25,7 +25,6 @@ more of Couchbase's private keys, an attacker could gain access to the key(s)
 and use them to impersonate the database on the network or otherwise perform
 unauthorized actions.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase is not using PKI-based authentication, this check is Not
 Applicable (NA).

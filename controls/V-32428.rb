@@ -28,7 +28,6 @@ unsafe are open to attack through those ports, protocols, and services. This
 can allow unauthorized access to the database and through the database to other
 components of the information system.
   "
-  desc  "rationale", ""
   desc  "check", "Review Couchbase settings and local documentation for
 functions, ports, protocols, and services that are not approved. If any are
 found, this is a finding."

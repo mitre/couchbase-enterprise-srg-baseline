@@ -13,7 +13,6 @@ membership information. It does not refer to the implicit retrieval of
 privileges/permissions/role memberships that Couchbase continually performs to
 determine if any and every action on the database is permitted.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that audit records can be produced
 when privileges/permissions/role memberships are retrieved.

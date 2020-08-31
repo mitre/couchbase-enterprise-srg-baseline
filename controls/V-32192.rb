@@ -34,7 +34,6 @@ organization's current account policy.
 together contain an overall mechanism supporting an organization's automated
 account management requirements.
   "
-  desc  "rationale", ""
   desc  "check", "
     If all accounts are authenticated by the organization-level
 authentication/access mechanism and not by Couchbase, this is not a finding.

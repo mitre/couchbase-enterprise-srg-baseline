@@ -25,7 +25,6 @@ event type an audit record is referring to. If event type information is not
 recorded and stored with the audit record, the record itself is of very limited
 use.
   "
-  desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following
 fields by default:

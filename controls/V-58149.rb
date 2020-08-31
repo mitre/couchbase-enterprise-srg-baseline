@@ -10,7 +10,6 @@ from being available to any current user/role (or current process) that obtains
 access to a shared system resource (e.g., registers, main memory, secondary
 storage) after the resource has been released back to the information system.
 Control of information in shared resources is also referred to as object reuse."
-  desc  "rationale", ""
   desc  "check", "
     Review the permissions granted to users by the operating system/file system
 on the database files, database log files and database backup files.

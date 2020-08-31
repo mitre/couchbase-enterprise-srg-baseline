@@ -46,7 +46,6 @@ combination of these.
 action that weakens the implementation of this requirement itself, since the
 objective is to have a complete audit trail of all administrative activity.
   "
-  desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing configuration includes
 certain privilege events by default. The Full Admin can specify events that

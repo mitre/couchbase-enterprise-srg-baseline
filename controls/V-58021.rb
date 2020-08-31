@@ -24,7 +24,6 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the system documentation, database and Couchbase security
 configuration, source code for Couchbase internal logic, source code of

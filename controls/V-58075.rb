@@ -12,7 +12,6 @@ privileges wrongly deny access to authorized users.
     In an SQL environment, modifying permissions is typically done via the
 GRANT, REVOKE, and DENY commands.
   "
-  desc  "rationale", ""
   desc  "check", "
     If there is no distinction in the Couchbase's security architecture between
 modifying permissions on the one hand, and adding and deleting permissions on

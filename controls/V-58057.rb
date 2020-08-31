@@ -18,7 +18,6 @@ expansion.
     The appropriate support staff include, at a minimum, the ISSO and the
 DBA/SA.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review system configuration.
     If no script/tool is monitoring the partition for the Couchbase log

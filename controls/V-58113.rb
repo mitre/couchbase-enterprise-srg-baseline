@@ -17,7 +17,6 @@ reconstructed from the log entries for other events (logons/connections;
 voluntary and involuntary disconnections), then it is not mandatory to create
 additional log entries specifically for this.)
   "
-  desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging
 logins and logouts with timestamps by default.

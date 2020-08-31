@@ -10,7 +10,6 @@ is attempted, it must be logged.
     To aid in diagnosis, it is necessary to keep track of failed attempts in
 addition to the successful ones.
   "
-  desc  "rationale", ""
   desc  "check", "
     If the Couchbase architecture makes it impossible for any user, even with
 the highest privileges, to directly view or directly modify the contents of its

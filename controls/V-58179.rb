@@ -30,7 +30,6 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase source code (stored procedures, functions, triggers) and
 application source code, to identify cases of dynamic code execution.

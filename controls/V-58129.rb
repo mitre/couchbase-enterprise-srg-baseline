@@ -17,7 +17,6 @@ changes, including upgrades and modifications.
     Unmanaged changes that occur to the database software libraries or
 configuration can lead to unauthorized or compromised installations.
   "
-  desc  "rationale", ""
   desc  "check", "
     Identify the group(s)/role(s) established for Couchbase modification.
     Obtain the list of users in those group(s)/roles:

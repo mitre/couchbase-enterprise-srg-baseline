@@ -20,7 +20,6 @@ representation of date and time. Rather, it is a database state counter and
 does not correspond to calendar and clock time. This requirement does not refer
 to that meaning of TIMESTAMP.
   "
-  desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following
 fields by default:

@@ -28,7 +28,6 @@ otherwise manipulating valid sessions.
 Couchbase must terminate the user session(s) to minimize the potential for
 sessions to be hijacked.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase settings and vendor documentation to verify user sessions
 are terminated, and session identifiers invalidated, upon user logout. If they

@@ -25,7 +25,6 @@ data compromise.
     The mechanism used to support security labeling may be a feature of
 Couchbase product, a third-party product, or custom application code.
   "
-  desc  "rationale", ""
   desc  "check", "
     If security labeling is not required, this is not a finding.
     If security labeling requirements have been specified, but the security

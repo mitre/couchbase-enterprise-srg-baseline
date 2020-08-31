@@ -28,7 +28,6 @@ activity.
     Deletion of database audit data could mask the theft of, or the
 unauthorized modification of, sensitive data stored in the database.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review locations of audit logs, both internal to the database and database
 audit logs located at the operating system level.

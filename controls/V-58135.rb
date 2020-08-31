@@ -26,7 +26,6 @@ or suspect) by the organization).
     In the case of a database management system, this requirement covers stored
 procedures, functions, triggers, views, etc.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase supports only software development, experimentation and/or
 developer-level testing (that is, excluding production systems, integration

@@ -32,7 +32,6 @@ While the older, more traditional definitions of discretionary access control
 require identity-based access control, that limitation is not required for this
 use of discretionary access control.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review system documentation to identify the required discretionary access
 control (DAC).

@@ -17,7 +17,6 @@ the operating system or access control program (e.g., Microsoft Active
 Directory) must be configured to do so.  For other Couchbases, the rules must
 be enforced using available configuration parameters or custom code.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase password authentication is not used, this is not a finding.
     As the Full Admin, review the password policy set using the following

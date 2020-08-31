@@ -22,7 +22,6 @@ modules are described in FIPS 140-2 Annex A.
     NSA Type-X (where X=1, 2, 3, 4) products are NSA-certified, hardware-based
 encryption modules.
   "
-  desc  "rationale", ""
   desc  "check", "
     As the system administrator, run the following:
     $ openssl version

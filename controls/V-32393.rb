@@ -28,7 +28,6 @@ protected from unauthorized access.
 settings, and audit reports) needed to successfully audit information system
 activity.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review locations of audit logs, both internal to the database and database
 audit logs located at the operating system level.

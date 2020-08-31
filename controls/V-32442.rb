@@ -20,7 +20,6 @@ without individual authentication. Organizations may require unique
 identification of individuals using shared accounts, for detailed
 accountability of individual activity.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase settings to determine whether organizational users are
 uniquely identified and authenticated when logging on/connecting to the system.

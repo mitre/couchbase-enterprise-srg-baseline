@@ -32,7 +32,6 @@ actions.
     Organizations may define additional events requiring continuous or ad hoc
 auditing.
   "
-  desc  "rationale", ""
   desc  "check", "
     Check Couchbase auditing to determine whether organization-defined
 auditable events are being audited by the system.

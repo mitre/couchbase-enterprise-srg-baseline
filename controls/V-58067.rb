@@ -17,7 +17,6 @@ facilitate audit reduction, analysis, and reporting. Organizations can
 establish time thresholds in which audit actions are changed, for example, near
 real time, within minutes, or within hours.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase does not provide the ability for users in authorized roles to
 reconfigure auditing at any time of the user's choosing, this is a finding.

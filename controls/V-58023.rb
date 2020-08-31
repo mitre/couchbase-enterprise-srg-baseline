@@ -51,7 +51,6 @@ and associated applications, the prevention of unauthorized use of privileged
 functions may be achieved by means of Couchbase security features, database
 triggers, other mechanisms, or a combination of these.
   "
-  desc  "rationale", ""
   desc  "check", "
     Only a user with Full Admin and Security Admin roles can alter or
 reconfigure the security safeguards.

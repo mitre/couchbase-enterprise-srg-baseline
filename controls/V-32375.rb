@@ -26,7 +26,6 @@ and impact of compromise.
 records are full-text recording of privileged commands or the individual
 identities of shared account users.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the system documentation to identify what additional information the
 organization has determined to be necessary.

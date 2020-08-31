@@ -18,7 +18,6 @@ data transfer and handling process.
     When receiving data, Couchbase, associated applications, and infrastructure
 must leverage protection mechanisms.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase is deployed in an unclassified environment, this is not
 applicable (NA).

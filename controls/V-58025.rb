@@ -23,7 +23,6 @@ information system use.
     This capability is typically reserved for specific cases where the system
 owner, data owner, or organization requires additional assurance.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review system documentation to obtain the organization's definition of
 circumstances requiring automatic session termination. If the documentation

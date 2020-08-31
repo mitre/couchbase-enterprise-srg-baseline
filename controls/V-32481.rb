@@ -22,7 +22,6 @@ information systems with the need to protect and adequately mitigate risk to
 organizational operations, organizational assets, individuals, other
 organizations, and the Nation.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase settings to determine whether non-organizational users are
 uniquely identified and authenticated when logging onto the system.

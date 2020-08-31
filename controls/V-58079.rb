@@ -12,7 +12,6 @@ privileges wrongly deny access to authorized users.
     In an SQL environment, deleting permissions is typically done via the
 REVOKE or DENY command.
   "
-  desc  "rationale", ""
   desc  "check", "
     Couchbase auditing is capable of logging all reads, creations,
 modifications, and deletions.

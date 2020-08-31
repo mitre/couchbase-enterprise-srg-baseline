@@ -14,7 +14,6 @@ functionality exceeding requirements or mission objectives.
     Couchbases must adhere to the principles of least functionality by
 providing only essential capabilities.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the list of components and features installed with the Couchbase
 database.

@@ -14,7 +14,6 @@ assurance exist. These include NSA configuration guides, CTOs, DTMs, and IAVMs.
 Couchbase must be configured in compliance with guidance from all such relevant
 sources.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the Couchbase documentation and configuration to determine if
 Couchbase is configured in accordance with DoD security configuration and

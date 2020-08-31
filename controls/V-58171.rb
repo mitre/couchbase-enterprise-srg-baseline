@@ -21,7 +21,6 @@ data structures (e.g., files, records, or fields).
 also influenced by the physical measures taken to secure the equipment and
 media on which the information resides.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the system documentation to determine whether the organization has
 defined the information to prevent the unauthorized disclosure of

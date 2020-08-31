@@ -16,7 +16,6 @@ implement the preferred technique yet may have other protections against
 session hijacking. Therefore, other techniques are acceptable, provided they
 are demonstrated to be effective.
   "
-  desc  "rationale", ""
   desc  "check", "
     Verify Couchbase has SSL enabled:
     $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin> \\-p

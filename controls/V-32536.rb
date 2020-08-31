@@ -22,7 +22,6 @@ objects or code implementing application logic. When security and non-security
 functionality are commingled, users who have access to non-security
 functionality may be able to access security functionality.
   "
-  desc  "rationale", ""
   desc  "check", "
     Check Couchbase settings to determine whether objects or code implementing
 security functionality are located in a separate security domain, such as a

@@ -16,7 +16,6 @@ changes, including upgrades and modifications.
     Unmanaged changes that occur to the database software libraries or
 configuration can lead to unauthorized or compromised installations.
   "
-  desc  "rationale", ""
   desc  "check", "
     Only a user with Full Admin role can change database configuration.
     As the Full Admin, get a list of all RBAC users with the following command:

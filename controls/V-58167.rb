@@ -14,7 +14,6 @@ http://iase.disa.mil/pki-pke/interoperability.
     This requirement focuses on communications protection for Couchbase session
 rather than for the network packet.
   "
-  desc  "rationale", ""
   desc  "check", "If Couchbase will accept non-DoD approved PKI end-entity
 certificates, this is a finding."
   desc  "fix", "Revoke trust in any certificates not issued by a DoD-approved

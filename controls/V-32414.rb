@@ -21,7 +21,6 @@ granted privileges that allow actions that can have a great impact on database
 security and operation. It is especially important to grant privileged access
 to only those persons who are qualified and authorized to use them.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review procedures for controlling, granting access to, and tracking use of
 the Couchbase software installation account.

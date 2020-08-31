@@ -19,7 +19,6 @@ limited to:
     To aid in diagnosis, it is necessary to keep track of failed attempts in
 addition to the successful ones.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that administrative users can
 specify database objects for which access must be audited, and can specify

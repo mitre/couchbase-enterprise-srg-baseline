@@ -15,7 +15,6 @@ Publication 199, Standards for Security Categorization of Federal Information
 and Information Systems, and FIPS Publication 200, Minimum Security
 Requirements for Federal Information and Information Systems.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that audit records can be produced
 when the system denies or fails to complete attempts to access categories of

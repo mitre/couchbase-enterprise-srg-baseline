@@ -21,7 +21,6 @@ provide access to the other application's database objects or directories. Any
 method that provides any level of separation of security context assists in the
 protection between applications.
   "
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase is running within a Docker container, this is not a finding.
     Review the Couchbase software library directory and note other root

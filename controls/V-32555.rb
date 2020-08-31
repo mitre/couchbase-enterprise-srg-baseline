@@ -32,7 +32,6 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase code (stored procedures, functions, and triggers),
 application code, settings, column and field definitions, and constraints to

@@ -13,7 +13,6 @@ encryption, or using unsalted hashes would be vulnerable to unauthorized
 disclosure. Database passwords must always be in the form of one-way, salted
 hashes when stored internally or externally to Couchbase.
   "
-  desc  "rationale", ""
   desc  "check", "
     If password authentication is used, SCRAM-SHA1, SCRAM-SHA256, and
 SCRAM-SHA512,  authentication protocols are available with saslauthd enabled.

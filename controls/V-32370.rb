@@ -17,7 +17,6 @@ application provides a means of investigating an attack; recognizing resource
 utilization or capacity thresholds; or identifying an improperly configured
 application.
   "
-  desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following
 fields by default:

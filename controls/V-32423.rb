@@ -23,7 +23,6 @@ are meant to provide simple examples of coding specific functions and are not
 developed to prevent vulnerabilities from being introduced to Couchbase and
 host system.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase to determine if any of the demonstration and sample
 databases, database applications, or files are installed in the database or are

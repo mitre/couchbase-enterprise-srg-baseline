@@ -16,7 +16,6 @@ system, to other kinds of local repository, or directly to a centralized log
 management system. Whatever the method used, it must be compatible with
 off-loading the records to the centralized system.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the system documentation for a description of how audit records are
 off-loaded.

@@ -22,7 +22,6 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review system documentation to determine how input errors are to be handled
 in general and if any special handling is defined for specific circumstances.

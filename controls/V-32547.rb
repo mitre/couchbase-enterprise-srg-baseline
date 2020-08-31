@@ -15,7 +15,6 @@ are not exposed.
     Copies of sensitive data must not be misplaced or left in a temporary
 location without the proper controls.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review the procedures for the refreshing of development/test data from
 production.

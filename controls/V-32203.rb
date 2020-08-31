@@ -32,7 +32,6 @@ networks or other applications in the information system. This may result in
 users either gaining or being denied access inappropriately and in conflict
 with applicable policy.
   "
-  desc  "rationale", ""
   desc  "check", "
     From the system security plan or equivalent documentation, determine the
 appropriate permissions on database objects for each kind (role) of user. If

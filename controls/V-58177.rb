@@ -33,7 +33,6 @@ security-relevant software updates within an identified time period from the
 availability of the update. The specific time period will be defined by an
 authoritative source (e.g. IAVM, CTOs, DTMs, and STIGs).
   "
-  desc  "rationale", ""
   desc  "check", "
     Obtain evidence that software patches are consistently applied to Couchbase
 within the time frame defined for each patch.

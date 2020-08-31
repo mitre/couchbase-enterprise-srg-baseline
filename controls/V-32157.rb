@@ -32,7 +32,6 @@ each query tab and navigation pane may count as a separate session.
     (Sessions may also be referred to as connections or logons, which for the
 purposes of this requirement are synonyms.)
   "
-  desc  "rationale", ""
   desc  "check", "
     Determine whether the system documentation specifies limits on the number
 of concurrent Couchbase sessions per account by type of user. If it does not,

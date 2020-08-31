@@ -24,7 +24,6 @@ captured; the frequency/speed with which audit records are off-loaded to the
 central log management system; and any limitations that exist on Couchbase's
 ability to reuse the space formerly occupied by off-loaded records.
   "
-  desc  "rationale", ""
   desc  "check", "
     Investigate whether there have been any incidents where Couchbase ran out
 of audit log space since the last time the space was allocated or other

@@ -19,7 +19,6 @@ identifier and have it recognized by the system, the attacker could gain access
 to the system without passing through access controls designed to limit
 database sessions to authorized users.
   "
-  desc  "rationale", ""
   desc  "check", "
     Review Couchbase settings and vendor documentation to determine whether
 Couchbase recognizes session identifiers that are not system-generated.

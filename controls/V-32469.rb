@@ -15,7 +15,6 @@ is the standard method for protecting passwords during transmission.
 vulnerable to discovery by unauthorized users. Disclosure of passwords may
 easily lead to unauthorized access to the database.
   "
-  desc  "rationale", ""
   desc  "check", "
     Couchbase Server 6.0.x and earlier -
     Review configuration settings for encrypting passwords in transit across

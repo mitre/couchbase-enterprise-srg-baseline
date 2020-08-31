@@ -5,7 +5,6 @@ control "V-58107" do
 connections occur."
   desc  "For completeness of forensic analysis, it is necessary to track
 who/what (a user or other principal) logs on to Couchbase."
-  desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging
 successful logins and connections by default.

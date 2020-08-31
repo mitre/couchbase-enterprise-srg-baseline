@@ -21,7 +21,6 @@ prior to installation. This requirement is usually a function of the design of
 the IDPS component. Compliance can be verified by acceptance/validation
 processes or vendor attestation.
   "
-  desc  "rationale", ""
   desc  "check", "
     Check Couchbase settings to determine whether organization-defined system
 state information is being preserved in the event of a system failure.

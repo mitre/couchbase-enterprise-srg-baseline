@@ -23,7 +23,6 @@ components will vary by Couchbase product, OS, and the nature of the component
 and may include Couchbase configuration settings, OS service settings, OS file
 access security, and Couchbase user/role permissions.
   "
-  desc  "rationale", ""
   desc  "check", "
     To list all installed packages, as the system administrator, run the
 following:

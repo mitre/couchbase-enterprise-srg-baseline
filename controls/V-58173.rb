@@ -10,7 +10,6 @@ processes is controlled through the security functions, and one process cannot
 modify the executing code of another process. Maintaining separate execution
 domains for executing processes can be achieved, for example, by implementing
 separate address spaces."
-  desc  "rationale", ""
   desc  "check", "
     If Couchbase is running within a Docker container, this is not a finding.
     Review Couchbase architecture to find out if and how it protects the

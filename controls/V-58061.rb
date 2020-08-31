@@ -31,7 +31,6 @@ Authorizing Official concurrence. In any case, sufficient auditing resources
 must be allocated to avoid audit data loss in all but the most extreme
 situations.
   "
-  desc  "rationale", ""
   desc  "check", "
     If the application owner has determined that the need for system
 availability does not outweigh the need for a complete audit trail, this is not

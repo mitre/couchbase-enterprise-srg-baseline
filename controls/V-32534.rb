@@ -17,7 +17,6 @@ to achieve confidentiality and integrity protections, as appropriate.
     If the confidentiality and integrity of application data is not protected,
 the data will be open to compromise and unauthorized modification.
   "
-  desc  "rationale", ""
   desc  "check", "
     If the application owner and Authorizing Official have determined that
 encryption of data at rest is NOT required, this is not a finding.
