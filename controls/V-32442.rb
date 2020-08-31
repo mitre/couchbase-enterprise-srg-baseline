@@ -1,5 +1,25 @@
 # encoding: UTF-8
+
 control "V-32442" do
+  title "Couchbase must uniquely identify and authenticate organizational users
+(or processes acting on behalf of organizational users)."
+  desc  "To assure accountability and prevent unauthenticated access,
+organizational users must be identified and authenticated to prevent potential
+misuse and compromise of the system.
+
+    Organizational users include organizational employees or individuals the
+organization deems to have equivalent status of employees (e.g., contractors).
+Organizational users (and any processes acting on behalf of users) must be
+uniquely identified and authenticated for all accesses, except the following:
+
+    (i) Accesses explicitly identified and documented by the organization.
+Organizations document specific user actions that can be performed on the
+information system without identification or authentication; and
+    (ii) Accesses that occur through authorized use of group authenticators
+without individual authentication. Organizations may require unique
+identification of individuals using shared accounts, for detailed
+accountability of individual activity.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase settings to determine whether organizational users are

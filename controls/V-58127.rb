@@ -1,5 +1,20 @@
 # encoding: UTF-8
+
 control "V-58127" do
+  title "Couchbase must produce audit records of its enforcement of access
+restrictions associated with changes to the configuration of Couchbase or
+database(s)."
+  desc  "Without auditing the enforcement of access restrictions against
+changes to configuration, it would be difficult to identify attempted attacks
+and an audit trail would not be available for forensic investigation for
+after-the-fact actions.
+
+    Enforcement actions are the methods or mechanisms used to prevent
+unauthorized changes to configuration settings. Enforcement action methods may
+be as simple as denying access to a file based on the application of file
+permissions (access restriction). Audit items may consist of lists of actions
+blocked by access restrictions or changes identified after the fact.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that audit records can be produced

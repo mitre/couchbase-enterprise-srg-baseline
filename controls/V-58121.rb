@@ -1,5 +1,24 @@
 # encoding: UTF-8
+
 control "V-58121" do
+  title "Couchbase must generate audit records when unsuccessful accesses to
+objects occur."
+  desc  "Without tracking all or selected types of access to all or selected
+objects (tables, views, procedures, functions, etc.), it would be difficult to
+establish, correlate, and investigate the events relating to an incident or
+identify those responsible for one.
+
+    In an SQL environment, types of access include, but are not necessarily
+limited to:
+    SELECT
+    INSERT
+    UPDATE
+    DELETE
+    EXECUTE
+
+    To aid in diagnosis, it is necessary to keep track of failed attempts in
+addition to the successful ones.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that administrative users can

@@ -1,5 +1,20 @@
 # encoding: UTF-8
+
 control "V-58097" do
+  title "Couchbase must generate audit records when unsuccessful attempts to
+access categories of information (e.g., classification levels/security levels)
+occur."
+  desc  "Changes in categories of information must be tracked. Without an audit
+trail, unauthorized access to protected data could go undetected.
+
+    To aid in diagnosis, it is necessary to keep track of failed attempts in
+addition to the successful ones.
+
+    For detailed information on categorizing information, refer to FIPS
+Publication 199, Standards for Security Categorization of Federal Information
+and Information Systems, and FIPS Publication 200, Minimum Security
+Requirements for Federal Information and Information Systems.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that audit records can be produced

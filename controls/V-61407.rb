@@ -1,5 +1,22 @@
 # encoding: UTF-8
+
 control "V-61407" do
+  title "If Couchbase authentication, using passwords, is employed, Couchbase
+must enforce the DoD standards for password complexity and lifetime"
+  desc  "OS/enterprise authentication and identification must be used
+(SRG-APP-000023-DB-000001).  Native Couchbase authentication may be used only
+when circumstances make it unavoidable; and must be documented and AO-approved.
+
+    The DoD standard for authentication is DoD-approved PKI certificates.
+Authentication based on User ID and Password may be used only when it is not
+possible to employ a PKI certificate, and requires AO approval.
+
+    In such cases, the DoD standards for password complexity and lifetime must
+be implemented.  Couchbase products that can inherit the rules for these from
+the operating system or access control program (e.g., Microsoft Active
+Directory) must be configured to do so.  For other Couchbases, the rules must
+be enforced using available configuration parameters or custom code.
+  "
   desc  "rationale", ""
   desc  "check", "
     If Couchbase password authentication is not used, this is not a finding.

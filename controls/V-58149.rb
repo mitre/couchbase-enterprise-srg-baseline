@@ -1,5 +1,15 @@
 # encoding: UTF-8
+
 control "V-58149" do
+  title "Couchbase must prevent unauthorized and unintended information
+transfer via shared system resources."
+  desc  "The purpose of this control is to prevent information, including
+encrypted representations of information, produced by the actions of a prior
+user/role (or the actions of a process acting on behalf of a prior user/role)
+from being available to any current user/role (or current process) that obtains
+access to a shared system resource (e.g., registers, main memory, secondary
+storage) after the resource has been released back to the information system.
+Control of information in shared resources is also referred to as object reuse."
   desc  "rationale", ""
   desc  "check", "
     Review the permissions granted to users by the operating system/file system

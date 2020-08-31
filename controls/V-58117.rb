@@ -1,5 +1,34 @@
 # encoding: UTF-8
+
 control "V-58117" do
+  title "Couchbase must generate audit records when unsuccessful attempts to
+execute privileged activities or other system-level access occur."
+  desc  "Without tracking privileged activity, it would be difficult to
+establish, correlate, and investigate the events relating to an incident or
+identify those responsible for one.
+
+    System documentation should include a definition of the functionality
+considered privileged.
+
+    A privileged function in this context is any operation that modifies the
+structure of the database, its built-in logic, or its security settings. This
+would include all Data Definition Language (DDL) statements and all
+security-related statements. In an SQL environment, it encompasses, but is not
+necessarily limited to:
+    CREATE
+    ALTER
+    DROP
+    GRANT
+    REVOKE
+    DENY
+
+    Note that it is particularly important to audit, and tightly control, any
+action that weakens the implementation of this requirement itself, since the
+objective is to have a complete audit trail of all administrative activity.
+
+    To aid in diagnosis, it is necessary to keep track of failed attempts in
+addition to the successful ones.
+  "
   desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing configuration includes

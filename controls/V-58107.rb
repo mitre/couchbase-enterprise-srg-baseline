@@ -1,5 +1,10 @@
 # encoding: UTF-8
+
 control "V-58107" do
+  title "Couchbase must generate audit records when successful logons or
+connections occur."
+  desc  "For completeness of forensic analysis, it is necessary to track
+who/what (a user or other principal) logs on to Couchbase."
   desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging

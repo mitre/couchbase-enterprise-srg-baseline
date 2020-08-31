@@ -1,5 +1,17 @@
 # encoding: UTF-8
+
 control "V-58071" do
+  title "Couchbase must generate audit records when privileges/permissions are
+added."
+  desc  "Changes in the permissions, privileges, and roles granted to users and
+roles must be tracked. Without an audit trail, unauthorized elevation or
+restriction of privileges could go undetected. Elevated privileges give users
+access to information and functionality that they should not have; restricted
+privileges wrongly deny access to authorized users.
+
+    In an SQL environment, adding permissions is typically done via the GRANT
+command, or, in the negative, the DENY command.
+  "
   desc  "rationale", ""
   desc  "check", "
     Couchbase auditing is capable of logging all reads, creations,

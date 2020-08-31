@@ -1,5 +1,28 @@
 # encoding: UTF-8
+
 control "V-32423" do
+  title "Default demonstration and sample databases, database objects, and
+applications must be removed."
+  desc  "Information systems are capable of providing a wide variety of
+functions and services. Some of the functions and services, provided by
+default, may not be necessary to support essential organizational operations
+(e.g., key missions, functions).
+
+    It is detrimental for software products to provide, or install by default,
+functionality exceeding requirements or mission objectives. Examples include,
+but are not limited to, installing advertising software, demonstrations, or
+browser plugins not related to requirements or providing a wide array of
+functionality, not required for every mission, that cannot be disabled.
+
+    Couchbases must adhere to the principles of least functionality by
+providing only essential capabilities.
+
+    Demonstration and sample database objects and applications present publicly
+known attack points for malicious users. These demonstration and sample objects
+are meant to provide simple examples of coding specific functions and are not
+developed to prevent vulnerabilities from being introduced to Couchbase and
+host system.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase to determine if any of the demonstration and sample

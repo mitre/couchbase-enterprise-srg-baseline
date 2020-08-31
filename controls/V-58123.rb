@@ -1,5 +1,13 @@
 # encoding: UTF-8
+
 control "V-58123" do
+  title "Couchbase must generate audit records for all direct access to the
+database(s)."
+  desc  "In this context, direct access is any query, command, or call to
+Couchbase that comes from any source other than the application(s) that it
+supports. Examples would be the command line or a database management utility
+program. The intent is to capture all activity from administrative and
+non-standard sources."
   desc  "rationale", ""
   desc  "check", "
     If Couchbase does not generate audit records for all direct access to the

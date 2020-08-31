@@ -1,5 +1,21 @@
 # encoding: UTF-8
+
 control "V-58055" do
+  title "Couchbase must off-load audit data to a separate log management
+facility; this shall be continuous and in near real time for systems with a
+network connection to the storage facility and weekly or more often for
+stand-alone systems."
+  desc  "Information stored in one location is vulnerable to accidental or
+incidental deletion or alteration.
+
+    Off-loading is a common process in information systems with limited audit
+storage capacity.
+
+    Couchbase may write audit records to database tables, to files in the file
+system, to other kinds of local repository, or directly to a centralized log
+management system. Whatever the method used, it must be compatible with
+off-loading the records to the centralized system.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the system documentation for a description of how audit records are

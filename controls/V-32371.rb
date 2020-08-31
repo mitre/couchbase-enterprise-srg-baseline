@@ -1,5 +1,27 @@
 # encoding: UTF-8
+
 control "V-32371" do
+  title "Couchbase must produce audit records containing sufficient information
+to establish the sources (origins) of the events."
+  desc  "Information system auditing capability is critical for accurate
+forensic analysis. Without establishing the source of the event, it is
+impossible to establish, correlate, and investigate the events relating to an
+incident.
+
+    In order to compile an accurate risk assessment and provide forensic
+analysis, it is essential for security personnel to know where events occurred,
+such as application components, modules, session identifiers, filenames, host
+names, and functionality.
+
+    In addition to logging where events occur within the application, the
+application must also produce audit records that identify the application
+itself as the source of the event.
+
+    Associating information about the source of the event within the
+application provides a means of investigating an attack; recognizing resource
+utilization or capacity thresholds; or identifying an improperly configured
+application.
+  "
   desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following

@@ -1,5 +1,19 @@
 # encoding: UTF-8
+
 control "V-58131" do
+  title "Couchbase must be configured in accordance with the security
+configuration settings based on DoD security configuration and implementation
+guidance, including STIGs, NSA configuration guides, CTOs, DTMs, and IAVMs."
+  desc  "Configuring Couchbase to implement organization-wide security
+implementation guides and security checklists ensures compliance with federal
+standards and establishes a common security baseline across DoD that reflects
+the most restrictive security posture consistent with operational requirements.
+
+    In addition to this SRG, sources of guidance on security and information
+assurance exist. These include NSA configuration guides, CTOs, DTMs, and IAVMs.
+Couchbase must be configured in compliance with guidance from all such relevant
+sources.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the Couchbase documentation and configuration to determine if

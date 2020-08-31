@@ -1,5 +1,17 @@
 # encoding: UTF-8
+
 control "V-58089" do
+  title "Couchbase must generate audit records when unsuccessful attempts to
+modify security objects occur."
+  desc  "Changes in the database objects (tables, views, procedures, functions)
+that record and control permissions, privileges, and roles granted to users and
+roles must be tracked. Without an audit trail, unauthorized changes to the
+security subsystem could go undetected. The database could be severely
+compromised or rendered inoperative.
+
+    To aid in diagnosis, it is necessary to keep track of failed attempts in
+addition to the successful ones.
+  "
   desc  "rationale", ""
   desc  "check", "
     If the Couchbase architecture makes it impossible for any user, even with

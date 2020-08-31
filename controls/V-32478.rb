@@ -1,5 +1,12 @@
 # encoding: UTF-8
+
 control "V-32478" do
+  title "Couchbase must map the PKI-authenticated identity to an associated
+user account."
+  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+Once a PKI certificate has been validated, it must be mapped to a Couchbase
+user account for the authenticated identity to be meaningful to Couchbase and
+useful for authorization decisions."
   desc  "rationale", ""
   desc  "check", "
     If Couchbase is not using PKI-based authentication, this check is Not

@@ -1,5 +1,39 @@
 # encoding: UTF-8
+
 control "V-32192" do
+  title "Couchbase must integrate with an organization-level
+authentication/access mechanism providing account management and automation for
+all users, groups, roles, and any other principals."
+  desc  "Enterprise environments make account management for applications and
+databases challenging and complex. A manual process for account management
+functions adds the risk of a potential oversight or other error. Managing
+accounts for the same person in multiple places is inefficient and prone to
+problems with consistency and synchronization.
+
+    A comprehensive application account management process that includes
+automation helps to ensure that accounts designated as requiring attention are
+consistently and promptly addressed.
+
+    Examples include, but are not limited to, using automation to take action
+on multiple accounts designated as inactive, suspended, or terminated, or by
+disabling accounts located in non-centralized account stores, such as multiple
+servers. Account management functions can also include: assignment of group or
+role membership; identifying account type; specifying user access
+authorizations (i.e., privileges); account removal, update, or termination; and
+administrative alerts. The use of automated mechanisms can include, for
+example: using email or text messaging to notify account managers when users
+are terminated or transferred; using the information system to monitor account
+usage; and using automated telephone notification to report atypical system
+account usage.
+
+    Couchbase must be configured to automatically utilize organization-level
+account management functions, and these functions must immediately enforce the
+organization's current account policy.
+
+    Automation may be comprised of differing technologies that when placed
+together contain an overall mechanism supporting an organization's automated
+account management requirements.
+  "
   desc  "rationale", ""
   desc  "check", "
     If all accounts are authenticated by the organization-level

@@ -1,5 +1,15 @@
 # encoding: UTF-8
+
 control "V-58173" do
+  title "Couchbase must maintain a separate execution domain for each executing
+process."
+  desc  "Database management systems can maintain separate execution domains
+for each executing process by assigning each process a separate address space.
+Each process has a distinct address space so that communication between
+processes is controlled through the security functions, and one process cannot
+modify the executing code of another process. Maintaining separate execution
+domains for executing processes can be achieved, for example, by implementing
+separate address spaces."
   desc  "rationale", ""
   desc  "check", "
     If Couchbase is running within a Docker container, this is not a finding.

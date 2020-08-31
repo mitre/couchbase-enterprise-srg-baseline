@@ -1,5 +1,16 @@
 # encoding: UTF-8
+
 control "V-58103" do
+  title "Couchbase must generate audit records when categories of information
+(e.g., classification levels/security levels) are deleted."
+  desc  "Changes in categories of information must be tracked. Without an audit
+trail, unauthorized access to protected data could go undetected.
+
+    For detailed information on categorizing information, refer to FIPS
+Publication 199, Standards for Security Categorization of Federal Information
+and Information Systems, and FIPS Publication 200, Minimum Security
+Requirements for Federal Information and Information Systems.
+  "
   desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging all

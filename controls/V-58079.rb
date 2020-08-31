@@ -1,5 +1,17 @@
 # encoding: UTF-8
+
 control "V-58079" do
+  title "Couchbase must generate audit records when privileges/permissions are
+deleted."
+  desc  "Changes in the permissions, privileges, and roles granted to users and
+roles must be tracked. Without an audit trail, unauthorized elevation or
+restriction of privileges could go undetected. Elevated privileges give users
+access to information and functionality that they should not have; restricted
+privileges wrongly deny access to authorized users.
+
+    In an SQL environment, deleting permissions is typically done via the
+REVOKE or DENY command.
+  "
   desc  "rationale", ""
   desc  "check", "
     Couchbase auditing is capable of logging all reads, creations,

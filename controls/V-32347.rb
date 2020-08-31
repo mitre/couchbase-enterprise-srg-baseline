@@ -1,5 +1,25 @@
 # encoding: UTF-8
+
 control "V-32347" do
+  title "Couchbase must protect against a user falsely repudiating having
+performed organization-defined actions."
+  desc  "Non-repudiation of actions taken is required in order to maintain data
+integrity. Examples of particular actions taken by individuals include creating
+information, sending a message, approving information (e.g., indicating
+concurrence or signing a contract), and receiving a message.
+
+    Non-repudiation protects against later claims by a user of not having
+created, modified, or deleted a particular data item or collection of data in
+the database.
+
+    In designing a database, the organization must define the types of data and
+the user actions that must be protected from repudiation. The implementation
+must then include building audit features into the application data tables and
+configuring Couchbase's audit tools to capture the necessary audit trail.
+Design and implementation also must ensure that applications pass individual
+user identification to Couchbase, even where the application connects to
+Couchbase with a standard, shared account.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review system documentation to determine the data and the actions on data

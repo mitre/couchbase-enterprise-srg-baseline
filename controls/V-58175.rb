@@ -1,5 +1,21 @@
 # encoding: UTF-8
+
 control "V-58175" do
+  title "When updates are applied to Couchbase, any software components that
+have been replaced or made unnecessary must be removed."
+  desc  "Previous versions of Couchbase components that are not removed from
+the information system after updates have been installed may be exploited by
+adversaries.
+
+    Some Couchbases' installation tools may remove older versions of software
+automatically from the information system. In other cases, manual review and
+removal will be required. In planning installations and upgrades, organizations
+must include steps (automated, manual, or both) to identify and remove the
+outdated modules.
+
+    A transition period may be necessary when both the old and the new software
+are required. This should be taken into account in the planning.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the list of components and features installed with the Couchbase.

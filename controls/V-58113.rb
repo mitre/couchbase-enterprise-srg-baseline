@@ -1,5 +1,22 @@
 # encoding: UTF-8
+
 control "V-58113" do
+  title "Couchbase must generate audit records when concurrent
+logons/connections by the same user from different workstations occur."
+  desc  "For completeness of forensic analysis, it is necessary to track who
+logs on to Couchbase.
+
+    Concurrent connections by the same user from multiple workstations may be
+valid use of the system; or such connections may be due to improper
+circumvention of the requirement to use the CAC for authentication; or they may
+indicate unauthorized account sharing; or they may be because an account has
+been compromised.
+
+    (If the fact of multiple, concurrent logons by a given user can be reliably
+reconstructed from the log entries for other events (logons/connections;
+voluntary and involuntary disconnections), then it is not mandatory to create
+additional log entries specifically for this.)
+  "
   desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging

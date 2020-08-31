@@ -1,5 +1,21 @@
 # encoding: UTF-8
+
 control "V-32415" do
+  title "Couchbase must limit privileges to change software modules, to include
+stored procedures, functions and triggers, and links to software external to
+Couchbase."
+  desc  "If the system were to allow any user to make changes to software
+libraries, then those changes might be implemented without undergoing the
+appropriate testing and approvals that are part of a robust change management
+process.
+
+    Accordingly, only qualified and authorized individuals shall be allowed to
+obtain access to information system components for purposes of initiating
+changes, including upgrades and modifications.
+
+    Unmanaged changes that occur to the database software libraries or
+configuration can lead to unauthorized or compromised installations.
+  "
   desc  "rationale", ""
   desc  "check", "
     Only a user with Full Admin role can change database configuration.

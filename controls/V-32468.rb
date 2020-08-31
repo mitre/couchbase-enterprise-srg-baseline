@@ -1,5 +1,18 @@
 # encoding: UTF-8
+
 control "V-32468" do
+  title "If passwords are used for authentication, Couchbase must store only
+hashed, salted representations of passwords."
+  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+
+    Authentication based on User ID and Password may be used only when it is
+not possible to employ a PKI certificate, and requires AO approval.
+
+    In such cases, database passwords stored in clear text, using reversible
+encryption, or using unsalted hashes would be vulnerable to unauthorized
+disclosure. Database passwords must always be in the form of one-way, salted
+hashes when stored internally or externally to Couchbase.
+  "
   desc  "rationale", ""
   desc  "check", "
     If password authentication is used, SCRAM-SHA1, SCRAM-SHA256, and

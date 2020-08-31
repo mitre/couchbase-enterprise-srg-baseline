@@ -1,5 +1,22 @@
 # encoding: UTF-8
+
 control "V-58067" do
+  title "Couchbase must provide the means for individuals in authorized roles
+to change the auditing to be performed on all application components, based on
+all selectable event criteria within organization-defined time thresholds."
+  desc  "If authorized individuals do not have the ability to modify auditing
+parameters in response to a changing threat environment, the organization may
+not be able to effectively respond, and important forensic information may be
+lost.
+
+    This requirement enables organizations to extend or limit auditing as
+necessary to meet organizational requirements. Auditing that is limited to
+conserve information system resources may be extended to address certain threat
+situations. In addition, auditing may be limited to a specific set of events to
+facilitate audit reduction, analysis, and reporting. Organizations can
+establish time thresholds in which audit actions are changed, for example, near
+real time, within minutes, or within hours.
+  "
   desc  "rationale", ""
   desc  "check", "
     If Couchbase does not provide the ability for users in authorized roles to

@@ -1,5 +1,30 @@
 # encoding: UTF-8
+
 control "V-32476" do
+  title "Couchbase must enforce authorized access to all PKI private keys
+stored/utilized by Couchbase."
+  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+PKI certificate-based authentication is performed by requiring the certificate
+holder to cryptographically prove possession of the corresponding private key.
+
+    If the private key is stolen, an attacker can use the private key(s) to
+impersonate the certificate holder.  In cases where Couchbase-stored private
+keys are used to authenticate Couchbase to the
+system\xE2\x80\x9A\xC3\x84\xC3\xB4s clients, loss of the corresponding private
+keys would allow an attacker to successfully perform undetected man in the
+middle attacks against Couchbase system and its clients.
+
+    Both the holder of a digital certificate and the issuing authority must
+take careful measures to protect the corresponding private key. Private keys
+should always be generated and protected in FIPS 140-2 validated cryptographic
+modules.
+
+    All access to the private key(s) of Couchbase must be restricted to
+authorized and authenticated users. If unauthorized users have access to one or
+more of Couchbase's private keys, an attacker could gain access to the key(s)
+and use them to impersonate the database on the network or otherwise perform
+unauthorized actions.
+  "
   desc  "rationale", ""
   desc  "check", "
     If Couchbase is not using PKI-based authentication, this check is Not

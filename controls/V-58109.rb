@@ -1,5 +1,12 @@
 # encoding: UTF-8
+
 control "V-58109" do
+  title "Couchbase must generate audit records when unsuccessful logons or
+connection attempts occur."
+  desc  "For completeness of forensic analysis, it is necessary to track failed
+attempts to log on to Couchbase. While positive identification may not be
+possible in a case of failed authentication, as much information as possible
+about the incident must be captured."
   desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging

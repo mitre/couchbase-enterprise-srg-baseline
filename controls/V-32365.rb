@@ -1,5 +1,11 @@
 # encoding: UTF-8
+
 control "V-32365" do
+  title "Couchbase must initiate session auditing upon startup."
+  desc  "Session auditing is for use when a user's activities are under
+investigation. To be sure of capturing all activity during those periods when
+session auditing is in use, it needs to be in operation for the whole time
+Couchbase is running."
   desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase will initiate session auditing upon

@@ -1,5 +1,20 @@
 # encoding: UTF-8
+
 control "V-32547" do
+  title "Database contents must be protected from unauthorized and unintended
+information transfer by enforcement of a data-transfer policy."
+  desc  "Applications, including Couchbases, must prevent unauthorized and
+unintended information transfer via shared system resources.
+
+    Data used for the development and testing of applications often involves
+copying data from production. It is important that specific procedures exist
+for this process, to include the conditions under which such transfer may take
+place, where the copies may reside, and the rules for ensuring sensitive data
+are not exposed.
+
+    Copies of sensitive data must not be misplaced or left in a temporary
+location without the proper controls.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the procedures for the refreshing of development/test data from

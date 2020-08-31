@@ -1,5 +1,23 @@
 # encoding: UTF-8
+
 control "V-58155" do
+  title "Couchbase must maintain the confidentiality and integrity of
+information during reception."
+  desc  "Information can be either unintentionally or maliciously disclosed or
+modified during reception, including, for example, during aggregation, at
+protocol transformation points, and during packing/unpacking. These
+unauthorized disclosures or modifications compromise the confidentiality or
+integrity of the information.
+
+    This requirement applies only to those applications that are either
+distributed or can allow access to data nonlocally. Use of this requirement
+will be limited to situations where the data owner has a strict requirement for
+ensuring data integrity and confidentiality is maintained at every step of the
+data transfer and handling process.
+
+    When receiving data, Couchbase, associated applications, and infrastructure
+must leverage protection mechanisms.
+  "
   desc  "rationale", ""
   desc  "check", "
     If Couchbase is deployed in an unclassified environment, this is not

@@ -1,5 +1,29 @@
 # encoding: UTF-8
+
 control "V-32514" do
+  title "Couchbase must separate user functionality (including user interface
+services) from database management functionality."
+  desc  "Information system management functionality includes functions
+necessary to administer databases, network components, workstations, or servers
+and typically requires privileged user access.
+
+    The separation of user functionality from information system management
+functionality is either physical or logical and is accomplished by using
+different computers, different central processing units, different instances of
+the operating system, different network addresses, combinations of these
+methods, or other methods, as appropriate.
+
+    An example of this type of separation is observed in web administrative
+interfaces that use separate authentication methods for users of any other
+information system resources.
+
+    This may include isolating the administrative interface on a different
+domain and with additional access controls.
+
+    If administrative functionality or information regarding Couchbase
+management is presented on an interface available for users, information on
+Couchbase settings may be inadvertently made available to the user.
+  "
   desc  "rationale", ""
   desc  "check", "
     Check Couchbase settings and vendor documentation to verify that

@@ -1,5 +1,21 @@
 # encoding: UTF-8
+
 control "V-58153" do
+  title "Couchbase must maintain the confidentiality and integrity of
+information during preparation for transmission."
+  desc  "Information can be either unintentionally or maliciously disclosed or
+modified during preparation for transmission, including, for example, during
+aggregation, at protocol transformation points, and during packing/unpacking.
+These unauthorized disclosures or modifications compromise the confidentiality
+or integrity of the information.
+
+    Use of this requirement will be limited to situations where the data owner
+has a strict requirement for ensuring data integrity and confidentiality is
+maintained at every step of the data transfer and handling process.
+
+    When transmitting data, Couchbase, associated applications, and
+infrastructure must leverage transmission protection mechanisms.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the system information/specification for information indicating a

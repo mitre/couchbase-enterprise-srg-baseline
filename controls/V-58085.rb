@@ -1,5 +1,25 @@
 # encoding: UTF-8
+
 control "V-58085" do
+  title "Couchbase must generate audit records when unsuccessful attempts to
+access security objects occur."
+  desc  "Changes to the security configuration must be tracked.
+
+    This requirement applies to situations where security data is retrieved or
+modified via data manipulation operations, as opposed to via specialized
+security functionality.
+
+    In an SQL environment, types of access include, but are not necessarily
+limited to:
+    SELECT
+    INSERT
+    UPDATE
+    DELETE
+    EXECUTE
+
+    To aid in diagnosis, it is necessary to keep track of failed attempts in
+addition to the successful ones.
+  "
   desc  "rationale", ""
   desc  "check", "
     If the Couchbase architecture makes it impossible for any user, even with

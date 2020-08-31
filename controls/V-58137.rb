@@ -1,5 +1,10 @@
 # encoding: UTF-8
+
 control "V-58137" do
+  title "Couchbase must prohibit the use of cached authenticators after an
+organization-defined time period."
+  desc  "If cached authentication information is out-of-date, the validity of
+the authentication information may be questionable."
   desc  "rationale", ""
   desc  "check", "
     Review system settings to determine whether the organization-defined limit

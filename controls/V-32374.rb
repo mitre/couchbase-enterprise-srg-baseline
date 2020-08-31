@@ -1,5 +1,19 @@
 # encoding: UTF-8
+
 control "V-32374" do
+  title "Couchbase must produce audit records containing sufficient information
+to establish the identity of any user/subject or process associated with the
+event."
+  desc  "Information system auditing capability is critical for accurate
+forensic analysis. Without information that establishes the identity of the
+subjects (i.e., users or processes acting on behalf of users) associated with
+the events, security personnel cannot determine responsibility for the
+potentially harmful event.
+
+    Identifiers (if authenticated or otherwise known) include, but are not
+limited to, user database tables, primary key values, user names, or process
+identifiers.
+  "
   desc  "rationale", ""
   desc  "check", "
     Once enabled on the cluster, Couchbase auditing provides the following

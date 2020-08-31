@@ -1,5 +1,21 @@
 # encoding: UTF-8
+
 control "V-58125" do
+  title "Couchbase must enforce access restrictions associated with changes to
+the configuration of Couchbase or database(s)."
+  desc  "Failure to provide logical access restrictions associated with changes
+to configuration may have significant effects on the overall security of the
+system.
+
+    When dealing with access restrictions pertaining to change control, it
+should be noted that any changes to the hardware, software, and/or firmware
+components of the information system can potentially have significant effects
+on the overall security of the system.
+
+    Accordingly, only qualified and authorized individuals should be allowed to
+obtain access to system components for the purposes of initiating changes,
+including upgrades and modifications.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase vendor documentation with respect to its ability to

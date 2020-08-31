@@ -1,5 +1,29 @@
 # encoding: UTF-8
+
 control "V-58053" do
+  title "Couchbase must allocate audit record storage capacity in accordance
+with organization-defined audit record storage requirements."
+  desc  "In order to ensure sufficient storage capacity for the audit logs,
+Couchbase must be able to allocate audit record storage capacity. Although
+another requirement (SRG-APP-000515-DB-000318) mandates that audit data be
+off-loaded to a centralized log management system, it remains necessary to
+provide space on the database server to serve as a buffer against outages and
+capacity limits of the off-loading mechanism.
+
+    The task of allocating audit record storage capacity is usually performed
+during initial installation of Couchbase and is closely associated with the DBA
+and system administrator roles. The DBA or system administrator will usually
+coordinate the allocation of physical drive space with the application
+owner/installer and the application will prompt the installer to provide the
+capacity information, the physical location of the disk, or both.
+
+    In determining the capacity requirements, consider such factors as: total
+number of users; expected number of concurrent users during busy periods;
+number and type of events being monitored; types and amounts of data being
+captured; the frequency/speed with which audit records are off-loaded to the
+central log management system; and any limitations that exist on Couchbase's
+ability to reuse the space formerly occupied by off-loaded records.
+  "
   desc  "rationale", ""
   desc  "check", "
     Investigate whether there have been any incidents where Couchbase ran out

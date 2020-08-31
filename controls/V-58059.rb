@@ -1,5 +1,25 @@
 # encoding: UTF-8
+
 control "V-58059" do
+  title "Couchbase must provide an immediate real-time alert to appropriate
+support staff of all audit log failures. "
+  desc  "It is critical for the appropriate personnel to be aware if a system
+is at risk of failing to process audit logs as required. Without a real-time
+alert, security personnel may be unaware of an impending failure of the audit
+capability, and system operation may be adversely affected.
+
+    The appropriate support staff include, at a minimum, the ISSO and the
+DBA/SA.
+
+    A failure of database auditing will result in either the database
+continuing to function without auditing or in a complete halt to database
+operations. When audit processing fails, appropriate personnel must be alerted
+immediately to avoid further downtime or unaudited transactions.
+
+    Alerts provide organizations with urgent messages. Real-time alerts provide
+these messages immediately (i.e., the time from event detection to alert occurs
+in seconds or less).
+  "
   desc  "rationale", ""
   desc  "check", "
     As the Full Admin, log into the cluster to and use the following

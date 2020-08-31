@@ -1,5 +1,18 @@
 # encoding: UTF-8
+
 control "V-32364" do
+  title "Couchbase must be able to generate audit records when
+privileges/permissions are retrieved."
+  desc  "Under some circumstances, it may be useful to monitor who/what is
+reading privilege/permission/role information. Therefore, it must be possible
+to configure auditing to do this. Couchbases typically make such information
+available through views or functions.
+
+    This requirement addresses explicit requests for privilege/permission/role
+membership information. It does not refer to the implicit retrieval of
+privileges/permissions/role memberships that Couchbase continually performs to
+determine if any and every action on the database is permitted.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review Couchbase documentation to verify that audit records can be produced

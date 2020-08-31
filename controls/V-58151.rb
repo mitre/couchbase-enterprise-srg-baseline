@@ -1,5 +1,13 @@
 # encoding: UTF-8
+
 control "V-58151" do
+  title "Access to database files must be limited to relevant processes and to
+authorized, administrative users."
+  desc  "Applications, including Couchbases, must prevent unauthorized and
+unintended information transfer via shared system resources. Permitting only
+Couchbase processes and authorized, administrative users to have access to the
+files where the database resides helps ensure that those files are not shared
+inappropriately and are not open to backdoor access and manipulation."
   desc  "rationale", ""
   desc  "check", "
     Review the permissions granted to users by the operating system/file system

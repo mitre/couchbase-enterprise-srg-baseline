@@ -1,5 +1,26 @@
 # encoding: UTF-8
+
 control "V-58171" do
+  title "Couchbase must implement cryptographic mechanisms preventing the
+unauthorized disclosure of organization-defined information at rest on
+organization-defined information system components."
+  desc  "Couchbases handling data requiring \"data at rest\" protections must
+employ cryptographic mechanisms to prevent unauthorized disclosure and
+modification of the information at rest. These cryptographic mechanisms may be
+native to Couchbase or implemented via additional software or operating
+system/file system settings, as appropriate to the situation.
+
+    Selection of a cryptographic mechanism is based on the need to protect the
+integrity of organizational information. The strength of the mechanism is
+commensurate with the security category and/or classification of the
+information. Organizations have the flexibility to either encrypt all
+information on storage devices (i.e., full disk encryption) or encrypt specific
+data structures (e.g., files, records, or fields).
+
+    The decision whether and what to encrypt rests with the data owner and is
+also influenced by the physical measures taken to secure the equipment and
+media on which the information resides.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the system documentation to determine whether the organization has

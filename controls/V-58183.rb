@@ -1,5 +1,27 @@
 # encoding: UTF-8
+
 control "V-58183" do
+  title "When invalid inputs are received, Couchbase must behave in a
+predictable and documented manner that reflects organizational and system
+objectives."
+  desc  "A common vulnerability is unplanned behavior when invalid inputs are
+received. This requirement guards against adverse or unintended system behavior
+caused by invalid inputs, where information system responses to the invalid
+input may be disruptive or cause the system to fail into an unsafe state.
+
+    The behavior will be derived from the organizational and system
+requirements and includes, but is not limited to, notification of the
+appropriate personnel, creating an audit record, and rejecting invalid input.
+
+    This calls for inspection of application source code, which will require
+collaboration with the application developers. It is recognized that in many
+cases, the database administrator (DBA) is organizationally separate from the
+application developers, and may have limited, if any, access to source code.
+Nevertheless, protections of this type are so important to the secure operation
+of databases that they must not be ignored. At a minimum, the DBA must attempt
+to obtain assurances from the development organization that this issue has been
+addressed, and must document what has been discovered.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review system documentation to determine how input errors are to be handled

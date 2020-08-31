@@ -1,5 +1,11 @@
 # encoding: UTF-8
+
 control "V-58091" do
+  title "Couchbase must generate audit records when security objects are
+deleted."
+  desc  "The removal of security objects from the database/Couchbase would
+seriously degrade a system's information assurance posture. If such an event
+occurs, it must be logged."
   desc  "rationale", ""
   desc  "check", "
     If the Couchbase architecture makes it impossible for any user, even with

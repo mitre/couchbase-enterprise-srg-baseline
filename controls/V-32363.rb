@@ -1,5 +1,8 @@
 # encoding: UTF-8
+
 control "V-32363" do
+  title "Couchbase must allow only the ISSM (or individuals or roles appointed
+by the ISSM) to select which auditable events are to be audited."
   desc  "rationale", ""
   desc  "check", "
     Only a user with Full Admin role can change auditing controls.

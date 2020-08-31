@@ -1,5 +1,18 @@
 # encoding: UTF-8
+
 control "V-58077" do
+  title "Couchbase must generate audit records when unsuccessful attempts to
+modify privileges/permissions occur."
+  desc  "Failed attempts to change the permissions, privileges, and roles
+granted to users and roles must be tracked. Without an audit trail,
+unauthorized attempts to elevate or restrict privileges could go undetected.
+
+    In an SQL environment, modifying permissions is typically done via the
+GRANT, REVOKE, and DENY commands.
+
+    To aid in diagnosis, it is necessary to keep track of failed attempts in
+addition to the successful ones.
+  "
   desc  "rationale", ""
   desc  "check", "
     If there is no distinction in Couchbase's security architecture between

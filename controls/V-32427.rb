@@ -1,5 +1,23 @@
 # encoding: UTF-8
+
 control "V-32427" do
+  title "Access to external executables must be disabled or restricted."
+  desc  "If the system were to allow any user to make changes to software
+libraries, then those changes might be implemented without undergoing the
+appropriate testing and approvals that are part of a robust change management
+process.
+
+
+
+    Accordingly, only qualified and authorized individuals shall be allowed to
+obtain access to information system components for purposes of initiating
+changes, including upgrades and modifications.
+
+
+
+    Unmanaged changes that occur to the database software libraries or
+configuration can lead to unauthorized or compromised installations.
+  "
   desc  "rationale", ""
   desc  "check", "
     Review the database for definitions of application executable objects

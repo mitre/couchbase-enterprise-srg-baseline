@@ -1,5 +1,17 @@
 # encoding: UTF-8
+
 control "V-58111" do
+  title "Couchbase must generate audit records showing starting and ending time
+for user access to the database(s)."
+  desc  "For completeness of forensic analysis, it is necessary to know how
+long a user's (or other principal's) connection to Couchbase lasts. This can be
+achieved by recording disconnections, in addition to logons/connections, in the
+audit logs.
+
+    Disconnection may be initiated by the user or forced by the system (as in a
+timeout) or result from a system or network failure. To the greatest extent
+possible, all disconnections must be logged.
+  "
   desc  "rationale", ""
   desc  "check", "
     When enabled on the cluster, Couchbase auditing is capable of logging

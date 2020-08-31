@@ -1,5 +1,22 @@
 # encoding: UTF-8
+
 control "V-58083" do
+  title "Couchbase must be able to generate audit records when security objects
+are accessed."
+  desc  "Changes to the security configuration must be tracked.
+
+    This requirement applies to situations where security data is retrieved or
+modified via data manipulation operations, as opposed to via specialized
+security functionality.
+
+    In an SQL environment, types of access include, but are not necessarily
+limited to:
+    SELECT
+    INSERT
+    UPDATE
+    DELETE
+    EXECUTE
+  "
   desc  "rationale", ""
   desc  "check", "
     If the Couchbase architecture makes it impossible for any user, even with

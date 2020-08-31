@@ -1,5 +1,26 @@
 # encoding: UTF-8
+
 control "V-32413" do
+  title "Database software, including Couchbase  configuration files, must be
+stored in dedicated directories, or DASD pools, separate from the host OS and
+other applications."
+  desc  "When dealing with change control issues, it should be noted any
+changes to the hardware, software, and/or firmware components of the
+information system and/or application can potentially have significant effects
+on the overall security of the system.
+
+    Multiple applications can provide a cumulative negative effect. A
+vulnerability and subsequent exploit to one application can lead to an exploit
+of other applications sharing the same security context. For example, an
+exploit to a web server process that leads to unauthorized administrative
+access to host system directories can most likely lead to a compromise of all
+applications hosted by the same system. Database software not installed using
+dedicated directories both threatens and is threatened by other hosted
+applications. Access controls defined for one application may by default
+provide access to the other application's database objects or directories. Any
+method that provides any level of separation of security context assists in the
+protection between applications.
+  "
   desc  "rationale", ""
   desc  "check", "
     If Couchbase is running within a Docker container, this is not a finding.

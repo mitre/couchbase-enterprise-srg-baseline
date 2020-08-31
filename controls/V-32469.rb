@@ -1,5 +1,20 @@
 # encoding: UTF-8
+
 control "V-32469" do
+  title "If passwords are used for authentication, the Couchbase must transmit
+only encrypted representations of passwords."
+  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+
+    Authentication based on User ID and Password may be used only when it is
+not possible to employ a PKI certificate, and requires AO approval.
+
+    In such cases, passwords need to be protected at all times, and encryption
+is the standard method for protecting passwords during transmission.
+
+    Couchbase passwords sent in clear text format across the network are
+vulnerable to discovery by unauthorized users. Disclosure of passwords may
+easily lead to unauthorized access to the database.
+  "
   desc  "rationale", ""
   desc  "check", "
     Couchbase Server 6.0.x and earlier -

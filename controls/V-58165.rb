@@ -1,5 +1,21 @@
 # encoding: UTF-8
+
 control "V-58165" do
+  title "Couchbase must maintain the authenticity of communications sessions by
+guarding against man-in-the-middle attacks that guess at Session ID values."
+  desc  "One class of man-in-the-middle, or session hijacking, attack involves
+the adversary guessing at valid session identifiers based on patterns in
+identifiers already known.
+
+    The preferred technique for thwarting guesses at Session IDs is the
+generation of unique session identifiers using a FIPS 140-2 approved random
+number generator.
+
+    However, it is recognized that available Couchbase products do not all
+implement the preferred technique yet may have other protections against
+session hijacking. Therefore, other techniques are acceptable, provided they
+are demonstrated to be effective.
+  "
   desc  "rationale", ""
   desc  "check", "
     Verify Couchbase has SSL enabled:

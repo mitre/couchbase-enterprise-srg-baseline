@@ -1,18 +1,21 @@
 # encoding: UTF-8
+
 control "V-32398" do
-  desc  "rationale", ""
-  desc  "check", "
-    Only a user with Full Admin role can change auditing controls.
-    As the Full Admin, get a list of all RBAC users with the following command:
-    $ couchbase-cli user-manage -c  <localhost>:<port>  -u <Full Admin> -p
-<Password> --list
-    If any users have the \"admin\" role that should not, this is a finding.
-    Additionally, the permissions of the config file should also be verified.
-This can be done by running the following command:
-     $ ls -la /opt/couchbase/etc/couchbase/static_config
-    Review the ownership and permissions. If anyone other than couchbase is the
-owner and group owner, this is a finding. If permissions are not set to 600,
-this is a finding.
+  title "Couchbase must protect its audit configuration from unauthorized
+modification."
+  desc  "Protecting audit data also includes identifying and protecting the
+tools used to view and manipulate log data. Therefore, protecting audit tools
+is necessary to prevent unauthorized operation on audit data.
+
+    Applications providing tools to interface with audit data will leverage
+user permissions and roles identifying the user accessing the tools and the
+corresponding rights the user enjoys in order make access decisions regarding
+the modification of audit tools.
+
+    Audit tools include, but are not limited to, vendor-provided and open
+source audit tools needed to successfully view and manipulate audit information
+system activity and records. Audit tools include custom queries and report
+generators.
   "
   desc  "fix", "
     Remove users who should not have Full Admin role. To manage the roles this
