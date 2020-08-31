@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-58019' do
-  title "The DBMS must enforce discretionary access control policies, as
+control "V-58019" do
+  title "Couchbase must enforce discretionary access control policies, as
 defined by the data owner, over defined subjects and objects."
   desc  "Discretionary Access Control (DAC) is based on the notion that
 individual users are \"owners\" of objects and therefore have discretion over
@@ -32,28 +32,31 @@ While the older, more traditional definitions of discretionary access control
 require identity-based access control, that limitation is not required for this
 use of discretionary access control.
   "
-  desc  'rationale', ''
-  desc  'check', "
+  desc  "check", "
     Review system documentation to identify the required discretionary access
 control (DAC).
-
-    Review the security configuration of the database and DBMS. If applicable,
-review the security configuration of the application(s) using the database.
-
+    Review the security configuration of the database and Couchbase. If
+applicable, review the security configuration of the application(s) using the
+database.
     If the discretionary access control defined in the documentation is not
 implemented in the security configuration, this is a finding.
+    Review Couchbase functionality considered privileged in the context of the
+system in question.
+    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> -p <Password>
+--list
+    If any functionality considered privileged has access privileges granted to
+non-privileged users, this is a finding.
   "
-  desc  'fix', "Implement the organization's DAC policy in the security
-configuration of the database and DBMS, and, if applicable, the security
+  desc  "fix", "Implement the organization's DAC policy in the security
+configuration of the database and Couchbase, and, if applicable, the security
 configuration of the application(s) using the database."
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000328-DB-000301'
-  tag gid: 'V-58019'
-  tag rid: 'SV-72449r1_rule'
-  tag stig_id: 'SRG-APP-000328-DB-000301'
-  tag fix_id: 'F-63227r1_fix'
-  tag cci: ['CCI-002165']
-  tag nist: ['AC-3 (4)']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000328-DB-000301"
+  tag "gid": "V-58019"
+  tag "rid": "SV-72449r1_rule"
+  tag "stig_id": "SRG-APP-000328-DB-000301"
+  tag "fix_id": "F-63227r1_fix"
+  tag "cci": ["CCI-002165"]
+  tag "nist": ["AC-3 (4)", "Rev_4"]
 end
-

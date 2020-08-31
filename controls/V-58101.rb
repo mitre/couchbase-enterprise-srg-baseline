@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-58101' do
-  title "The DBMS must generate audit records when unsuccessful attempts to
+control "V-58101" do
+  title "Couchbase must generate audit records when unsuccessful attempts to
 modify categories of information (e.g., classification levels/security levels)
 occur."
   desc  "Changes in categories of information must be tracked. Without an audit
@@ -15,44 +15,43 @@ Publication 199, Standards for Security Categorization of Federal Information
 and Information Systems, and FIPS Publication 200, Minimum Security
 Requirements for Federal Information and Information Systems.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Review DBMS documentation to verify that audit records can be produced when
-the system denies or fails to complete attempts to modify categories of
-information.
-
-    If the DBMS is not capable of this, this is a finding.
-
-    Review the DBMS/database security and audit configurations to verify that
-audit records are produced when the system denies attempts to modify categories
-of information.
-
-    If they are not produced, this is a finding.
-
-    Review the DBMS/database security and audit configurations to verify that
-audit records are produced when other errors prevent attempts to modify
-categories of information.
-
-    If they are not produced, this is a finding.
+  desc  "check", "
+    When enabled on the cluster, Couchbase auditing is capable of logging all
+reads, creations, modifications, and deletions.
+    Couchbase Server 6.5.0 and earlier -
+      As root or a sudo user, verify that the \"audit.log\" file exists in the
+var/lib/couchbase/logs directory of the Couchbase application home (example:
+/opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
+      Review the audit.log file. If it does not exist or not populated with
+data captured, this is a finding.
+    Couchbase Server Version 6.5.1 and later -
+      As the Full Admin, verify that auditing is enabled by executing the
+following command:
+       $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
+<Password> --get-settings
+      Review the output of the command. If \"Audit enabled\" is not set to
+\"true\", this is finding.
   "
-  desc  'fix', "
-    Deploy a DBMS capable of producing the required audit records when it
-denies or fails to complete modification of categories of information.
-
-    Configure the DBMS to produce audit records when it denies modification of
-categories of information.
-
-    Configure the DBMS to produce audit records when other errors prevent
-modification of categories of information.
+  desc  "fix", "
+    Enable session auditing on the Couchbase cluster.
+    Couchbase Server 6.5.0 and earlier -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+--audit-log-path /opt/couchbase/var/lib/couchbase/logs
+    Couchbase Server Version 6.5.1 and later -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
   "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000498-DB-000347'
-  tag gid: 'V-58101'
-  tag rid: 'SV-72531r1_rule'
-  tag stig_id: 'SRG-APP-000498-DB-000347'
-  tag fix_id: 'F-63309r1_fix'
-  tag cci: ['CCI-000172']
-  tag nist: ['AU-12 c']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000498-DB-000347"
+  tag "gid": "V-58101"
+  tag "rid": "SV-72531r1_rule"
+  tag "stig_id": "SRG-APP-000498-DB-000347"
+  tag "fix_id": "F-63309r1_fix"
+  tag "cci": ["CCI-000172"]
+  tag "nist": ["AU-12 c", "Rev_4"]
 end
-

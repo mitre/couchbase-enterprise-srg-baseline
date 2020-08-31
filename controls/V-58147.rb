@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-58147' do
-  title "The DBMS must require users to re-authenticate when
+control "V-58147" do
+  title "Couchbase must require users to re-authenticate when
 organization-defined circumstances or situations require re-authentication."
   desc  "The DoD standard for authentication of an interactive user is the
 presentation of a Common Access Card (CAC) or other physical token bearing a
@@ -31,35 +31,20 @@ circumstances:
     Within the DoD, the minimum circumstances requiring re-authentication are
 privilege escalation and role changes.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Review the system documentation and the configuration of the DBMS and
-related applications and tools.
-
-    If there are any circumstances under which a user is not required to
-re-authenticate when changing role or escalating privileges, this is a finding.
-
-    If the information owner has identified additional cases where
-re-authentication is needed, but there are circumstances where the system does
-not ask the user to re-authenticate when those cases occur, this is a finding.
-  "
-  desc  'fix', "
-    Modify and/or configure the DBMS and related applications and tools so that
-users are always required to re-authenticate when changing role or escalating
-privileges.
-
-    Modify and/or configure the DBMS and related applications and tools so that
-users are always required to re-authenticate when the specified cases needing
-reauthorization occur.
-  "
+  desc  "check", "Review the organization-defined circumstances or situations
+and determine all situations where a user must re-authenticate. If there are
+any of these organization-defined circumstances under which a user is not
+required to re-authenticate, this is a finding."
+  desc  "fix", "Modify and/or configure Couchbase and related applications and
+tools so that users are always required to re-authenticate when the specified
+cases needing reauthorization occur."
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000389-DB-000372'
-  tag gid: 'V-58147'
-  tag rid: 'SV-72577r1_rule'
-  tag stig_id: 'SRG-APP-000389-DB-000372'
-  tag fix_id: 'F-63355r1_fix'
-  tag cci: ['CCI-002038']
-  tag nist: ['IA-11']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000389-DB-000372"
+  tag "gid": "V-58147"
+  tag "rid": "SV-72577r1_rule"
+  tag "stig_id": "SRG-APP-000389-DB-000372"
+  tag "fix_id": "F-63355r1_fix"
+  tag "cci": ["CCI-002038"]
+  tag "nist": ["IA-11", "Rev_4"]
 end
-

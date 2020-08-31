@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-58163' do
-  title "The DBMS must implement NIST FIPS 140-2 validated cryptographic
+control "V-58163" do
+  title "Couchbase must implement NIST FIPS 140-2 validated cryptographic
 modules to protect unclassified information requiring confidentiality and
 cryptographic protection, in accordance with the data owners requirements."
   desc  "Use of weak or untested encryption algorithms undermines the purposes
@@ -17,22 +17,28 @@ policies, regulations, and standards.
 Requirements For Cryptographic Modules. Note that the product's cryptographic
 modules must be validated and certified by NIST as FIPS-compliant.
   "
-  desc  'rationale', ''
-  desc  'check', "If the DBMS contains, or is intended to contain, unclassified
-information requiring confidentiality and cryptographic protection, and does
-not employ NIST FIPS 140-2 validated cryptographic modules to provide this
-protection, this is a finding."
-  desc  'fix', "Implement NIST FIPS 140-2 validated cryptographic modules to
-provide cryptographic protection for the unclassified information that requires
-it."
+  desc 
+  desc  "check", "
+    As the system administrator, run the following:
+    $ openssl version
+    If \"fips\" is not included in the openssl version, this is a finding.
+    Run the following command to check if the OS has FIPS enabled:
+    $ cat /proc/sys/crypto/fips_enabled
+    If fips_enabled is not 1, this is a finding.
+  "
+  desc  "fix", "
+    Configure OpenSSL to meet FIPS Compliance.
+    To configure OpenSSL to be FIPS 140-2 compliant, see the official RHEL
+Documentation:
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-Federal_Standards_And_Regulations-Federal_Information_Processing_Standard.html
+  "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000514-DB-000383'
-  tag gid: 'V-58163'
-  tag rid: 'SV-72593r1_rule'
-  tag stig_id: 'SRG-APP-000514-DB-000383'
-  tag fix_id: 'F-63371r2_fix'
-  tag cci: ['CCI-002450']
-  tag nist: ['SC-13']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000514-DB-000383"
+  tag "gid": "V-58163"
+  tag "rid": "SV-72593r1_rule"
+  tag "stig_id": "SRG-APP-000514-DB-000383"
+  tag "fix_id": "F-63371r2_fix"
+  tag "cci": ["CCI-002450"]
+  tag "nist": ["SC-13", "Rev_4"]
 end
-

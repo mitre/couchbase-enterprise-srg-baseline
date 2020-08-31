@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-32528' do
-  title "The DBMS must fail to a secure state if system initialization fails,
+control "V-32528" do
+  title "Couchbase must fail to a secure state if system initialization fails,
 shutdown fails, or aborts fail."
   desc  "Failure to a known state can address safety or security in accordance
 with the mission/business needs of the organization.
@@ -31,30 +31,38 @@ exactly what that condition means.
     Abort refers to stopping a program or function before it has finished
 naturally. The term abort refers to both requested and unexpected terminations.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Check DBMS settings and vendor documentation to verify the DBMS properly
-handles transactions in the event of a system failure.
-
-    If open transactions are not rolled back to a consistent state during
-system failure, this is a finding.
-
-    The consistent state must include a security configuration that is at least
-as restrictive as before the system failure. If this is not guaranteed, this is
-a finding.
+  desc  "check", "
+    Couchbase is capable of replicating data across different clusters, by
+means of the Database Change Protocol (DCP).
+    As the Full Admin, execute the following command to list the current XDCR
+replication:
+      $ couchbase-cli xdcr-replicate -c <host>:<port> -u <Full Admin> -p
+<Password> --list
+    If the list is empty, XDCR replication is not being utilized by the
+cluster, therefore this is a finding.
   "
-  desc  'fix', "Configure DBMS settings so that, in the event of a system
-failure, the DBMS will roll back open transactions to a consistent state, to
-include a security configuration that is at least as restrictive as before the
-system failure."
+  desc  "fix", "
+    As the Full Admin, setup XDCR for Couchbase with the following command:
+     $ couchbase-cli xdcr-setup -c <host>:<port>-u <Full Admin> -p <Password>
+--create \\
+    --xdcr-cluster-name <remote-cluster>--xdcr-hostname <host>:<port>
+--xdcr-username \\
+    <Full Admin> --xdcr-password <Password>
+      $ couchbase-cli xdcr-replicate -c <host>:<port>-u <Full Admin> \\
+       -p <Password> --create --xdcr-cluster-name <remote-cluster>
+--xdcr-from-bucket    <bucket> --xdcr-to-bucket <remote-bucket>
+--xdcr-replication-mode xmem
+    Review XDCR setup documentation for Couchbase:
+https://docs.couchbase.com/server/current/cli/cbcli/couchbase-cli-xdcr-setup.html
+https://docs.couchbase.com/server/current/cli/cbcli/couchbase-cli-xdcr-replicate.html
+  "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000225-DB-000153'
-  tag gid: 'V-32528'
-  tag rid: 'SV-42865r3_rule'
-  tag stig_id: 'SRG-APP-000225-DB-000153'
-  tag fix_id: 'F-36443r2_fix'
-  tag cci: ['CCI-001190']
-  tag nist: ['SC-24']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000225-DB-000153"
+  tag "gid": "V-32528"
+  tag "rid": "SV-42865r3_rule"
+  tag "stig_id": "SRG-APP-000225-DB-000153"
+  tag "fix_id": "F-36443r2_fix"
+  tag "cci": ["CCI-001190"]
+  tag "nist": ["SC-24", "Rev_4"]
 end
-

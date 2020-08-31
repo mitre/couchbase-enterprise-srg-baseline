@@ -1,10 +1,10 @@
 # encoding: UTF-8
 
-control 'V-58113' do
-  title "The DBMS must generate audit records when concurrent
+control "V-58113" do
+  title "Couchbase must generate audit records when concurrent
 logons/connections by the same user from different workstations occur."
   desc  "For completeness of forensic analysis, it is necessary to track who
-logs on to the DBMS.
+logs on to Couchbase.
 
     Concurrent connections by the same user from multiple workstations may be
 valid use of the system; or such connections may be due to improper
@@ -17,29 +17,44 @@ reconstructed from the log entries for other events (logons/connections;
 voluntary and involuntary disconnections), then it is not mandatory to create
 additional log entries specifically for this.)
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Review the DBMS audit settings.
-
-    If the fact of multiple, concurrent logons by a given user (or other
-principal) can be reliably reconstructed from the log entries for other events,
-then this is not a finding.
-
-    If an audit record is not generated each time a user (or other principal)
-who is already connected to the DBMS logs on or connects to the DBMS from a
-different workstation, this is a finding.
+  desc  "check", "
+    When enabled on the cluster, Couchbase auditing is capable of logging
+logins and logouts with timestamps by default.
+    Couchbase Server 6.5.0 and earlier -
+      As root or a sudo user, verify that the \"audit.log\" file exists in the
+var/lib/couchbase/logs directory of the Couchbase application home (example:
+/opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
+      Review the audit.log file. If it does not exist or not populated with
+data captured, this is a finding.
+    Couchbase Server Version 6.5.1 and later -
+      As the Full Admin, verify that auditing is enabled by executing the
+following command:
+       $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
+<Password> --get-settings
+      Review the output of the command. If \"Audit enabled\" is not set to
+\"true\", this is finding.
   "
-  desc  'fix', "Configure DBMS audit settings to generate an audit record each
-time a user (or other principal) who is already connected to the DBMS logs on
-or connects to the DBMS from a different workstation."
+  desc  "fix", "
+    Enable session auditing on the Couchbase cluster to produce audit records
+when logins and logouts occur.
+    Couchbase Server 6.5.0 and earlier -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+--audit-log-path /opt/couchbase/var/lib/couchbase/logs
+    Couchbase Server Version 6.5.1 and later -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+  "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000506-DB-000353'
-  tag gid: 'V-58113'
-  tag rid: 'SV-72543r1_rule'
-  tag stig_id: 'SRG-APP-000506-DB-000353'
-  tag fix_id: 'F-63321r1_fix'
-  tag cci: ['CCI-000172']
-  tag nist: ['AU-12 c']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000506-DB-000353"
+  tag "gid": "V-58113"
+  tag "rid": "SV-72543r1_rule"
+  tag "stig_id": "SRG-APP-000506-DB-000353"
+  tag "fix_id": "F-63321r1_fix"
+  tag "cci": ["CCI-000172"]
+  tag "nist": ["AU-12 c", "Rev_4"]
 end
-

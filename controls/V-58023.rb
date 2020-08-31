@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-58023' do
-  title "The DBMS must prevent non-privileged users from executing privileged
+control "V-58023" do
+  title "Couchbase must prevent non-privileged users from executing privileged
 functions, to include disabling, circumventing, or altering implemented
 security safeguards/countermeasures."
   desc  "Preventing non-privileged users from executing privileged functions
@@ -19,7 +19,7 @@ detection and prevention mechanisms or malicious code protection mechanisms are
 examples of privileged functions that require protection from non-privileged
 users.
 
-    A privileged function in the DBMS/database context is any operation that
+    A privileged function in Couchbase/database context is any operation that
 modifies the structure of the database, its built-in logic, or its security
 settings. This would include all Data Definition Language (DDL) statements and
 all security-related statements. In an SQL environment, it encompasses, but is
@@ -46,33 +46,36 @@ to context, should be regarded as privileged. Possible examples include:
     any SELECT, INSERT, UPDATE, or DELETE to an application-defined security
 table executed by other than a security principal.
 
-    Depending on the capabilities of the DBMS and the design of the database
+    Depending on the capabilities of Couchbase and the design of the database
 and associated applications, the prevention of unauthorized use of privileged
-functions may be achieved by means of DBMS security features, database
+functions may be achieved by means of Couchbase security features, database
 triggers, other mechanisms, or a combination of these.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Review the system documentation to obtain the definition of the
-database/DBMS functionality considered privileged in the context of the system
-in question.
-
-    Review the DBMS security configuration and/or other means used to protect
-privileged functionality from unauthorized use.
-
-    If the configuration does not protect all of the actions defined as
-privileged, this is a finding.
+  desc  "check", "
+    Only a user with Full Admin and Security Admin roles can alter or
+reconfigure the security safeguards.
+    As the Full Admin, get a list of all RBAC users with the following command:
+    $ couchbase-cli user-manage -c  <localhost>:<port>  -u <Full Admin> -p
+<Password> --list
+    If any users have the \"admin\" role or \"security_admin\" role that should
+not, this is a finding.
   "
-  desc  'fix', "Configure DBMS security to protect all privileged
-functionality."
+  desc  "fix", "
+    Remove users who should not have Full Admin or Security Admin role. To
+manage the roles this can be done by running the following command (Note: Do
+not include the \"admin\" or the \"security_admin\" role in command):
+    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+     -p <Password> --set --rbac-username <user> --rbac-password <password> \\
+     --rbac-name <name> --roles <roles> \\
+     --auth-domain <domain>
+  "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000340-DB-000304'
-  tag gid: 'V-58023'
-  tag rid: 'SV-72453r1_rule'
-  tag stig_id: 'SRG-APP-000340-DB-000304'
-  tag fix_id: 'F-63231r1_fix'
-  tag cci: ['CCI-002235']
-  tag nist: ['AC-6 (10)']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000340-DB-000304"
+  tag "gid": "V-58023"
+  tag "rid": "SV-72453r1_rule"
+  tag "stig_id": "SRG-APP-000340-DB-000304"
+  tag "fix_id": "F-63231r1_fix"
+  tag "cci": ["CCI-002235"]
+  tag "nist": ["AC-6 (10)", "Rev_4"]
 end
-

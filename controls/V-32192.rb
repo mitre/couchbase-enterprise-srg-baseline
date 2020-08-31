@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-32192' do
-  title "The DBMS must integrate with an organization-level
+control "V-32192" do
+  title "Couchbase must integrate with an organization-level
 authentication/access mechanism providing account management and automation for
 all users, groups, roles, and any other principals."
   desc  "Enterprise environments make account management for applications and
@@ -26,7 +26,7 @@ are terminated or transferred; using the information system to monitor account
 usage; and using automated telephone notification to report atypical system
 account usage.
 
-    The DBMS must be configured to automatically utilize organization-level
+    Couchbase must be configured to automatically utilize organization-level
 account management functions, and these functions must immediately enforce the
 organization's current account policy.
 
@@ -34,34 +34,36 @@ organization's current account policy.
 together contain an overall mechanism supporting an organization's automated
 account management requirements.
   "
-  desc  'rationale', ''
-  desc  'check', "
+  desc  "check", "
     If all accounts are authenticated by the organization-level
-authentication/access mechanism and not by the DBMS, this is not a finding.
-
-    If there are any accounts managed by the DBMS, review the system
+authentication/access mechanism and not by Couchbase, this is not a finding.
+    If there are any accounts managed by Couchbase, review the system
 documentation for justification and approval of these accounts.
-
-    If any DBMS-managed accounts exist that are not documented and approved,
-this is a finding.
+    As the Full Admin, list all RBAC users in each cluster with the following
+command:
+      $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
+<host>:<port> --list
+    If any Couchbase-managed accounts exist that are not documented and
+approved, this is a finding.
   "
-  desc  'fix', "
-    Integrate DBMS security with an organization-level authentication/access
-mechanism providing account management for all users, groups, roles, and any
-other principals.
-
-    For each DBMS-managed account that is not documented and approved, either
-transfer it to management by the external mechanism, or document the need for
-it and obtain approval, as appropriate.
+  desc  "fix", "
+    Integrate Couchbase security with an organization-level
+authentication/access mechanism providing account management for all users,
+groups, roles, and any other principals.
+    For each Couchbase-managed account that is not documented and approved,
+either transfer it to management by the external mechanism, or document the
+need for it and obtain approval, as appropriate.
+    To remove undocumented accounts, execute the following command:
+      $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
+<host>:<port> --set --delete --rbac-username <username> --auth-domain <domain>
   "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000023-DB-000001'
-  tag gid: 'V-32192'
-  tag rid: 'SV-42509r3_rule'
-  tag stig_id: 'SRG-APP-000023-DB-000001'
-  tag fix_id: 'F-36116r2_fix'
-  tag cci: ['CCI-000015']
-  tag nist: ['AC-2 (1)']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000023-DB-000001"
+  tag "gid": "V-32192"
+  tag "rid": "SV-42509r3_rule"
+  tag "stig_id": "SRG-APP-000023-DB-000001"
+  tag "fix_id": "F-36116r2_fix"
+  tag "cci": ["CCI-000015"]
+  tag "nist": ["AC-2 (1)", "Rev_4"]
 end
-

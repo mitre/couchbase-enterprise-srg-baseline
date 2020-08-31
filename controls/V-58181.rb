@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-control 'V-58181' do
-  title "The DBMS and associated applications, when making use of dynamic code
+control "V-58181" do
+  title "Couchbase and associated applications, when making use of dynamic code
 execution, must scan input data for invalid values that may indicate a code
 injection attack."
   desc  "With respect to database management systems, one class of threat is
@@ -66,24 +66,21 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Review DBMS source code (stored procedures, functions, triggers) and
+  desc  "check", "
+    Review Couchbase source code (stored procedures, functions, triggers) and
 application source code to identify cases of dynamic code execution.
-
     If dynamic code execution is employed without protective measures against
 code injection, this is a finding.
   "
-  desc  'fix', "Where dynamic code execution is used, modify the code to
+  desc  "fix", "Where dynamic code execution is used, modify the code to
 implement protections against code injection."
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000251-DB-000392'
-  tag gid: 'V-58181'
-  tag rid: 'SV-72611r2_rule'
-  tag stig_id: 'SRG-APP-000251-DB-000392'
-  tag fix_id: 'F-63389r1_fix'
-  tag cci: ['CCI-001310']
-  tag nist: ['SI-10']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000251-DB-000392"
+  tag "gid": "V-58181"
+  tag "rid": "SV-72611r2_rule"
+  tag "stig_id": "SRG-APP-000251-DB-000392"
+  tag "fix_id": "F-63389r1_fix"
+  tag "cci": ["CCI-001310"]
+  tag "nist": ["SI-10", "Rev_4"]
 end
-

@@ -1,18 +1,18 @@
 # encoding: UTF-8
 
-control 'V-32571' do
-  title "The DBMS must reveal detailed error messages only to the ISSO, ISSM,
+control "V-32571" do
+  title "Couchbase must reveal detailed error messages only to the ISSO, ISSM,
 SA and DBA."
-  desc  "If the DBMS provides too much information in error logs and
+  desc  "If Couchbase provides too much information in error logs and
 administrative messages to the screen, this could lead to compromise. The
 structure and content of error messages need to be carefully considered by the
 organization and development team. The extent to which the information system
 is able to identify and handle error conditions is guided by organizational
 policy and operational requirements.
 
-    Some default DBMS error messages can contain information that could aid an
-attacker in, among others things, identifying the database type, host address,
-or state of the database. Custom errors may contain sensitive customer
+    Some default Couchbase error messages can contain information that could
+aid an attacker in, among others things, identifying the database type, host
+address, or state of the database. Custom errors may contain sensitive customer
 information.
 
     It is important that detailed error messages be visible only to those who
@@ -37,25 +37,28 @@ of databases that they must not be ignored. At a minimum, the DBA must attempt
 to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
-  desc  'rationale', ''
-  desc  'check', "
-    Check DBMS settings and custom database code to determine if detailed error
-messages are ever displayed to unauthorized individuals.
-
-    If detailed error messages are displayed to individuals not authorized to
-view them, this is a finding.
+  desc  "check", "
+    Check Couchbase settings and custom database code to determine if detailed
+error messages are ever displayed to unauthorized individuals.
+    Review the ownership and permissions of the audit logs:
+      $ ls \xE2\x80\x93ald /opt/couchbase/var/lib/couchbase/logs
+    If the logs are not owned by both the \"couchbase\" user and group, this is
+a finding. If the file permission are not 600, this is a finding.
   "
-  desc  'fix', "Configure DBMS settings, custom database code, and associated
-application code not to display detailed error messages to those not authorized
-to view them."
+  desc  "fix", "
+    As the root or sudo user, change the permissions/ownership of the logs
+using the following commands:
+      $ chown -R couchbase:couchbase /opt/couchbase/var/lib/couchbase/logs
+      $ chmod 700 /opt/couchbase/var/lib/couchbase/logs
+      $ chmod 600 /opt/couchbase/var/lib/couchbase/*.logs
+  "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000267-DB-000163'
-  tag gid: 'V-32571'
-  tag rid: 'SV-42908r5_rule'
-  tag stig_id: 'SRG-APP-000267-DB-000163'
-  tag fix_id: 'F-36486r2_fix'
-  tag cci: ['CCI-001314']
-  tag nist: ['SI-11 b']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000267-DB-000163"
+  tag "gid": "V-32571"
+  tag "rid": "SV-42908r5_rule"
+  tag "stig_id": "SRG-APP-000267-DB-000163"
+  tag "fix_id": "F-36486r2_fix"
+  tag "cci": ["CCI-001314"]
+  tag "nist": ["SI-11 b", "Rev_4"]
 end
-
