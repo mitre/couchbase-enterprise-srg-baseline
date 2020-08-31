@@ -1,26 +1,44 @@
 # encoding: UTF-8
-
-control 'V-58107' do
-  title "The DBMS must generate audit records when successful logons or
-connections occur."
-  desc  "For completeness of forensic analysis, it is necessary to track
-who/what (a user or other principal) logs on to the DBMS."
-  desc  'rationale', ''
-  desc  'check', "Review the DBMS audit settings. If an audit record is not
-generated each time a user (or other principal) logs on or connects to the
-DBMS, this is a finding."
-  desc  'fix', "Configure DBMS audit settings to generate an audit record each
-time a user (or other principal) logs on or connects to the DBMS. Ensure that
-the audit record contains the time of the event, the user ID, and session
-identifier."
+control "V-58107" do
+  desc  "rationale", ""
+  desc  "check", "
+    When enabled on the cluster, Couchbase auditing is capable of logging
+successful logins and connections by default.
+    Couchbase Server 6.5.0 and earlier -
+      As root or a sudo user, verify that the \"audit.log\" file exists in the
+var/lib/couchbase/logs directory of the Couchbase application home (example:
+/opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
+      Review the audit.log file. If it does not exist or not populated with
+data captured, this is a finding.
+    Couchbase Server Version 6.5.1 and later -
+      As the Full Admin, verify that auditing is enabled by executing the
+following command:
+       $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
+<Password> --get-settings
+      Review the output of the command. If \"Audit enabled\" is not set to
+\"true\", this is finding.
+  "
+  desc  "fix", "
+    Enable session auditing on the Couchbase cluster to produce audit records
+when successful login or connections occur.
+    Couchbase Server 6.5.0 and earlier -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+--audit-log-path /opt/couchbase/var/lib/couchbase/logs
+    Couchbase Server Version 6.5.1 and later -
+      As the Full Admin, execute the following command to enable auditing:
+       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+--password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+  "
   impact 0.5
-  tag severity: 'medium'
-  tag gtitle: 'SRG-APP-000503-DB-000350'
-  tag gid: 'V-58107'
-  tag rid: 'SV-72537r1_rule'
-  tag stig_id: 'SRG-APP-000503-DB-000350'
-  tag fix_id: 'F-63315r1_fix'
-  tag cci: ['CCI-000172']
-  tag nist: ['AU-12 c']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000503-DB-000350"
+  tag "gid": "V-58107"
+  tag "rid": "SV-72537r1_rule"
+  tag "stig_id": "SRG-APP-000503-DB-000350"
+  tag "fix_id": "F-63315r1_fix"
+  tag "cci": ["CCI-000172"]
+  tag "nist": ["AU-12 c", "Rev_4"]
 end
-
