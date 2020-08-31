@@ -23,7 +23,7 @@ cluster_admin FROM janedoe\"
       {\"description\":\"A N1QL REVOKE ROLE statement was
 executed\",\"id\":28686,\"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"12.61108ms\",\"errorCount\":1,\"executionTime\":\"12.55615ms\",\"resultCount\":0,\"resultSize\":0},\"name\":\"REVOKE
 ROLE
-statement\",\"node\":\"127.0.0.1:8091\",\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":41172},\"requestId\":\"aa6cd9c6-b966-403c-aed2-0a3a86144602\",\"statement\":\"REVOKE
+statement\",\"node\":\"127.0.0.1:8091\",\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":41172},\"requestId\":\"aa6cd9c6-b966-403c-aed2-0a3a86144602\",\"statement\":\"REVOKE
 cluster_admin FROM
 janedoe;\",\"status\":\"fatal\",\"timestamp\":\"2020-08-21T17:53:34.166Z\",\"userAgent\":\"Go-http-client/1.1
 (CBQ/2.0)\"}
@@ -46,7 +46,7 @@ when privileges/permissions are unsuccessfully deleted.
 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
     Enable the required set of auditable events by doing the following:
       As the Full Admin, log into the cluster and use  the following
-documentation to enable all on the "Query and Index Services Event:
+documentation to enable all on the \"Query and Index Services Event:
       -
 https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
   "

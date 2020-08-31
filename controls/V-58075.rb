@@ -22,7 +22,7 @@ command:
       {\"description\":\"A N1QL GRANT ROLE statement was
 executed\",\"id\":28685,\"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"163.459219ms\",\"executionTime\":\"163.397491ms\",\"resultCount\":0,\"resultSize\":0},\"name\":\"GRANT
 ROLE
-statement\",\"node\":\"127.0.0.1:8091\",\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"admin\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":38110},\"requestId\":\"a3344468-e5a2-44ba-af49-0fd858f20f7b\",\"statement\":\"GRANT
+statement\",\"node\":\"127.0.0.1:8091\",\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"admin\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":38110},\"requestId\":\"a3344468-e5a2-44ba-af49-0fd858f20f7b\",\"statement\":\"GRANT
 cluster_admin TO
 jdoe;;\",\"status\":\"success\",\"timestamp\":\"2020-08-21T16:37:40.312Z\",\"userAgent\":\"Go-http-client/1.1
 (CBQ/2.0)\"}
@@ -44,7 +44,7 @@ when privileges/permissions are modified.
 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
     Enable the required set of auditable events by doing the following:
       As the Full Admin, log into the cluster and use  the following
-documentation to enable all on the "Query and Index Services Event:
+documentation to enable all on the \"Query and Index Services Event:
       -
 https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
   "

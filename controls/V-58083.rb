@@ -22,7 +22,7 @@ cbpass --bucket test-data --bucket-type couchbase  --bucket-ramsize 256
       $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
       Output:  {\"bucket_name\":\"test-data\",\"description\":\"Bucket was
 created\",\"id\":8201,\"name\":\"create
-bucket\",\"props\":{\"compression_mode\":\"passive\",\"conflict_resolution_type\":\"seqno\",\"durability_min_level\":\"none\",\"eviction_policy\":\"value_only\",\"flush_enabled\":false,\"max_ttl\":0,\"num_threads\":3,\"ram_quota\":268435456,\"replica_index\":true,\"storage_mode\":\"couchstore\"},\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":45934},\"timestamp\":\"2020-08-20T20:30:34.115Z\",\"type\":\"membase\"}
+bucket\",\"props\":{\"compression_mode\":\"passive\",\"conflict_resolution_type\":\"seqno\",\"durability_min_level\":\"none\",\"eviction_policy\":\"value_only\",\"flush_enabled\":false,\"max_ttl\":0,\"num_threads\":3,\"ram_quota\":268435456,\"replica_index\":true,\"storage_mode\":\"couchstore\"},\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":45934},\"timestamp\":\"2020-08-20T20:30:34.115Z\",\"type\":\"membase\"}
     If the above steps cannot verify that audit records are produced when
 security objects are accessed, this is a finding.
 

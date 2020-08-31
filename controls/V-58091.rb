@@ -27,7 +27,7 @@ cbpass --bucket test-data
       Output:
       {\"bucket_name\":\"test-data\",\"description\":\"Bucket was
 deleted\",\"id\":8203,\"name\":\"delete
-bucket\",\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":47336},\"timestamp\":\"2020-08-20T21:17:06.409Z\"}
+bucket\",\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":47336},\"timestamp\":\"2020-08-20T21:17:06.409Z\"}
     If the above steps cannot verify that audit records are produced when
 security objects are deleted, this is a finding.
 

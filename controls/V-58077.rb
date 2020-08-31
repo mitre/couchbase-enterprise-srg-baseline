@@ -26,7 +26,7 @@ cluster_admin TO janedoe\"
       {\"description\":\"A N1QL GRANT ROLE statement was
 executed\",\"id\":28685,\"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"476.925\xC2\xB5s\",\"errorCount\":1,\"executionTime\":\"388.584\xC2\xB5s\",\"resultCount\":0,\"resultSize\":0},\"name\":\"GRANT
 ROLE
-statement\",\"node\":\"127.0.0.1:8091\",\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":39960},\"requestId\":\"1e51a528-6108-44cd-a387-076502e61728\",\"statement\":\"GRANT
+statement\",\"node\":\"127.0.0.1:8091\",\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":39960},\"requestId\":\"1e51a528-6108-44cd-a387-076502e61728\",\"statement\":\"GRANT
 cluster_admin TO
 janedoe;\",\"status\":\"fatal\",\"timestamp\":\"2020-08-21T17:23:55.427Z\",\"userAgent\":\"Go-http-client/1.1
 (CBQ/2.0)\"}
@@ -49,7 +49,7 @@ when privileges/permissions are unsuccessfully modified.
 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
     Enable the required set of auditable events by doing the following:
       As the Full Admin, log into the cluster and use  the following
-documentation to enable all on the "Query and Index Services Event:
+documentation to enable all on the \"Query and Index Services Event:
       -
 https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
   "

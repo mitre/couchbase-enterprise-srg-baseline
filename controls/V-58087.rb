@@ -27,7 +27,7 @@ executing the following command:
       Output:
       {\"bucket_name\":\"test-data\",\"description\":\"Bucket was
 modified\",\"id\":8202,\"name\":\"modify
-bucket\",\"props\":{\"ram_quota\":104857600,\"storage_mode\":\"couchstore\"},\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":46976},\"timestamp\":\"2020-08-20T21:06:09.746Z\",\"type\":\"membase\"}
+bucket\",\"props\":{\"ram_quota\":104857600,\"storage_mode\":\"couchstore\"},\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"jdoe\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":46976},\"timestamp\":\"2020-08-20T21:06:09.746Z\",\"type\":\"membase\"}
     If the above steps cannot verify that audit records are produced when
 security objects are modified, this is a finding.
 

@@ -5,7 +5,7 @@ control "V-32476" do
     If Couchbase is not using PKI-based authentication, this check is Not
 Applicable (NA).
     Verify ownership, group ownership, and permissions on the file given for
-the private key (default "ca.key").
+the private key (default \"ca.key\").
     Run following command and review its output:
     ls -al <Private Key File Path>/ca.key
     Example Output:
@@ -15,7 +15,7 @@ Path>/ca.key
 finding.
     If the file is more permissive than \"600\", this is a finding.
     Verify ownership, group ownership, and permissions on the file given for CA
-file (default "ca.pem").
+file (default \"ca.pem\").
     Run following command and review its output:
     ls -al <CA File Path>/ca.pem
     Example Output:

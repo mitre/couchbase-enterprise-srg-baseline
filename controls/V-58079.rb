@@ -19,7 +19,7 @@ following command:
       {\"description\":\"A N1QL REVOKE ROLE statement was
 executed\",\"id\":28686,\"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"104.68184ms\",\"executionTime\":\"104.610836ms\",\"resultCount\":0,\"resultSize\":0,\"warningCount\":1},\"name\":\"REVOKE
 ROLE
-statement\",\"node\":\"127.0.0.1:8091\",\"real_use"rid"\":{\"domain\":\"local\",\"user\":\"admin\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":36832},\"requestId\":\"392e653c-644b-4907-8fbb-5bcb1be8298f\",\"statement\":\"REVOKE
+statement\",\"node\":\"127.0.0.1:8091\",\"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"admin\"},\"remote\":{\"ip\":\"127.0.0.1\",\"port\":36832},\"requestId\":\"392e653c-644b-4907-8fbb-5bcb1be8298f\",\"statement\":\"REVOKE
 cluster_admin FROM
 jdoe;\",\"status\":\"success\",\"timestamp\":\"2020-08-21T15:54:42.820Z\",\"userAgent\":\"Go-http-client/1.1
 (CBQ/2.0)\"}
@@ -41,7 +41,7 @@ when privileges/permissions are deleted.
 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
     Enable the required set of auditable events by doing the following:
       As the Full Admin, log into the cluster and use  the following
-documentation to enable all on the "Query and Index Services Event:
+documentation to enable all on the \"Query and Index Services Event:
       -
 https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
   "
