@@ -1,1 +1,2 @@
 ---
+cb_static_conf: 'opt/couchbase/etc/couchbase/static_config'

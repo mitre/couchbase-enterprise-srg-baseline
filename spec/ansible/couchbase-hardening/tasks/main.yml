@@ -4,9 +4,23 @@
     name: couchbase-server
     state: started
 
-# - name: Enable Auditing
-#   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --enabled 1 --audit-log-rotate-interval 604800 \
-#   --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+- name: Check version of Couchbase Server
+  shell: "/opt/couchbase/bin/couchbase-server -v"
+  register: cbversion
+
+- name: Enable Auditing for Enterprise 6.5.0 and earlier
+  shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  when: "'6.0.2' in cbversion.stdout or '6.5.0' in cbversion.stdout"
+
+- name: Enable Auditing for Enterprise 6.5.1 and later
+  shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --set --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  when: "'6.5.1' in cbversion.stdout" or "'6.6.0' in cbversion.stdout"
+
+- name: Set Ownership/Permissions on Couchbase Static Config file
+    path: "{{ cb_static_conf }}"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
 
 
 # Add steps to harden

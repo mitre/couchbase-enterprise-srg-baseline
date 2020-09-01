@@ -81,7 +81,7 @@ control "V-32192" do
   else
     rbac_accounts = input('cb_admin_users').clone << input('cb_users')
     user_accounts = []
-    json_output = command("couchbase-cli user-manage -u admin -p password --cluster localhost:8091 --list | grep 'id'").stdout.split("\n")
+    json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep 'id'").stdout.split("\n")
     json_output.each do |output|
       user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
       user_accounts.push(user_id)

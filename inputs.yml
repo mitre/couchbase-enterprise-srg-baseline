@@ -1,4 +1,7 @@
 
+cb_service_user: 'couchbase'
+cb_service_group: 'couchbase'
+
 cb_full_admin: 'admin'
 cb_full_admin_password: 'password'
 
@@ -14,6 +17,7 @@ cb_auth_method: 'saslauthd'
 
 cb_home_dir: '/opt/couchbase'
 cb_config_dir: 'opt/couchbase/etc/couchbase'
+cb_static_conf: 'opt/couchbase/etc/couchbase/static_config'
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
