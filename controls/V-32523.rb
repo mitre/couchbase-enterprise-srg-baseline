@@ -61,4 +61,8 @@ http://<host>:<port>/settings/security \\ -d \"uiSessionTimeout=600\"
   tag "fix_id": "F-36438r2_fix"
   tag "cci": ["CCI-001185"]
   tag "nist": ["SC-23 (1)", "Rev_4"]
+
+    describe command("curl -v -X GET -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security | grep 'uiSessionTimeout:'") do
+      its('stdout') { should_not be "" }
+    end 
 end

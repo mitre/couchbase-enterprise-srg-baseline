@@ -53,4 +53,18 @@ command:
   tag "fix_id": "F-36429r2_fix"
   tag "cci": ["CCI-001082"]
   tag "nist": ["SC-2", "Rev_4"]
+
+    rbac_accounts = input('cb_admin_users').clone << input('cb_users')
+    user_accounts = []
+    json_output = command("couchbase-cli user-manage -u admin -p password --cluster localhost:8091 --list | grep 'id'").stdout.split("\n")
+    json_output.each do |output|
+      user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      user_accounts.push(user_id)
+    end
+    user_accounts.each do |user|
+      describe 'Each user in the list' do
+        subject { user }
+        it { should be_in rbac_accounts.uniq.flatten }
+      end
+    end
 end
