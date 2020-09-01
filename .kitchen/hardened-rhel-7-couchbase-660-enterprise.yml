@@ -1,7 +1,0 @@
----
-hostname: 127.0.0.1
-port: '2203'
-username: vagrant
-ssh_key: C:/Users/zhangc/git/couchbase-enterprise-srg-baseline/.kitchen/kitchen-vagrant/hardened-rhel-7-couchbase-660-enterprise/.vagrant/machines/default/virtualbox/private_key
-last_action: create
-last_error: 
