@@ -4,5 +4,9 @@
     name: couchbase-server
     state: started
 
+# - name: Enable Auditing
+#   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --enabled 1 --audit-log-rotate-interval 604800 \
+#   --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+
 
 # Add steps to harden

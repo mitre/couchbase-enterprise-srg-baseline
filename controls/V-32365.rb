@@ -21,7 +21,7 @@ following command:
        $ couchbase-cli setting-audit -c <localhost>:<port> -u <Full Admin> -p
 <Password> --get-settings
       Review the output of the command. If \"Audit enabled\" is not set to
-\"true\", this is finding.
+\"True\", this is finding.
   "
   desc  "fix", "
     Enable session auditing on the Couchbase cluster.
@@ -45,4 +45,16 @@ following command:
   tag "fix_id": "F-36280r3_fix"
   tag "cci": ["CCI-001464"]
   tag "nist": ["AU-14 (1)", "Rev_4"]
+
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") do
+      its('stdout') { should include "True" }
+    end 
+  else
+    describe file(input('cb_audit_log')) do
+      it {should exist}
+    end
+  end
 end

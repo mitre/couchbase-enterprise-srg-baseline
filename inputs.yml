@@ -14,7 +14,8 @@ cb_auth_method: 'saslauthd'
 
 cb_home_dir: '/opt/couchbase'
 cb_config_dir: 'opt/couchbase/etc/couchbase'
-cb_log_dir: '/opt/couchbase/var/lib/couchbase/log'
+cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
+cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'

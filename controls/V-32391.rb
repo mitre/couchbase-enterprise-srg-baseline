@@ -75,4 +75,16 @@ system clocks to generate time stamps for audit records.
   tag "fix_id": "F-36306r2_fix"
   tag "cci": ["CCI-000159"]
   tag "nist": ["AU-8 a", "Rev_4"]
+
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") do
+      its('stdout') { should include "True" }
+    end 
+  else
+    describe file(input('cb_audit_log')) do
+      it {should exist}
+    end
+  end
 end

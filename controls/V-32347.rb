@@ -28,12 +28,12 @@ that need to be protected from repudiation by means of audit trails.
       As root or a sudo user, verify that the \"audit.log\" file exists in the
 var/lib/couchbase/logs directory of the Couchbase application home (example:
 /opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
-    Couchbase Server Version 6.51 and later -
+    Couchbase Server Version 6.5.1 and later -
       As the Full Admin, verify that auditing is enabled by executing the
 following command:
        $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
 <Password> --get-settings
-      Verify from the output that \"Audit enabled\" is set to \"true\". If
+      Verify from the output that \"Audit enabled\" is set to \"True\". If
 \"Audit enabled\" is not set to true, this is finding.
   "
   desc  "fix", "
@@ -60,4 +60,16 @@ individual user identification and passes it to Couchbase.
   tag "fix_id": "F-36261r3_fix"
   tag "cci": ["CCI-000166"]
   tag "nist": ["AU-10", "Rev_4"]
+
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") do
+      its('stdout') { should include "True" }
+    end 
+  else
+    describe file(input('cb_audit_log')) do
+      it {should exist}
+    end
+  end
 end
