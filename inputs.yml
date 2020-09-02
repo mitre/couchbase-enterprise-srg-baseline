@@ -13,13 +13,32 @@ cb_users: [
   'cbuser'
   ]
 
+cb_roles: [
+  'admin',
+  'bucket_admin'
+]
+
 cb_auth_method: 'saslauthd'
 
 cb_home_dir: '/opt/couchbase'
 cb_config_dir: 'opt/couchbase/etc/couchbase'
 cb_static_conf: 'opt/couchbase/etc/couchbase/static_config'
+
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
+
+cb_required_audit_events: [
+  'Service configuration change',
+  'authentication succeeded',
+  'session terminated'
+]
+
+cb_required_audit_event_ids: [
+  '36865',
+  '20485',
+  '20493', 
+  '20489'
+]
 
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'

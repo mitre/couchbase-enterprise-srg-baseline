@@ -33,26 +33,26 @@ users either gaining or being denied access inappropriately and in conflict
 with applicable policy.
   "
   desc  "check", "
-    From the system security plan or equivalent documentation, determine the
-appropriate permissions on database objects for each kind (role) of user. If
-this documentation is missing, this is a finding.
-    Check Couchbase settings to determine whether users are restricted from
-accessing objects and data they are not authorized to access.
-    As the Full Admin, list all RBAC users in each cluster with the following
-command:
-      $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
-<host>:<port> --list
-    Verify the roles for each user account. If any user account is assigned a
-role the exceed those documented, this is a finding.
+  Check Couchbase settings to determine whether users are restricted from
+  accessing objects and data they are not authorized to access.
+  
+  As the Full Admin, list all RBAC users in each cluster with the following
+  command:
+    $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
+    <host>:<port> --list
+  
+  Verify the roles for each user account. If any user account is assigned a
+  role the exceed those documented, this is a finding.
   "
   desc  "fix", "
-    Configure Couchbase settings and access controls to permit user access only
-to objects and data that the user is authorized to view or interact with, and
-to prevent access to all other objects and data.
-    To update roles assigned to users, execute the following command:
-      $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
-<host>:<port> --set --delete --rbac-username <username> --roles <roles_list>
---auth-domain <domain>
+  Configure Couchbase settings and access controls to permit user access only
+  to objects and data that the user is authorized to view or interact with, and
+  to prevent access to all other objects and data.
+  
+  To update roles assigned to users, execute the following command:
+    $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
+    <host>:<port> --set --delete --rbac-username <username> --roles <roles_list>
+    --auth-domain <domain>
   "
   impact 0.5
   tag "severity": "medium"
@@ -64,5 +64,16 @@ to prevent access to all other objects and data.
   tag "cci": ["CCI-000213"]
   tag "nist": ["AC-3", "Rev_4"]
 
-  
+  user_roles = []
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep '\"role\":'").stdout.split("\n")
+  json_output.each do |output|
+    role = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+    user_roles.push(role)
+  end
+  user_roles.each do |role|
+    describe 'Each role in the list' do
+      subject { role }
+      it { should be_in input('cb_roles').uniq.flatten }
+    end
+  end
 end

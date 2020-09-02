@@ -75,8 +75,8 @@ information regarding the user/subject or process associated with the event.
       its('stdout') { should include "True" }
     end 
   else
-    describe file(input('cb_audit_log')) do
-      it {should exist}
-    end
+    describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
+      its('auditdEnabled') { should eq true }
+    end 
   end
 end

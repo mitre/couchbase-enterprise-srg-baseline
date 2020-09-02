@@ -37,25 +37,27 @@ control "V-32362" do
   auditable events are being audited by the system.
   To verify other events being audited do the following:
   
-  Couchbase Server 6.5.0 and earlier -
-  As the Full Admin, log into the cluster to verify which events are
-  disabled and which are enabled. Use  the following documentation:
-      https://docs.couchbase.com/server/6.0/manage/manage-security/manage-auditing.html
-    
+  Couchbase Server 6.5.0 and earlier - 
+  As the Full Admin, execute the following command to verify which events are disabled:
+
+    $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
+
+  Review the output. If organization-defined auditable events are not being audited, this is a finding.
+
   Couchbase Server Version 6.5.1 and later -
-   When auditing is enabled, the following events are audited by default and
-   cannot be turned off:
-      - authentication failed
-      - command access failed
-      - privilege debug configured
-      - privilege debug
+  When auditing is enabled, the following events are audited by default and
+  cannot be turned off:
+    - authentication failed
+    - command access failed
+    - privilege debug configured
+    - privilege debug
       
   As the Full Admin, execute the following command to verify which events
   are disabled and which are enabled:
     $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
     <Password> --get-settings
 
-  If organization-defined auditable events are not being audited, this is a
+  Review the output. If organization-defined auditable events are not being audited, this is a
   finding.
   "
   desc  "fix", "
@@ -67,14 +69,14 @@ control "V-32362" do
   Couchbase Server 6.5.0 and earlier -
   As the Full Admin, log into the cluster and use  the following
   documentation to enable required events:
-      -https://docs.couchbase.com/server/6.0/manage/manage-security/manage-auditing.html
-      -https://docs.couchbase.com/server/6.5/manage/manage-security/manage-auditing.html
+    - https://docs.couchbase.com/server/6.0/manage/manage-security/manage-auditing.html
+    - https://docs.couchbase.com/server/6.5/manage/manage-security/manage-auditing.html
   
   Couchbase Server 6.5.1 and later -
   As the Full Admin, log into the cluster and use the following
   documentation to enable required events:
-      -https://docs.couchbase.com/server/6.5/manage/manage-security/manage-auditing.html
-      -https://docs.couchbase.com/server/6.6/manage/manage-security/manage-auditing.html
+    - https://docs.couchbase.com/server/6.5/manage/manage-security/manage-auditing.html
+    - https://docs.couchbase.com/server/6.6/manage/manage-security/manage-auditing.html
 
   "
   impact 0.5
@@ -86,4 +88,20 @@ control "V-32362" do
   tag "fix_id": "F-36277r2_fix"
   tag "cci": ["CCI-000169"]
   tag "nist": ["AU-12 a", "Rev_4"]
+
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    input('cb_required_audit_events').each do |event_name|
+      describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep '#{event_name}'") do
+        its('stdout') { should include "True" }
+      end 
+    end 
+  else
+    input('cb_required_audit_event_ids').each do |event_id|
+      describe command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
+        its('stdout') { should_not include event_id }
+      end 
+    end
+  end
 end
