@@ -59,4 +59,8 @@ http://<host>:<port>/settings/security -d disableUIOverHttp=true
   tag "fix_id": "F-36393r3_fix"
   tag "cci": ["CCI-000206"]
   tag "nist": ["IA-6", "Rev_4"]
+
+  describe command("curl -v -X GET -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security | grep 'disableUIOverHttp:'") do
+  its('stdout') { should be "true" }
+end 
 end
