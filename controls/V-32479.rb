@@ -60,7 +60,7 @@ http://<host>:<port>/settings/security -d disableUIOverHttp=true
   tag "cci": ["CCI-000206"]
   tag "nist": ["IA-6", "Rev_4"]
 
-  describe command("curl -v -X GET -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security | grep 'disableUIOverHttp:'") do
-  its('stdout') { should be "true" }
+  describe command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security | grep 'disableUIOverHttp:'") do
+    its('stdout') { should be "true" }
 end 
 end
