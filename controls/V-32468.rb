@@ -41,4 +41,8 @@ Admin> \\
   tag "fix_id": "F-36383r4_fix"
   tag "cci": ["CCI-000196"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
+
+  describe command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/saslauthAuth | grep 'saslauthd:'") do
+  its('stdout') { should eq 1 }
+  end 
 end

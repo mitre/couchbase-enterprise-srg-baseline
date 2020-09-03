@@ -37,4 +37,12 @@ object definitions that are not authorized."
   tag "fix_id": "F-36341r2_fix"
   tag "cci": ["CCI-000381"]
   tag "nist": ["CM-7 a", "Rev_4"]
+
+  describe "This test requires a Manual Review: Determine if there are methods to disable use or access, or to remove
+  definitions for external executable objects.Verify each application executable object listed is authorized by the ISSO.
+    If any are not, this is a finding." do
+    skip "This test requires a Manual Review: Determine if there are methods to disable use or access, or to remove
+    definitions for external executable objects.Verify each application executable object listed is authorized by the ISSO.
+      If any are not, this is a finding."
+  end
 end
