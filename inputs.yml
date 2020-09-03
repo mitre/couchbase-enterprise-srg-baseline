@@ -19,6 +19,7 @@ cb_roles: [
 ]
 
 cb_auth_method: 'saslauthd'
+cb_auth_domain: 'local'
 
 cb_home_dir: '/opt/couchbase'
 cb_config_dir: 'opt/couchbase/etc/couchbase'
@@ -42,6 +43,12 @@ cb_required_audit_event_ids: [
 
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'
+
+is_docker: 'true'
+
+sample_buckets: [
+  'travel-data'
+]
 
 
 

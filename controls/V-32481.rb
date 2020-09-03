@@ -51,26 +51,17 @@ non-organizational users who log onto the system.
   tag "cci": ["CCI-000804"]
   tag "nist": ["IA-8", "Rev_4"]
 
-  if input('cb_auth_method') != "saslauthd"
-    impact 0.0
-    describe "All accounts are authenticated by the organization-level authentication/access 
-    mechanism and not by Couchbase, therefore this is not a finding." do
-      skip "All accounts are authenticated by the organization-level authentication/access 
-      mechanism and not by Couchbase, therefore this is not a finding."
-    end
-  else
-    rbac_accounts = input('cb_admin_users').clone << input('cb_users')
-    user_accounts = []
-    json_output = command("couchbase-cli user-manage -u admin -p password --cluster localhost:8091 --list | grep 'id'").stdout.split("\n")
-    json_output.each do |output|
-      user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-      user_accounts.push(user_id)
-    end
-    user_accounts.each do |user|
-      describe 'Each user in the list' do
-        subject { user }
-        it { should be_in rbac_accounts.uniq.flatten }
-      end
+  rbac_accounts = input('cb_admin_users').clone << input('cb_users')
+  user_accounts = []
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep 'id'").stdout.split("\n")
+  json_output.each do |output|
+    user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+    user_accounts.push(user_id)
+  end
+  user_accounts.each do |user|
+    describe 'Each user in the list' do
+      subject { user }
+      it { should be_in rbac_accounts.uniq.flatten }
     end
   end 
 end

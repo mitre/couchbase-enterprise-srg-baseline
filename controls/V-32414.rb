@@ -39,4 +39,10 @@ track use of the Couchbase software installation account."
   tag "fix_id": "F-36329r2_fix"
   tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
+
+  describe "This test requires a Manual Review: Ensure there are procedures in place 
+  to restrict and track the use of the Couchbase software installation account." do
+    skip "This test requires a Manual Review: Ensure there are procedures in place 
+    to restrict and track the use of the Couchbase software installation account."
+  end
 end

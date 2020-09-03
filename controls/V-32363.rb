@@ -43,7 +43,21 @@ control "V-32363" do
   tag "cci": ["CCI-000171"]
   tag "nist": ["AU-12 b", "Rev_4"]
 
+  admin_users = []
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
+  json_output.each do |output|
+    user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+    admin_users.push(user)
+  end
+
+  admin_users.each do |user|
+    describe 'Each admin user in the list' do
+      subject { user }
+      it { should be_in input('cb_admin_users').uniq.flatten }
+    end
+  end
+
   describe file(input('cb_static_conf')) do
     its('owner') { should be_in input('cb_service_user') }
     its('group') { should be_in input('cb_service_group') }

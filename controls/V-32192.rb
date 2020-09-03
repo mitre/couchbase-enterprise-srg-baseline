@@ -71,12 +71,19 @@ control "V-32192" do
   tag "cci": ["CCI-000015"]
   tag "nist": ["AC-2 (1)", "Rev_4"]
 
-  if input('cb_auth_method') != "saslauthd"
-    impact 0.0
-    describe "All accounts are authenticated by the organization-level authentication/access 
-    mechanism and not by Couchbase, therefore this is not a finding." do
-      skip "All accounts are authenticated by the organization-level authentication/access 
-      mechanism and not by Couchbase, therefore this is not a finding."
+  if input('cb_auth_domain') == "external"
+    domain_list = []
+    json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep 'domain'").stdout.split("\n")
+    json_output.each do |output|
+      domain = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      domain_list.push(domain)
+    end
+    domain_list.each do |domain|
+      describe "All accounts are authenticated by the organization-level authentication/access 
+      mechanism and not by Couchbase, therefore this is not a finding. Each domain in the list" do
+        subject { domain }
+        it { should cmp "external" }
+      end
     end
   else
     rbac_accounts = input('cb_admin_users').clone << input('cb_users')
