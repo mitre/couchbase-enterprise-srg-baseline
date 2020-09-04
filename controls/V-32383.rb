@@ -45,4 +45,11 @@ control "V-32383" do
   tag "fix_id": "F-36298r2_fix"
   tag "cci": ["CCI-000140"]
   tag "nist": ["AU-5 b", "Rev_4"]
+
+  describe "This test requires a Manual Review: Couchbase is not currently capable 
+  of shutting down in the case of an audit failure." do
+    skip "This test requires a Manual Review: Couchbase is not currently capable 
+    of shutting down in the case of an audit failure."
+  end
+
 end

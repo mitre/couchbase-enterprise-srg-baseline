@@ -28,9 +28,11 @@ control "V-32415" do
   Couchbase configuration files directory -
     $ ls -la /opt/couchbase/etc/couchbase
 
-  If the owner and group are not both \"couchbase\" for the configuration
-  files, this is a finding.
+  If the owner and group are not both \"couchbase\" for the configuration directory 
+  and files, this is a finding.
   
+  If the directory permissions are more permissive than \"700\", this is a finding.
+
   If the file permissions are more permissive than \"600\", this is a finding.
   "
   desc  "fix", "
@@ -41,10 +43,12 @@ control "V-32415" do
      -p <Password> --set --rbac-username <user> --rbac-password <password> \\
      --rbac-name <name> --roles <roles> \\
      --auth-domain <domain>
+
   As the root or sudo user, change the permission of the following
   directories:
   Couchbase configuration files directory:
     $ chown -R couchbase:couchbase /opt/couchbase/etc/couchbase
+    $ chmod 700 /opt/couchbase/etc/couchbase
     $ chmod 600 /opt/couchbase/etc/couchbase/*
   "
   impact 0.5
@@ -72,10 +76,19 @@ control "V-32415" do
     end
   end
 
-  #update check for all files
-  describe file(input('cb_static_conf')) do
+  describe file(input('cb_config_dir')) do
     its('owner') { should be_in input('cb_service_user') }
     its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0600') }
+    it { should_not be_more_permissive_than('0700') }
   end
+
+  log_files = command("ls -p #{input('cb_config_dir')} | grep -v '/'").stdout.split("\n")
+
+  log_files.each do |file|
+    describe file("#{input('cb_config_dir')}/#{file}") do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0600') }
+    end
+  end 
 end

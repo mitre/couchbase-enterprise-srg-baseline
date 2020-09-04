@@ -50,4 +50,19 @@ control "V-32375" do
   tag "cci": ["CCI-000135"]
   tag "nist": ["AU-3 (1)", "Rev_4"]
 
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    input('cb_required_audit_events').each do |event_name|
+      describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep '#{event_name}'") do
+        its('stdout') { should include "True" }
+      end 
+    end 
+  else
+    input('cb_required_audit_event_ids').each do |event_id|
+      describe command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
+        its('stdout') { should_not include event_id }
+      end 
+    end
+  end
 end

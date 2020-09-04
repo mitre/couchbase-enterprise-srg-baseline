@@ -28,6 +28,13 @@ cb_static_conf: 'opt/couchbase/etc/couchbase/static_config'
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
+cb_samples_dir: '/opt/couchbase/samples'
+sample_buckets: [
+  'travel-sample',
+  'gamesim-sample', 
+  'beer-sample'
+]
+
 cb_required_audit_events: [
   'Service configuration change',
   'authentication succeeded',
@@ -46,9 +53,6 @@ cb_cluster_port: '8091'
 
 is_docker: 'true'
 
-sample_buckets: [
-  'travel-data'
-]
 
 
 

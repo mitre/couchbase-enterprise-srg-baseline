@@ -26,10 +26,13 @@ control "V-32347" do
   When enabled, Couchbase can identify a unique user for each record.
 
   Couchbase Server 6.5.0 and earlier -
-  As root or a sudo user, verify that the \"audit.log\" file exists in the
-  var/lib/couchbase/logs directory of the Couchbase application home (example:
-  /opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
-  
+  As the Full Admin, verify that auditing is enabled by executing the following command:
+
+  $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
+
+  Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
+  is not set to \"true\", this is finding.
+
   Couchbase Server Version 6.5.1 and later -
   As the Full Admin, verify that auditing is enabled by executing the
   following command:

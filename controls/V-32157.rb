@@ -85,10 +85,10 @@ control "V-32157" do
   tag "nist": ["AC-10", "Rev_4"]
 
   describe "This test requires a Manual Review: It is not technically feasible 
-  for Couchbase to enforce this restriction.Verify that the application(s) or 
+  for Couchbase to enforce this restriction. Ensure that the application(s) or 
   supporting software are configured to do so. If not, this is a finding." do
     skip "This test requires a Manual Review: It is not technically feasible 
-    for Couchbase to enforce this restriction.Verify that the application(s) or 
+    for Couchbase to enforce this restriction. Ensure that the application(s) or 
     supporting software are configured to do so. If not, this is a finding."
   end
 end

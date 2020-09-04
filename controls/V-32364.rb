@@ -42,4 +42,11 @@ control "V-32364" do
   tag "fix_id": "F-36279r2_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
+
+  describe "This test requires a Manual Review: Couchbase is not currently
+  capable of logging when privileges/permissions/role memberships are retrieved." do
+    skip "This test requires a Manual Review: Couchbase is not currently
+    capable of logging when privileges/permissions/role memberships are retrieved."
+  end
+
 end
