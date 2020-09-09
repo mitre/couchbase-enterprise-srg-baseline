@@ -2,44 +2,41 @@
 
 control "V-58169" do
   title "Couchbase must implement cryptographic mechanisms to prevent
-unauthorized modification of organization-defined information at rest (to
-include, at a minimum, PII and classified information) on organization-defined
-information system components."
+  unauthorized modification of organization-defined information at rest (to
+  include, at a minimum, PII and classified information) on organization-defined
+  information system components."
   desc  "Couchbases handling data requiring \"data at rest\" protections must
-employ cryptographic mechanisms to prevent unauthorized disclosure and
-modification of the information at rest. These cryptographic mechanisms may be
-native to Couchbase or implemented via additional software or operating
-system/file system settings, as appropriate to the situation.
+  employ cryptographic mechanisms to prevent unauthorized disclosure and
+  modification of the information at rest. These cryptographic mechanisms may be
+  native to Couchbase or implemented via additional software or operating
+  system/file system settings, as appropriate to the situation.
 
-    Selection of a cryptographic mechanism is based on the need to protect the
-integrity of organizational information. The strength of the mechanism is
-commensurate with the security category and/or classification of the
-information. Organizations have the flexibility to either encrypt all
-information on storage devices (i.e., full disk encryption) or encrypt specific
-data structures (e.g., files, records, or fields).
+  Selection of a cryptographic mechanism is based on the need to protect the
+  integrity of organizational information. The strength of the mechanism is
+  commensurate with the security category and/or classification of the
+  information. Organizations have the flexibility to either encrypt all
+  information on storage devices (i.e., full disk encryption) or encrypt specific
+  data structures (e.g., files, records, or fields).
 
-    The decision whether and what to encrypt rests with the data owner and is
-also influenced by the physical measures taken to secure the equipment and
-media on which the information resides.
+  The decision whether and what to encrypt rests with the data owner and is
+  also influenced by the physical measures taken to secure the equipment and
+  media on which the information resides.
   "
   desc  "check", "
-    Review the system documentation to determine whether the organization has
-defined the information at rest that is to be protected from modification,
-which must include, at a minimum, PII and classified information.
-    If no information is identified as requiring such protection, this is not a
-finding.
-    If any of the information defined as requiring cryptographic protection
-from modification is not encrypted in a manner that provides the required level
-of protection, this is a finding.
-    If an encryption at rest is required but the encryption tool is not
-installed on the server, this is a finding.
-
+  Review the system documentation to determine whether the organization has
+  defined the information at rest that is to be protected from modification,
+  which must include, at a minimum, PII and classified information.
+  If no information is identified as requiring such protection, this is not a
+  finding.If any of the information defined as requiring cryptographic protection
+  from modification is not encrypted in a manner that provides the required level
+  of protection, this is a finding. If an encryption at rest is required but the encryption tool is not
+  installed on the server, this is a finding.
   "
   desc  "fix", "
-    Configure Couchbase settings to enable protections against
-man-in-the-middle attacks that guess at session identifier values.
-    Review  documentation to set up 3rd party encryption tools.
-https://docs.couchbase.com/server/current/manage/manage-security/manage-connections-and-disks.html
+  Configure Couchbase settings to enable protections against
+  man-in-the-middle attacks that guess at session identifier values.
+  Review documentation to set up 3rd party encryption tools.
+  https://docs.couchbase.com/server/current/manage/manage-security/manage-connections-and-disks.html
   "
   impact 0.5
   tag "severity": "medium"
@@ -50,4 +47,14 @@ https://docs.couchbase.com/server/current/manage/manage-security/manage-connecti
   tag "fix_id": "F-63377r1_fix"
   tag "cci": ["CCI-002475"]
   tag "nist": ["SC-28 (1)", "Rev_4"]
+
+  describe 'Check if information at rest requiring protection are protected from modification' do
+    skip 'This test can only be performed by manual examination or interview at this time.'
+  end
+  describe 'Check if any information requiring protection are encrypted to the required level of protection' do
+    skip 'This test can only be performed by manual examination or interview at this time.'
+  end
+  describe 'Check if an encryption at rest is required and the encryption tool is installed on the server' do
+    skip 'This test can only be performed by manual examination or interview at this time.'
+  end
 end

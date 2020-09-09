@@ -1,5 +1,1 @@
 ---
-cb_config_dir: 'opt/couchbase/etc/couchbase'
-cb_static_conf: '/opt/couchbase/etc/couchbase/static_config'
-cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
-cb_samples_dir: '/opt/couchbase/samples'
