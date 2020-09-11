@@ -5,8 +5,8 @@ control "V-32475" do
 certificates by performing RFC 5280-compliant certification path validation."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates.
 
-    A certificate\xE2\x80\x9A\xC3\x84\xC3\xB4s certification path is the path
-from the end entity certificate to a trusted root certification authority (CA).
+A certificates certification path is the path from the end entity certificate
+to a trusted root certification authority (CA).
  Certification path validation is necessary for a relying party to make an
 informed decision regarding acceptance of an end entity certificate.
 Certification path validation includes checks such as certificate issuer trust,
@@ -57,4 +57,8 @@ command:
   tag "fix_id": "F-36390r3_fix"
   tag "cci": ["CCI-000185"]
   tag "nist": ["IA-5 (2) (a)", "Rev_4"]
+
+  describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --client-auth --extended | grep '\"path\'") do
+  its('stdout') { should include "True" }
+  end 
 end
