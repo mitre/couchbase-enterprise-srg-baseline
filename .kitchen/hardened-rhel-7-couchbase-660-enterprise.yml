@@ -1,7 +1,0 @@
----
-hostname: 127.0.0.1
-port: '2202'
-username: vagrant
-ssh_key: "/Users/chassenfeldt/Documents/GitHub/couchbase-enterprise-srg-baseline/.kitchen/kitchen-vagrant/hardened-rhel-7-couchbase-660-enterprise/.vagrant/machines/default/virtualbox/private_key"
-last_action: verify
-last_error: Kitchen::ActionFailed
