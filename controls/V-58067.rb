@@ -41,4 +41,10 @@ actions or events that the application owner rules unacceptable.
   tag "fix_id": "F-63275r1_fix"
   tag "cci": ["CCI-001914"]
   tag "nist": ["AU-12 (3)", "Rev_4"]
+
+  describe "This test requires a Manual Review: Review Couchbase documentation to verify if it provides the ability for users in authorized roles to
+  reconfigure auditing at any time of the user's choosing" do
+    skip "This test requires a Manual Review: Review Couchbase documentation to verify if it provides the ability for users in authorized roles to
+    reconfigure auditing at any time of the user's choosing" 
+  end
 end

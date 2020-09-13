@@ -43,4 +43,8 @@ security labeling of information in process."
   tag "fix_id": "F-63247r1_fix"
   tag "cci": ["CCI-002263"]
   tag "nist": ["AC-16 a", "Rev_4"]
+
+  describe "This test requires a Manual Review: Review Couchbase documentation and check if security labeling is required" do
+    skip "This test requires a Manual Review: Review Couchbase documentation and check if security labeling is required" 
+  end
 end

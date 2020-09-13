@@ -1,26 +1,99 @@
+cb_service_user: 'couchbase' 
 
-cb_full_admin: 'admin'
-cb_full_admin_password: 'password'
+cb_service_group: 'couchbase' 
 
-cb_admin_users: [
-  'cbadmin'
-  ]
+ 
 
-cb_users: [
-  'cbuser'
-  ]
+cb_full_admin: 'admin' 
 
-cb_auth_method: 'saslauthd'
+cb_full_admin_password: 'password' 
 
-cb_home_dir: '/opt/couchbase'
-cb_config_dir: 'opt/couchbase/etc/couchbase'
-cb_log_dir: '/opt/couchbase/var/lib/couchbase/log'
+ 
 
-cb_cluster_host: 'localhost'
-cb_cluster_port: '8091'
+cb_admin_users: [ 
 
+  'cbadmin' 
 
+  ] 
 
+ 
 
+cb_users: [ 
 
+  'cbuser' 
 
+  ] 
+
+ 
+
+cb_roles: [ 
+
+  'admin', 
+
+  'bucket_admin' 
+
+] 
+
+ 
+
+cb_auth_method: 'saslauthd' 
+
+ 
+
+cb_home_dir: '/opt/couchbase' 
+
+cb_config_dir: 'opt/couchbase/etc/couchbase' 
+
+cb_static_conf: 'opt/couchbase/etc/couchbase/static_config' 
+
+cb_data_dir: '/opt/couchbase/var/lib/couchbase/data' 
+
+cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs' 
+
+cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log' 
+
+ 
+
+cb_required_audit_events: [ 
+
+  'Service configuration change', 
+
+  'authentication succeeded', 
+
+  'session terminated' 
+
+] 
+
+ 
+
+cb_required_audit_event_ids: [ 
+
+  '36865', 
+
+  '20485', 
+
+  '20493',  
+
+  '20489' 
+
+] 
+
+ 
+
+approved_packages: [ 
+
+  '' 
+
+  ] 
+
+ 
+
+cb_cluster_host: 'localhost' 
+
+cb_cluster_port: '8091' 
+
+ 
+
+is_docker: 'true' 
+
+ 

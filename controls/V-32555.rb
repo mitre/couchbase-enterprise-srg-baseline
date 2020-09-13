@@ -65,4 +65,10 @@ database columns and tables that require them for data integrity.
   tag "fix_id": "F-36470r3_fix"
   tag "cci": ["CCI-001310"]
   tag "nist": ["SI-10", "Rev_4"]
+
+    describe "This test requires a Manual Review: Review Couchbase code, application code, settings, column and field definitions, and constraints to
+    determine whether the database is protected against invalid input." do
+      skip "This test requires a Manual Review: Review Couchbase code, application code, settings, column and field definitions, and constraints to
+      determine whether the database is protected against invalid input."
+  end
 end

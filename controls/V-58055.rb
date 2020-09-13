@@ -41,4 +41,10 @@ system exists, or at least weekly in the absence of such a connection."
   tag "fix_id": "F-63263r1_fix"
   tag "cci": ["CCI-001851"]
   tag "nist": ["AU-4 (1)", "Rev_4"]
+
+  describe "This test requires a Manual Review: Review the system documentation for a description of how audit records are
+  off-loaded." do
+    skip "This test requires a Manual Review: Review the system documentation for a description of how audit records are
+    off-loaded." 
+  end
 end

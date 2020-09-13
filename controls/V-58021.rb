@@ -54,4 +54,12 @@ using the database, to ensure privilege elevation is used only as required.
   tag "fix_id": "F-63229r1_fix"
   tag "cci": ["CCI-002233"]
   tag "nist": ["AC-6 (8)", "Rev_4"]
+
+  describe "This test requires a Manual Review: Review the system documentation, database and Couchbase security
+  configuration, source code for Couchbase internal logic, source code of external modules invoked by Couchbase , 
+  and source code of the application(s) using the database." do
+    skip "This test requires a Manual Review: Review the system documentation, database and Couchbase security
+    configuration, source code for Couchbase internal logic, source code of external modules invoked by Couchbase , 
+    and source code of the application(s) using the database."
+  end
 end

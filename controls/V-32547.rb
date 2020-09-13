@@ -39,4 +39,10 @@ locations."
   tag "fix_id": "F-36462r3_fix"
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
+
+    describe "This test requires a Manual Review: Review the procedures for the refreshing of development/test data from
+    production." do
+    skip "This test requires a Manual Review: Review the procedures for the refreshing of development/test data from
+    production."
+  end
 end

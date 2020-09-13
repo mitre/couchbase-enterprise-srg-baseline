@@ -18,17 +18,17 @@ console.
 following command:
      $ curl -v -X GET -u <Full Admin>:<Password>
 http://<host>:<port>/settings/security
-    Review the output of the command. If \"disableUIOverHttps\" is set to
-\"true\", this is finding.
+    Review the output of the command. If disableUIOverHttps is set to
+true, this is finding.
   "
   desc  "fix", "
     Modify and configure each non-compliant application, tool, or feature
 associated with Couchbase/database so that it does not display authentication
 secrets.
-    The web console is available by default, unless both \"disableUIOverHttp\"
-and \"disableUIOverHttps\" are both set to \"true\".
-    If \"disableUIOverHttps\" is set to \"true\", as the Full Admin, change
-this value to \"false\" with the following command:
+    The web console is available by default, unless both disableUIOverHttp
+and disableUIOverHttps are both set to true.
+    If disableUIOverHttps is set to true, as the Full Admin, change
+this value to false with the following command:
      $  curl -v -X GET -u <Full Admin>:<Password>
 http://<host>:<port>/settings/security -d disableUIOverHttps=false
 
@@ -42,4 +42,9 @@ http://<host>:<port>/settings/security -d disableUIOverHttps=false
   tag "fix_id": "F-63259r1_fix"
   tag "cci": ["CCI-001844"]
   tag "nist": ["AU-3 (2)", "Rev_4"]
+
+
+  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") do
+    its('disableUIOverHttps') { should eq false }
+  end 
 end

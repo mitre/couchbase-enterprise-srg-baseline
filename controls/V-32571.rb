@@ -61,4 +61,15 @@ using the following commands:
   tag "fix_id": "F-36486r2_fix"
   tag "cci": ["CCI-001314"]
   tag "nist": ["SI-11 b", "Rev_4"]
+
+  if file(input('cb_audit_log')).exist?
+    describe file(input('cb_audit_log')) do
+      its ('mode') { should be 0640 }
+      its ('owner') { should eq input('couchdb_owner') }
+    end
+  else
+    describe "The #{input('cb_audit_log')} file is missing, we cannot test this control" do
+    skip "The input('cb_audit_log') file is missing, please restore the file and rerun the test"
+    end
+  end
 end

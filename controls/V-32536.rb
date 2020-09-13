@@ -41,4 +41,10 @@ code implementing application logic."
   tag "fix_id": "F-36451r2_fix"
   tag "cci": ["CCI-001084"]
   tag "nist": ["SC-3", "Rev_4"]
+
+  describe "This test requires a Manual Review: Check Couchbase settings to determine whether objects or code implementing
+  security functionality are located in a separate security domain." do
+    skip "This test requires a Manual Review: Check Couchbase settings to determine whether objects or code implementing
+    security functionality are located in a separate security domain."
+  end
 end

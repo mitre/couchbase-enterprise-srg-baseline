@@ -78,4 +78,19 @@ not include the \"admin\" or the \"security_admin\" role in command):
   tag "fix_id": "F-63231r1_fix"
   tag "cci": ["CCI-002235"]
   tag "nist": ["AC-6 (10)", "Rev_4"]
+
+  admin_users = []
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
+  
+  json_output.each do |output|
+    user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+    admin_users.push(user)
+  end
+
+  admin_users.each do |user|
+    describe 'Each admin user in the list' do
+      subject { user }
+      it { should be_in input('cb_admin_users').uniq.flatten }
+    end
+  end
 end

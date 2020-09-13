@@ -8,7 +8,7 @@
     max_ssh_sessions: 1
 
   provisioner:
-    name: ansible_playbook
+    name: chef_solo
     hosts: all
     require_ansible_repo: false
     require_ansible_omnibus: true
@@ -23,7 +23,7 @@
     sudo: true
     load_plugins: true
     inspec_tests:
-      - path: ./
+      - path: ./controls/V-58023.rb
     input_files:
       - inputs.yml
   
@@ -31,7 +31,7 @@
     - name: rhel-7-couchbase-6.0.2-enterprise
       lifecycle:
         post_create:
-          - remote: curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
+          - remote: curl -O -k https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo yum install -y couchbase-server-6.0.2-2413
           - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
@@ -43,7 +43,7 @@
     - name: rhel-7-couchbase-6.6.0-enterprise
       lifecycle:
         post_create:
-          - remote: curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
+          - remote: curl -O -k https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo yum install -y couchbase-server-6.6.0-7909
           - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc

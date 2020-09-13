@@ -43,4 +43,12 @@ attempts to delete security objects.
   tag "fix_id": "F-63301r1_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
+  
+  describe "This test requires a Manual Review: Review Couchbase documentation to verify the architecture makes it impossible for any user, even with
+  the highest privileges, to directly view or directly modify the contents of its built-in security objects, and if there are no additional, locally-defined
+  security objects in the database(s)." do
+    skip "This test requires a Manual Review: Review Couchbase documentation to verify the architecture makes it impossible for any user, even with
+    the highest privileges, to directly view or directly modify the contents of its built-in security objects, and if there are no additional, locally-defined
+    security objects in the database(s)." 
+  end
 end

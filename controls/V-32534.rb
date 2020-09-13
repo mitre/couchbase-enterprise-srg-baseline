@@ -38,4 +38,10 @@ https://docs.couchbase.com/server/current/manage/manage-security/manage-connecti
   tag "fix_id": "F-36449r2_fix"
   tag "cci": ["CCI-001199"]
   tag "nist": ["SC-28", "Rev_4"]
+  
+  describe "This test requires a Manual Review: Review the system documentation to determine whether the organization has protected
+   the defined confidentiality and integrity of all information at rest." do
+    skip "This test requires a Manual Review: Review the system documentation to determine whether the organization has protected
+   the defined confidentiality and integrity of all information at rest."
+  end
 end

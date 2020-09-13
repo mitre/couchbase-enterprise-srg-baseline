@@ -43,4 +43,14 @@ manually terminate a session initiated by that user."
   tag "fix_id": "F-63243r1_fix"
   tag "cci": ["CCI-002363"]
   tag "nist": ["AC-12 (1)", "Rev_4"]
+
+  describe "This test requires a Manual Review: Review Couchbase documentation and/or inquiring of the
+  vendor's technical support staff, whether the Couchbase satisfies this
+  requirement; and, if it does, determine whether this is inherent, unchangeable
+  behavior, or a configurable feature." do
+    skip "This test requires a Manual Review: Review Couchbase documentation and/or inquiring of the
+    vendor's technical support staff, whether the Couchbase satisfies this
+    requirement; and, if it does, determine whether this is inherent, unchangeable
+    behavior, or a configurable feature."
+  end
 end

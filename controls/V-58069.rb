@@ -48,4 +48,10 @@ access to privileges/permissions/role membership.
   tag "fix_id": "F-63277r1_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
+  
+  describe "This test requires a Manual Review: Review Couchbase documentation to verify that audit records can be produced
+  when the system denies or fails to complete attempts to retrieve privileges/permissions/role membership." do
+    skip "This test requires a Manual Review: Review Couchbase documentation to verify that audit records can be produced
+    when the system denies or fails to complete attempts to retrieve privileges/permissions/role membership." 
+  end
 end

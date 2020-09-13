@@ -64,4 +64,12 @@ and execution of logic.
   tag "fix_id": "F-63293r1_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
+
+  describe "This test requires a Manual Review: Review Couchbase documentation to verify that audit records can be produced
+  when the system denies or fails to complete attempts to access security objects, such as tables, views, procedures, and functions, such access to
+  include reads, creations, modifications and deletions of data, and execution of logic." do
+    skip "This test requires a Manual Review: Review Couchbase documentation to verify that audit records can be produced
+    when the system denies or fails to complete attempts to access security objects, such as tables, views, procedures, and functions, such access to
+    include reads, creations, modifications and deletions of data, and execution of logic." 
+  end
 end
