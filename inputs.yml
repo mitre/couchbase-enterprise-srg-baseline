@@ -63,6 +63,14 @@ cb_debian_approved_packages: [
   'couchbase-server'
 ]
 
+approved_ssl_protocols: [
+  'TLSv1.2'
+]
+
+approved_ciphers: []
+
+
+
 
 
 

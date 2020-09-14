@@ -68,5 +68,4 @@ encryption at the OS or network level.
   its('stdout') { should_not be "[]" }
   its('stdout') {should include input('approved_ciphers')}
   end 
-
 end
