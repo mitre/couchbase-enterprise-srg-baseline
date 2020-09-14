@@ -17,19 +17,30 @@ control "V-32424" do
   desc  "check", "
   Review the list of components and features installed with the Couchbase
   database.
-    $ yum list installed | grep couchbase
+
+  # RHEL/CENT Systems
+  $ yum list installed | grep couchbase
+  
+  # Debian Systems
+  $ dpkg --get-selections | grep couchbase
   
   If unused components are installed and are not documented and authorized,
   this is a finding.
-  RPM can also be used to check to see what is installed:
-    $ rpm -qa | grep couchbase
   
   If any packages displayed by this command are not being used, this is a
   finding.
   "
   desc  "fix", "Uninstall unused components or features that are installed and
   can be uninstalled. Remove any database objects and applications that are
-  installed to support them."
+  installed to support them.
+  
+  To remove any unused components, as the system administrator, run the
+  following:
+    # RHEL/CENT Systems
+    $ yum remove <package_name>
+    
+    # Debian Systems
+    $ apt-get remove <package_name>"
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000141-DB-000091"
@@ -40,5 +51,20 @@ control "V-32424" do
   tag "cci": ["CCI-000381"]
   tag "nist": ["CM-7 a", "Rev_4"]
 
-
+  if os.debian?
+    dpkg_packages = command("dpkg --get-selections | grep \"couchbase\"").stdout.split("\n")
+    dpkg_packages.each do |package|
+      package = command("echo #{package} | sed 's/ install$//'").stdout.split
+      describe(package) do
+        it { should be_in input('cb_debian_approved_packages') }
+      end
+    end
+  elsif os.redhat?
+    yum_packages = command("yum list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+    yum_packages.each do |package|
+      describe(package) do
+        it { should be_in input('cb_redhat_approved_packages') }
+      end
+    end
+  end
 end

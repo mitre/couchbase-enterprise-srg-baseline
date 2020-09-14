@@ -26,17 +26,20 @@ control "V-32426" do
   desc  "check", "
   To list all installed packages, as the system administrator, run the
   following:
-    # RHEL/CENT Systems
-    $ yum list installed | grep couchbase
-    # Debian Systems
-    $ dpkg --get-selections | grep couchbase
-    If any packages are installed that are not required, this is a finding.
+  # RHEL/CENT Systems
+  $ yum list installed | grep couchbase
+
+  # Debian Systems
+  $ dpkg --get-selections | grep couchbase
+
+  If any packages are installed that are not required, this is a finding.
   "
   desc  "fix", "
   To remove any unneeded executables, as the system administrator, run the
   following:
     # RHEL/CENT Systems
     $ yum remove <package_name>
+
     # Debian Systems
     $ apt-get remove <package_name>
   "
@@ -51,18 +54,18 @@ control "V-32426" do
   tag "nist": ["CM-7 a", "Rev_4"]
 
   if os.debian?
-    dpkg_packages = command("dpkg --get-selections | grep \"couchdb\"").stdout.tr('install','').split("\n")
-    dpkg_packages.each do |packages|
-      describe(packages) do
-        it { should be_in approved_packages }
+    dpkg_packages = command("dpkg --get-selections | grep \"couchbase\"").stdout.split("\n")
+    dpkg_packages.each do |package|
+      package = command("echo #{package} | sed 's/ install$//'").stdout.split
+      describe(package) do
+        it { should be_in input('cb_debian_approved_packages') }
       end
     end
-  
-  elsif os.linux? || os.redhat?
-    yum_packages = command("yum list installed | grep \"couchdb\"").stdout.strip.tr(' ','').split("\n")
-    yum_packages.each do |packages|
-      describe(packages) do
-        it { should be_in approved_packages }
+  elsif os.redhat?
+    yum_packages = command("yum list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+    yum_packages.each do |package|
+      describe(package) do
+        it { should be_in input('cb_redhat_approved_packages') }
       end
     end
   end

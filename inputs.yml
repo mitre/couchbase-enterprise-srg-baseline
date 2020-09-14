@@ -29,6 +29,7 @@ cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
 cb_samples_dir: '/opt/couchbase/samples'
+
 sample_buckets: [
   'travel-sample',
   'gamesim-sample', 
@@ -52,6 +53,15 @@ cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'
 
 is_docker: 'true'
+
+cb_redhat_approved_packages: [
+  'couchbase-release.x86_64',
+  'couchbase-server.x86_64'
+]
+
+cb_debian_approved_packages: [
+  'couchbase-server'
+]
 
 
 

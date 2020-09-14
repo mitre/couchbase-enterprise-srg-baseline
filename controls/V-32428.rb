@@ -43,9 +43,11 @@ approved."
   tag "cci": ["CCI-000382"]
   tag "nist": ["CM-7 b", "Rev_4"]
 
-  describe "This test requires a Manual Review: Determine if there are any functions, ports, protocols, and services that are not approved. If any are
-  found, this is a finding." do
-    skip "This test requires a Manual Review: Determine if there are any functions, ports, protocols, and services that are not approved. If any are
-    found, this is a finding."
+  describe "This test requires a Manual Review: Determine if there are any functions, 
+  ports, protocols, and services that are not approved. If any are found, this is a 
+  finding." do
+    skip "This test requires a Manual Review: Determine if there are any functions, 
+    ports, protocols, and services that are not approved. If any are found, this is a 
+    finding."
   end
 end

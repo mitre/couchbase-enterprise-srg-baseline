@@ -59,9 +59,9 @@
     group: "couchbase"
 
 - name: Remove Samples Directory
-    file:
-      path: "{{ cb_samples_dir }}"
-      state: absent
+  file:
+    path: "{{ cb_samples_dir }}"
+    state: absent
 
 
 # Add steps to harden
