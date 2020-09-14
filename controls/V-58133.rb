@@ -5,7 +5,8 @@ control "V-58133" do
   services deemed by the organization to be nonsecure, in accord with the Ports,
   Protocols, and Services Management (PPSM) guidance."
   desc  "Use of nonsecure network functions, ports, protocols, and services
-  exposes the system to avoidable threats."
+  exposes the system to avoidable threats.
+  "
   desc  "check", "
   Review the network functions, ports, protocols, and services in the
   Couchbase config:
@@ -28,7 +29,21 @@ control "V-58133" do
   tag "cci": ["CCI-001762"]
   tag "nist": ["CM-7 (1) (b)", "Rev_4"]
 
-  describe command("cat /opt/couchbase/etc/couchbase/static_config") do
-    its('state') { should eq 'enable' }
+  describe command("cat /opt/couchbase/etc/couchbase/static_config | grep \"port\"") do
+    its('stdout') { should include input('cb_cluster_port') }
   end  
+
+  if virtualization.system == 'docker'
+  describe "This test requires a Manual Review: The docker container must have networking tools 
+  to check its ports and their processes" do
+	  skip "This test requires a Manual Review: The docker container must have networking tools 
+    to check its ports and their processes"
+	end
+
+  else
+    describe port(input('cb_cluster_port')) do
+      it { should be_listening }
+      its('processes') { should include 'couchbase' }
+    end
+  end
 end

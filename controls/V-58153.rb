@@ -16,7 +16,6 @@ control "V-58153" do
   When transmitting data, Couchbase, associated applications, and
   infrastructure must leverage transmission protection mechanisms.
   "
-
   desc  "check", "
   Review the system information/specification for information indicating a
   strict requirement for data integrity and confidentiality when data is being
@@ -29,7 +28,6 @@ control "V-58153" do
     --client-auth --extended
   If the response does not show SSL is enabled, this is a finding.
   "
-
   desc  "fix", "
   Implement protective measures against unauthorized disclosure and
   modification during preparation for transmission.

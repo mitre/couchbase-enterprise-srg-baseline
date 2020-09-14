@@ -27,10 +27,10 @@ control "V-58169" do
   defined the information at rest that is to be protected from modification,
   which must include, at a minimum, PII and classified information.
   If no information is identified as requiring such protection, this is not a
-  finding.If any of the information defined as requiring cryptographic protection
+  finding. If any of the information defined as requiring cryptographic protection
   from modification is not encrypted in a manner that provides the required level
-  of protection, this is a finding. If an encryption at rest is required but the encryption tool is not
-  installed on the server, this is a finding.
+  of protection, this is a finding. If an encryption at rest is required but the
+  encryption tool is not installed on the server, this is a finding.
   "
   desc  "fix", "
   Configure Couchbase settings to enable protections against
@@ -48,13 +48,16 @@ control "V-58169" do
   tag "cci": ["CCI-002475"]
   tag "nist": ["SC-28 (1)", "Rev_4"]
 
-  describe 'Check if information at rest requiring protection are protected from modification' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
+  describe "This test requires a Manual Review: Ensure any information requiring
+  cryptographic protection from modification is encrypted to the required level
+  of protection" do
+    skip "This test requires a Manual Review: Ensure any information requiring
+    cryptographic protection from modification is encrypted to the required level
+    of protection"
   end
-  describe 'Check if any information requiring protection are encrypted to the required level of protection' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
-  end
-  describe 'Check if an encryption at rest is required and the encryption tool is installed on the server' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
+  describe "This test requires a Manual Review: Verify if encryption at rest is required 
+  that encryption tools are installed on the server" do
+    skip "This test requires a Manual Review: Verify if encryption at rest is required 
+    that encryption tools are installed on the server"
   end
 end

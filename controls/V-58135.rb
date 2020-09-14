@@ -57,8 +57,6 @@ control "V-58135" do
   tag "cci": ["CCI-001812"]
   tag "nist": ["CM-11 (2)", "Rev_4"]
 
-  describe json({ command "couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \ 
-  -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --list"}) do
-    its('state') { should eq 'enable' }
+  describe json({ command "couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --list"}) do
   end   
 end

@@ -52,7 +52,9 @@ control "V-58147" do
   tag "cci": ["CCI-002038"]
   tag "nist": ["IA-11", "Rev_4"]
   
-  describe 'Check that organization-defined circumstances require users to re-authenticate' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
+  describe "This test requires a Manual Review: Determine all situations where a user must re-authenticate
+    to re-authenticate, if Couchbase does not force re-authentication, this is a finding" do
+    skip "This test requires a Manual Review: Determine all situations where a user must re-authenticate
+    to re-authenticate, if Couchbase does not force re-authentication, this is a finding"
   end 
 end

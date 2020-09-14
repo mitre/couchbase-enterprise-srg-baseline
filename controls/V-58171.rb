@@ -42,8 +42,7 @@ control "V-58171" do
   physical protection.
   Review  documentation to set up 3rd party encryption tools.
   https://docs.couchbase.com/server/current/manage/manage-security/manage-connections-and-disks.html
-  "
-  
+ "
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000429-DB-000387"
@@ -54,13 +53,21 @@ control "V-58171" do
   tag "cci": ["CCI-002476"]
   tag "nist": ["SC-28 (1)", "Rev_4"]
 
-  describe 'Review system documentation on prevention of unauthorized disclosure of organization-defined information at rest on information system components.' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
+  describe "This test requires a Manual Review: Ensure Couchbase prevents unauthorized disclosure of
+  information at rest on system componets." do
+    skip "This test requires a Manual Review: Ensure Couchbase prevents unauthorized disclosure of
+    information at rest on system componets."
   end
-  describe 'Check if any of information requiring protection is not encrypted to the required level of protection or is not physically secured to the required level.' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
-  end  
-  describe 'Check if an encryption at rest is required and the encryption tool is installed on the server.' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
+  describe "This test requires a Manual Review: Ensure any information defined as requiring protection 
+  is encrypted in a manner that provides the required level of protection and is physically secured to
+  the required level " do
+    skip "This test requires a Manual Review: Ensure any information defined as requiring protection 
+    is encrypted in a manner that provides the required level of protection and is physically secured to
+    the required level"
   end    
+  describe "This test requires a Manual Review: Verify if encryption at rest is required 
+  that encryption tools are installed on the server" do
+    skip "This test requires a Manual Review: Verify if encryption at rest is required 
+    that encryption tools are installed on the server"
+  end
 end

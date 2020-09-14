@@ -33,7 +33,12 @@ control "V-58167" do
   tag "cci": ["CCI-002470"]
   tag "nist": ["SC-23 (5)", "Rev_4"]
 
-  describe '"Check if Couchbase will deny non-DoD approved PKI end-entity certificates.' do
-    skip 'This test can only be performed by manual examination or interview at this time.'
+  describe command('openssl x509 -in -text | grep -i "issuer"') do
+  end 
+
+  describe "This test requires a Manual Review: Ensure Couchbase will only accept DoD-approved PKI
+  end-entity certificates" do
+    skip "This test requires a Manual Review: Ensure Couchbase will only accept DoD-approved PKI
+    end-entity certificates"
   end
 end

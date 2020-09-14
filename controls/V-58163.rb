@@ -4,7 +4,6 @@ control "V-58163" do
   title "Couchbase must implement NIST FIPS 140-2 validated cryptographic
   modules to protect unclassified information requiring confidentiality and
   cryptographic protection, in accordance with the data owners requirements."
-
   desc  "Use of weak or untested encryption algorithms undermines the purposes
   of utilizing encryption to protect data. The application must implement
   cryptographic modules adhering to the higher standards approved by the federal
@@ -18,7 +17,6 @@ control "V-58163" do
   Requirements For Cryptographic Modules. Note that the product's cryptographic
   modules must be validated and certified by NIST as FIPS-compliant.
   "
- 
   desc  "check", "
   As the system administrator, run the following:
     $ openssl version
@@ -27,7 +25,6 @@ control "V-58163" do
     $ cat /proc/sys/crypto/fips_enabled
   If fips_enabled is not 1, this is a finding.
   "
- 
   desc  "fix", "
   Configure OpenSSL to meet FIPS Compliance.
   To configure OpenSSL to be FIPS 140-2 compliant, see the official RHEL
@@ -47,7 +44,7 @@ control "V-58163" do
   describe command('openssl version') do
     its('stdout') { should include 'fips' }
   end
-  describe command('cat /proc/sys/crypto/fips_enabled') do
-    its('stdout') { should eq '1' }
-  end  
+  describe kernel_parameter('crypto.fips_enabled') do
+    its('value') { should cmp 1 }
+  end
 end

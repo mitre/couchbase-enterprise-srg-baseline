@@ -18,11 +18,10 @@ control "V-58165" do
   However, it is recognized that available Couchbase products do not all
   implement the preferred technique yet may have other protections against
   session hijacking. Therefore, other techniques are acceptable, provided they
-  are demonstrated to be effective.
-  "
+  are demonstrated to be effective."
   desc  "check", "
   Verify Couchbase has SSL enabled:
-    $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin> \\-p
+    $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin> -p
     <Password> --client-auth --extended
   If Couchbase does not have SSL enabled, this is a finding.
   Review Couchbase settings to determine whether protections against
@@ -31,7 +30,7 @@ control "V-58165" do
   "
   desc  "fix", "
   To make authorization mandatory run the following command:
-    $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin>\\ -p
+    $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin> -p
     <Password> --set-client-auth mandatory
   "
   impact 0.5

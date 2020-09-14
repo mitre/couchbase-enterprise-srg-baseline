@@ -18,6 +18,8 @@ cb_config_dir: 'opt/couchbase/etc/couchbase'
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 cb_static_config: '/opt/couchbase/etc/couchbase/static_config'
+cb_http_access_log: '/opt/couchbase/var/lib/couchbase/logs/http_access.log' 
+cb_http_access_internal_log: '/opt/couchbase/var/lib/couchbase/logs/ http_access_internal.log'
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'
 

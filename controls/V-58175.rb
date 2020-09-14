@@ -42,10 +42,21 @@ control "V-58175" do
   tag "cci": ["CCI-002617"]
   tag "nist": ["SI-2 (6)", "Rev_4"]
 
-  yum_packages = command("yum list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
-  yum_packages.each do |packages|
-    describe(packages) do
-      it { should be_in input('approved_packages') }
+  if os.debian?
+    dpkg_packages = command("apt list --installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+    dpkg_packages.each do |packages|
+      describe(packages) do
+        it { should match input('cb_version') }
+      end
+  end
+
+  elsif os.linux? || os.redhat?
+    yum_packages = command("yum -list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+
+    yum_packages.each do |packages|
+      describe(packages) do
+        it { should match input('cb_version') }
+      end
     end
   end
 end

@@ -1,10 +1,5 @@
 # encoding: UTF-8
 
-cb_data_dir = ('cb_data_dir')
-cb_full_admin = ('cb_full_admin')
-cb_static_config = ('cb_static_config')
-cb_log_dir = ('cb_log_dir')
-
 control "V-58151" do
   title "Access to database files must be limited to relevant processes and to
   authorized, administrative users."
@@ -58,21 +53,21 @@ control "V-58151" do
   tag "nist": ["SC-4", "Rev_4"]
 
   describe file(input('cb_static_config')) do
-    it { should be_owned_by input('cb_full_admin') }
-    it { should be_owned_by input('cb_full_admin') }
-    its('mode') { should cmp '0600' }
+    its('owner') { should be_in input('cb_service_user') }
+    its('group') { should be_in input('cb_service_group') }
+    it { should_not be_more_permissive_than('0600') }
   end      
   describe directory(input('cb_data_dir')) do
     it { should be_directory }
-    it { should be_owned_by input('cb_full_admin') }
-    it { should be_grouped_into input('cb_full_admin') }
-    its('mode') { should cmp '0700' }
+    its('owner') { should be_in input('cb_service_user') }
+    its('group') { should be_in input('cb_service_group') }
+    it { should_not be_more_permissive_than('0700') }
   end
   describe directory(input('cb_log_dir')) do
     it { should be_directory }
-    it { should be_owned_by input('cb_full_admin') }
-    it { should be_grouped_into input('cb_full_admin') }
-    its('mode') { should cmp '0700' }
+    its('owner') { should be_in input('cb_service_user') }
+    its('group') { should be_in input('cb_service_group') }
+    it { should_not be_more_permissive_than('0700') }
   end   
 end
 

@@ -38,14 +38,16 @@ control "V-58173" do
   tag "nist": ["SC-39", "Rev_4"]
 
   if virtualization.system == 'docker'
-    describe "Couchbase is within a container, which separates execution space" do
+    describe "If Couchbase is running within a Docker container, there is separate execution
+    space and this is not a finding." do
+      skip "If Couchbase is running within a Docker container, there is separate execution
+      space and this is not a finding."
     end
   else
-    describe "Check if Couchbase is capable of maintaining a separate execution domain for each executing process." do
-      skip "This test can only be performed by manual examination or interview at this time."
-    end 
-    describe "Check if Couchbase is configured to maintain a separate execution domain for each executing process." do
-      skip "This test can only be performed by manual examination or interview at this time."
-    end   
+    describe "This test requires a Manual Review: Ensure Couchbase is capable of maintaining a 
+    separate execution domain for each executing process." do
+      skip "Check if Couchbase is capable of maintaining a separate execution domain for each 
+      executing process."
+    end  
   end  
 end

@@ -7,7 +7,8 @@ control "V-58123" do
   Couchbase that comes from any source other than the application(s) that it
   supports. Examples would be the command line or a database management utility
   program. The intent is to capture all activity from administrative and
-  non-standard sources."
+  non-standard sources.
+  "
   desc  "check", "
   If Couchbase does not generate audit records for all direct access to the
   database(s), this is a finding.
@@ -45,5 +46,22 @@ control "V-58123" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
+  describe "This test requires a Manual Review: Verify that audit records for all direct access 
+  to the database(s)." do
+    skip "This test requires a Manual Review: Verify that audit records for all direct access 
+    to the database(s)."
+  end 
 
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe json({ command "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
+      its('Audit enabled') { should eq 'true' }
+    end
+  else
+    describe command("cat #{input('cb_http_access_log')}") do
+      its('stdout') { should_not eq '' }
+    end
+    describe command("cat #{input('cb_http_access_internal_log')}") do
+      its('stdout') { should_not eq '' }
+    end
+  end    
 end

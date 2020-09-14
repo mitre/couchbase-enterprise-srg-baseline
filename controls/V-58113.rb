@@ -57,4 +57,16 @@ control "V-58113" do
   tag "fix_id": "F-63321r1_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
+
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe json({ command "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
+      its('Audit enabled') { should eq 'true' }
+    end
+  else
+    describe command("cat #{input('cb_audit_log')}") do
+      its('stdout') { should include 'timestamp' }
+    end
+  end
 end

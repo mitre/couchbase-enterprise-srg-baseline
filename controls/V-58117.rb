@@ -48,18 +48,18 @@ control "V-58117" do
     \"true\", this is finding.
   "
   desc  "fix", "
-    Enable session auditing on the Couchbase cluster to configure required
-functionality to be audited.
-    Couchbase Server 6.5.0 and earlier -
-      As the Full Admin, execute the following command to enable auditing:
-       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
---password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
---audit-log-path /opt/couchbase/var/lib/couchbase/logs
-    Couchbase Server Version 6.5.1 and later -
-      As the Full Admin, execute the following command to enable auditing:
-       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
---password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
-604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+  Enable session auditing on the Couchbase cluster to configure required
+  functionality to be audited.
+  Couchbase Server 6.5.0 and earlier -
+    As the Full Admin, execute the following command to enable auditing:
+      $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+      --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+      --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+  Couchbase Server Version 6.5.1 and later -
+    As the Full Admin, execute the following command to enable auditing:
+      $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+      --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+      604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
   "
   impact 0.5
   tag "severity": "medium"
@@ -70,4 +70,22 @@ functionality to be audited.
   tag "fix_id": "F-63325r1_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
+
+  describe "This test requires a Manual Review: Verify events that should be audit have been 
+  specified by Full Admin." do
+    skip "This test requires a Manual Review: Verify events that should be audit have been 
+    specified by Full Admin."
+  end
+
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe json({ command "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
+      its('Audit enabled') { should eq 'true' }
+    end
+  else
+    describe command("cat #{input('cb_audit_log')}") do
+      its('stdout') { should_not eq '' }
+    end
+  end
 end

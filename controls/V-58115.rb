@@ -92,5 +92,21 @@ control "V-58115" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
+  describe "This test requires a Manual Review: Verify events that should be audit have been 
+  specified by Full Admin." do
+    skip "This test requires a Manual Review: Verify events that should be audit have been 
+    specified by Full Admin."
+  end
   
+  couchbase_version = command('couchbase-server -v').stdout
+
+  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
+    describe json({ command "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
+      its('Audit enabled') { should eq 'true' }
+    end
+  else
+    describe command("cat #{input('cb_audit_log')}") do
+      its('stdout') { should_not eq '' }
+    end
+  end
 end

@@ -26,7 +26,6 @@ control "V-58159" do
   Documentation:
   https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-Federal_Standards_And_Regulations-Federal_Information_Processing_Standard.html
   "
-  
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000514-DB-000381"
@@ -40,7 +39,7 @@ control "V-58159" do
   describe command('openssl version') do
     its('stdout') { should include 'fips' }
   end
-  describe command('cat /proc/sys/crypto/fips_enabled') do
-    its('stdout') { should eq '1' }
-  end  
+  describe kernel_parameter('crypto.fips_enabled') do
+    its('value') { should cmp 1 }
+  end
 end

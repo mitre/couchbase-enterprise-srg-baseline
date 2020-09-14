@@ -47,4 +47,18 @@ control "V-58127" do
   tag "fix_id": "F-63335r1_fix"
   tag "cci": ["CCI-001814"]
   tag "nist": ["CM-5 (1)", "Rev_4"]
+
+  describe "This test requires a Manual Review: Verify that audit records are produced when the
+  system fails attempts to change the configuration of Couchbase or database(s)." do
+    skip "This test requires a Manual Review: Verify that audit records are produced when the
+    system fails attempts to change the configuration of Couchbase or database(s)."
+  end 
+ 
+  describe "This test requires a Manual Review: Verify that audit records are produced when the system denies attempts to change the configuration of Couchbase or  database(s)." do
+    skip "This test requires a Manual Review: Verify that audit records are produced when the system denies attempts to change the configuration of Couchbase or  database(s)."
+  end
+
+  describe "This test requires a Manual Review: Verify that audit records are produced when other errors prevent attempts to change theconfiguration of Couchbase or database(s)." do
+    skip "This test requires a Manual Review: Verify that audit records are produced when other errors prevent attempts to change theconfiguration of Couchbase or database(s)."
+  end  
 end

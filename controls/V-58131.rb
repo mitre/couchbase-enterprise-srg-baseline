@@ -36,5 +36,9 @@ control "V-58131" do
   tag "cci": ["CCI-000366"]
   tag "nist": ["CM-6 b", "Rev_4"]
 
-  
+  describe "This test requires a Manual Review: Review the Couchbase security configuration settings
+  to ensure compliance with DoD security guidelines." do
+    skip "This test requires a Manual Review: Review the Couchbase security configuration settings
+    to ensure compliance with DoD security guideline"
+  end   
 end
