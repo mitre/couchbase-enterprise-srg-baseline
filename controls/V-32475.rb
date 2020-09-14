@@ -5,7 +5,7 @@ control "V-32475" do
 certificates by performing RFC 5280-compliant certification path validation."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates.
 
-    A certificate\xE2\x80\x9A\xC3\x84\xC3\xB4s certification path is the path
+    A certificate's certification path is the path
 from the end entity certificate to a trusted root certification authority (CA).
  Certification path validation is necessary for a relying party to make an
 informed decision regarding acceptance of an end entity certificate.

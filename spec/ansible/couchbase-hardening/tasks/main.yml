@@ -4,6 +4,65 @@
     name: couchbase-server
     state: started
 
+- name: Setup new cluster
+  shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c 127.0.0.1 --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
+
+- name: Create a Bucket
+  shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c 127.0.0.1:8091 --username admin --password password --bucket test-data --bucket-type couchbase --bucket-ramsize 100"
+
+- name: Create Admin User
+  shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbadmin --rbac-password cbpass --rbac-name 'Admin User' --roles admin --auth-domain local"
+
+- name: Create Regular User
+  shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbuser --rbac-password cbpass --rbac-name 'CB User' --roles bucket_admin[test-data] --auth-domain local"
+
+- name: Check version of Couchbase Server
+  shell: "/opt/couchbase/bin/couchbase-server -v"
+  register: cbversion
+
+- name: Enable Auditing for Enterprise 6.5.0 and earlier
+  shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  when: "'6.0.2' in cbversion.stdout or '6.5.0' in cbversion.stdout"
+
+- name: Enable Auditing for Enterprise 6.5.1 and later
+  shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --set --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
+
+- name: Set Ownership/Permissions on all Couchbase Config Files
+  file:
+    path: "{{ cb_config_dir }}"
+    recurse: yes
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on Couchbase Config Directory
+  file:
+    path: "{{ cb_config_dir }}"
+    mode: "700"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Log Files
+  file:
+    path: "{{ cb_log_dir }}"
+    recurse: yes
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on Log Directory
+  file:
+    path: "{{ cb_log_dir }}"
+    mode: "700"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Remove Samples Directory
+    file:
+      path: "{{ cb_samples_dir }}"
+      state: absent
+
 - name: Check version of Couchbase server
   shell: "opt/couchbase/bin/couchbase-server -v"
   register: cbversion
@@ -18,8 +77,17 @@
   --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
   when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
 
-- name: Configure Couchbase to Generate Audit Records for All Invalid Inputs
-  shell: "**************************"
+- name: Enable Compliant Auditing Settings 6.0.2 and earlier
+  shell: "couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+   --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+   --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  when: "'6.0.2' in cbversion.stdout or '6.5.0' in cbversion.stdout"
+
+- name: Enable Compliant Auditing Settings 6.5 and later
+  shell: "couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+    --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+    604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
 
 - name: Configure Couchbase to to implement a limit on the lifetime of cached authenticator
   shell: "couchbase-cli setting-ldap -c 127.0.0.1:8091 -u admin -p password --cache-value-lifetime 300000"

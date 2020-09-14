@@ -10,7 +10,7 @@ holder to cryptographically prove possession of the corresponding private key.
     If the private key is stolen, an attacker can use the private key(s) to
 impersonate the certificate holder.  In cases where Couchbase-stored private
 keys are used to authenticate Couchbase to the
-system\xE2\x80\x9A\xC3\x84\xC3\xB4s clients, loss of the corresponding private
+system's clients, loss of the corresponding private
 keys would allow an attacker to successfully perform undetected man in the
 middle attacks against Couchbase system and its clients.
 
