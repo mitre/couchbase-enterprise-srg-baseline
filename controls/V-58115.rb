@@ -105,8 +105,8 @@ control "V-58115" do
       its('Audit enabled') { should eq 'true' }
     end
   else
-    describe command("cat #{input('cb_audit_log')}") do
-      its('stdout') { should_not eq '' }
-    end
+    describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
+      its('auditdEnabled') { should eq true }
+    end 
   end
 end

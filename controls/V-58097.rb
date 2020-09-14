@@ -52,5 +52,27 @@ control "V-58097" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  
+  describe "This test requires a Manual Review: Verify that audit records can be 
+  produced when the system denies or fails to complete attempts to access categories
+  of information, such access to include reads, creations, modifications and deletions." do
+    skip "This test requires a Manual Review: Verify that audit records can be produced
+    when the system denies or fails to complete attempts to access categories of information,
+    such access to include reads, creations, modifications and deletions."
+  end
+
+  describe "This test requires a Manual Review: Verify that audit records are produced 
+  when the system denies attempts to access categories of information, such access to 
+  include reads, creations, modifications and deletions." do
+    skip "This test requires a Manual Review: Verify that audit records are produced when 
+    the system denies attempts to access categories of information, such access to include
+    reads, creations, modifications and deletions."
+  end  
+
+  describe "This test requires a Manual Review: Verify that audit records are produced when 
+  other errors prevent attempts to access categories of information, such access to include
+  reads, creations, modifications and deletions." do
+    skip "This test requires a Manual Review: Verify that audit records are produced when 
+    the system denies attempts to access categories of information, such access to include 
+    reads, creations, modifications and deletions."
+  end  
 end

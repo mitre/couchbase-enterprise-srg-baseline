@@ -65,6 +65,10 @@ control "V-58113" do
       its('Audit enabled') { should eq 'true' }
     end
   else
+    describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
+      its('auditdEnabled') { should eq true }
+    end 
+    
     describe command("cat #{input('cb_audit_log')}") do
       its('stdout') { should include 'timestamp' }
     end
