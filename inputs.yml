@@ -53,6 +53,14 @@ cb_cluster_port: '8091'
 
 is_docker: 'true'
 
+approved_ssl_protocols: [
+  'TLSv1.2'
+]
+
+approved_ciphers: []
+
+
+
 
 
 

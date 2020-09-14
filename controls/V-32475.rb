@@ -58,7 +58,7 @@ command:
   tag "cci": ["CCI-000185"]
   tag "nist": ["IA-5 (2) (a)", "Rev_4"]
 
-  describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --client-auth --extended | grep '\"path\'") do
-  its('stdout') { should include "True" }
+  describe command("couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --client-auth --extended | grep '\"path\'") do
+  its('stdout') { should include "true" }
   end 
 end

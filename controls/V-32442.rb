@@ -47,4 +47,18 @@ organizational users who log on/connect to the system.
   tag "fix_id": "F-36357r2_fix"
   tag "cci": ["CCI-000764"]
   tag "nist": ["IA-2", "Rev_4"]
+  
+  rbac_accounts = input('cb_admin_users').clone << input('cb_users')
+  user_accounts = []
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep 'id'").stdout.split("\n")
+  json_output.each do |output|
+    user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+    user_accounts.push(user_id)
+  end
+  user_accounts.each do |user|
+    describe 'Each user in the list' do
+      subject { user }
+      it { should be_in rbac_accounts.uniq.flatten }
+    end
+  end 
 end

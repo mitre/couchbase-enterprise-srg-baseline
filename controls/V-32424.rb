@@ -39,6 +39,6 @@ control "V-32424" do
   tag "fix_id": "F-36339r2_fix"
   tag "cci": ["CCI-000381"]
   tag "nist": ["CM-7 a", "Rev_4"]
-
+ 
 
 end
