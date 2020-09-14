@@ -71,12 +71,6 @@ control "V-58117" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Verify events that should be audit have been 
-  specified by Full Admin." do
-    skip "This test requires a Manual Review: Verify events that should be audit have been 
-    specified by Full Admin."
-  end
-
   couchbase_version = command('couchbase-server -v').stdout
 
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
