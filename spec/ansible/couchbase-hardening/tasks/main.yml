@@ -28,6 +28,12 @@
   shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --set --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
   when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
 
+- name: Enable saslauthd
+  shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c 127.0.0.1:8091 --username admin --password password --enabled 1"
+
+- name: Set UI Session Timeout
+  shell: "curl -X POST -u admin:password http://127.0.0.1:8091/settings/security -d 'uiSessionTimeout=600'"
+
 - name: Set Ownership/Permissions on all Couchbase Config Files
   file:
     path: "{{ cb_config_dir }}"
