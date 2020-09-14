@@ -91,12 +91,6 @@ control "V-58115" do
   tag "fix_id": "F-63323r1_fix"
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
-
-  describe "This test requires a Manual Review: Verify events that should be audit have been 
-  specified by Full Admin." do
-    skip "This test requires a Manual Review: Verify events that should be audit have been 
-    specified by Full Admin."
-  end
   
   couchbase_version = command('couchbase-server -v').stdout
 
