@@ -44,7 +44,7 @@ control "V-58157" do
   tag "cci": ["CCI-002450"]
   tag "nist": ["SC-13", "Rev_4"]
 
-  describe json({ command "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended"}) do
+  describe json({ command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended"}) do
     its('state') { should eq 'enable' }
   end  
 end

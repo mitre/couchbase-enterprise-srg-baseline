@@ -31,7 +31,7 @@ control "V-58137" do
   tag "cci": ["CCI-002007"]
   tag "nist": ["IA-5 (13)", "Rev_4"]
 
-  describe json({ "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}:settings/ldap)"}) do
+  describe json(command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}:settings/ldap)") do
     its('cache-value-lifetime') { should_not eq '0' }
   end        
 end

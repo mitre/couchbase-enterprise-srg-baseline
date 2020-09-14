@@ -54,7 +54,7 @@ control "V-58099" do
   couchbase_version = command('couchbase-server -v').stdout
 
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
-    describe json({ command "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
+    describe json({ command: "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
       its('Audit enabled') { should eq 'true' }
     end
   else
