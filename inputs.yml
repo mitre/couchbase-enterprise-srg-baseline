@@ -18,8 +18,13 @@ cb_roles: [
   'bucket_admin'
 ]
 
-cb_auth_method: 'saslauthd'
+cb_use_saslauthd: 'true'
+cb_use_ldap: 'false'
+cb_use_pki: 'true'
 cb_auth_domain: 'local'
+
+cb_private_key_path: '/etc/ssl/ca.key'
+cb_ca_file_path: '/etc/ssl/ca.pem'
 
 cb_home_dir: '/opt/couchbase'
 cb_config_dir: 'opt/couchbase/etc/couchbase'

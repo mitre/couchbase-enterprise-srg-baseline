@@ -29,8 +29,7 @@ control "V-32468" do
   "
   desc  "fix", "
   As the Full Admin, enable saslauthd with the following command:
-    $ couchbase-cli setting-saslauthd -c <host>:<port> --username <Full
-    Admin> --password <Password> --enabled 1
+    $ couchbase-cli setting-saslauthd -c <host>:<port> --username <Full Admin> --password <Password> --enabled 1
   "
   impact 0.5
   tag "severity": "medium"
