@@ -89,8 +89,6 @@ control "V-32362" do
   tag "cci": ["CCI-000169"]
   tag "nist": ["AU-12 a", "Rev_4"]
 
-  couchbase_version = command('couchbase-server -v').stdout
-
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
     input('cb_required_audit_events').each do |event_name|
       describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep '#{event_name}'") do
