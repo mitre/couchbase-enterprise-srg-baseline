@@ -25,6 +25,11 @@ cb_cluster_port: '8091'
 
 cb_version: '6.5'
 
-approved_packages: [
+cb_debian_approved_packages: [
+  ''
+  ]
+
+  
+cb_redhat_approved_package: [
   ''
   ]

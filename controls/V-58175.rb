@@ -43,25 +43,20 @@ control "V-58175" do
   tag "nist": ["SI-2 (6)", "Rev_4"]
 
   if os.debian?
-    describe 'Installed Couchbase packages' do
-      subject { dpkg_packages = command("apt list --installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n") }
-
-      dpkg_packages.each do |packages|
-        describe(packages) do
-          it { should be_in input('approved_packages') }
-        end
+    dpkg_packages = command("dpkg --get-selections | grep \"couchbase\"").stdout.split("\n")
+    dpkg_packages.each do |package|
+      package = command("echo #{package} | sed 's/ install$//'").stdout.split
+      describe "Only approved packages should be installed. #{package}" do
+        subject { package }
+        it { should be_in input('cb_debian_approved_packages') }
       end
     end
-
-  elsif os.linux? || os.redhat?
-    describe 'Installed Couchbase packages' do
-      subject { yum_packages = command("yum -list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n") }
-
-      yum_packages.each do |packages|
-        describe(packages) do
-          it { should be_in input('approved_packages') }
-        end
+  elsif os.redhat?
+    yum_packages = command("yum list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+    yum_packages.each do |package|
+      describe "Only approved packages should be installed. #{package}" do
+        subject { package }
+        it { should be_in input('cb_redhat_approved_packages') }
       end
     end
   end
-end
