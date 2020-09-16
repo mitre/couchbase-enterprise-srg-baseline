@@ -29,7 +29,7 @@ control "V-58149" do
   As the root or sudo user, change the permission of the following files:
   Couchbase configuration files directory:
     $ chown -R couchbase:couchbase /opt/couchbase/etc/couchbase
-    $ chmod 600 /opt/couchbase/etc/couchbase/*
+    $ chmod 700 /opt/couchbase/etc/couchbase/
   Couchbase default directory (contains data and logs):
     $ chown -R couchbase:couchbase /opt/couchbase/var/lib/couchbase
     $ chmod 600 /opt/couchbase/var/lib/couchbase/*
@@ -44,10 +44,19 @@ control "V-58149" do
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
 
-  describe command("find #{input('cb_log_dir')} -type f -perm 600 ! -perm 600 ! -group #{pg_group} | wc -l") do
-    its('stdout.strip') { should eq '0' }
+  describe file(input('cb_log_dir')) do
+    its('owner') { should be_in input('cb_service_user') }
+    its('group') { should be_in input('cb_service_group') }
+    it { should_not be_more_permissive_than('0700') }
   end
-  describe command("find #{input('cb_data_dir')} -type f -perm 600 ! -perm 600 ! -group #{pg_group} | wc -l") do
-    its('stdout.strip') { should eq '0' }
-  end
+
+  log_files = command("ls -p #{input('cb_log_dir')} | grep -v '/'").stdout.split("\n")
+
+  log_files.each do |file|
+    describe file("#{input('cb_log_dir')}/#{file}") do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0600') }
+    end
+  end 
 end
