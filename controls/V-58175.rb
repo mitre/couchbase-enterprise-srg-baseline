@@ -43,19 +43,24 @@ control "V-58175" do
   tag "nist": ["SI-2 (6)", "Rev_4"]
 
   if os.debian?
-    dpkg_packages = command("apt list --installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
-    dpkg_packages.each do |packages|
-      describe(packages) do
-        it { should match input('cb_version') }
+    describe 'Installed Couchbase packages' do
+      subject { dpkg_packages = command("apt list --installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n") }
+
+      dpkg_packages.each do |packages|
+        describe(packages) do
+          it { should be_in input('approved_packages') }
+        end
       end
-  end
+    end
 
   elsif os.linux? || os.redhat?
-    yum_packages = command("yum -list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+    describe 'Installed Couchbase packages' do
+      subject { yum_packages = command("yum -list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n") }
 
-    yum_packages.each do |packages|
-      describe(packages) do
-        it { should match input('cb_version') }
+      yum_packages.each do |packages|
+        describe(packages) do
+          it { should be_in input('approved_packages') }
+        end
       end
     end
   end

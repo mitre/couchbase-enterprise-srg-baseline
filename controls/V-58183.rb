@@ -52,10 +52,12 @@ control "V-58183" do
   tag "cci": ["CCI-002754"]
   tag "nist": ["SI-10 (3)", "Rev_4"]
 
-  describe command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} -engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} --script=\"SELECT * TestDatabase user\"") do
+  describe command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+  -engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} --script=\"SELECT * TestDatabase user\"") do
   end
   
-  describe command("cat #{input('cb_audit_log')} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1\"") do
+  describe command("cat #{input('cb_audit_log')} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` \
+  | grep \"Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1\"") do
     its('stdout') { should match /^.*Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1.*$/ }
   end
 end

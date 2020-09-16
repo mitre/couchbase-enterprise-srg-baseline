@@ -56,15 +56,15 @@ control "V-58179" do
   (stored procedures, functions, triggers) and application source code, to identify 
   cases of dynamic code execution." do
     skip "This test requires a Manual Review: Review Couchbase source code 
-  (stored procedures, functions, triggers) and application source code, to identify 
-  cases of dynamic code execution."
+    (stored procedures, functions, triggers) and application source code, to identify 
+    cases of dynamic code execution."
   end 
- 
+
   describe "This test requires a Manual Review: If dynamic code execution is employed in 
   circumstances where the objective could practically be satisfied by static execution with
   strongly typed parameters, this is a finding." do
     skip "This test requires a Manual Review: If dynamic code execution is employed in 
-  circumstances where the objective could practically be satisfied by static execution with
-  strongly typed parameters, this is a finding."
+    circumstances where the objective could practically be satisfied by static execution with
+    strongly typed parameters, this is a finding."
   end  
 end
