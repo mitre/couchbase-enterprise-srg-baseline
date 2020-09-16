@@ -62,11 +62,13 @@ encryption at the OS or network level.
     its('disableUIOverHttp') { should eq true }
   end 
 
-  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'tlsMinVersion'") do
+  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+  -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'tlsMinVersion'") do
   its('stdout') { should include input('approved_ssl_protocols') }
   end 
  
-  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'tlsMinVersion'") do
+  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+  -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'tlsMinVersion'") do
   its('stdout') { should_not be "[]" }
   its('stdout') {should include input('approved_ciphers')}
   end 
