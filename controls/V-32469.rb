@@ -56,8 +56,10 @@ encryption at the OS or network level.
   tag "cci": ["CCI-000197"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
 
-  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'disableUIOverHttp'") do
-  its('stdout') { should eq "true" }
+  describe "The security setting" do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+    its('disableUIOverHttp') { should eq true }
   end 
 
   describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'tlsMinVersion'") do

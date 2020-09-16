@@ -41,7 +41,9 @@ control "V-32468" do
   tag "cci": ["CCI-000196"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
 
-  describe json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/saslauthdAuth") do
+  describe "The saslauthd setting" do  
+    subject { json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/saslauthdAuth") }
     its('enabled') { should eq true }
   end
 end

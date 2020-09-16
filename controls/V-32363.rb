@@ -3,6 +3,16 @@
 control "V-32363" do
   title "Couchbase must allow only the ISSM (or individuals or roles appointed
   by the ISSM) to select which auditable events are to be audited."
+  desc "Without the capability to restrict which roles and individuals can select 
+  which events are audited, unauthorized personnel may be able to prevent or 
+  interfere with the auditing of critical events.
+
+  Suppression of auditing could permit an adversary to evade detection.
+  
+  Misconfigured audits can degrade the system's performance by overwhelming the audit 
+  log. Misconfigured audits may also make it more difficult to establish, correlate, 
+  and investigate the events relating to an incident or identify those responsible 
+  for one."
   desc  "check", "
   Only a user with Full Admin role can change auditing controls.
   As the Full Admin, get a list of all RBAC users with the following command:
@@ -44,7 +54,8 @@ control "V-32363" do
   tag "nist": ["AU-12 b", "Rev_4"]
 
   admin_users = []
-  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
   json_output.each do |output|
     user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
@@ -52,7 +63,7 @@ control "V-32363" do
   end
 
   admin_users.each do |user|
-    describe 'Each admin user in the list' do
+    describe "Each admin user in the list should be docuemented. #{user}" do
       subject { user }
       it { should be_in input('cb_admin_users').uniq.flatten }
     end

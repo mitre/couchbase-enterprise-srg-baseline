@@ -38,11 +38,20 @@
   when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
 
 # - name: Enable saslauthd
-#   shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enabled 1"
+#   shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
+#--password {{ cb_full_admin_password }} --enabled 1"
 
 - name: Set UI Session Timeout
   shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
   -d 'uiSessionTimeout=600'"
+
+- name: Disable UI Access Over HTTP
+  shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
+  -d disableUIOverHttp=true"
+
+- name: Enable UI Access Over HTTPS
+  shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
+  -d disableUIOverHttps=false"
 
 - name: Set Ownership/Permissions on all Couchbase Config Files
   file:

@@ -9,22 +9,13 @@ control "V-32365" do
   desc  "check", "
   Once enabled on the cluster, Couchbase will initiate session auditing upon
   startup.
-  Couchbase Server 6.5.0 and earlier -
+
   As the Full Admin, verify that auditing is enabled by executing the following command:
 
   $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
 
-  Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
+  Verify from the output that \"auditEnabled\" is set to \"true\". If \"auditEnabled\" 
   is not set to \"true\", this is finding.
-
-  Couchbase Server Version 6.5.1 and later -
-  As the Full Admin, verify that auditing is enabled by executing the
-  following command:
-    $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
-    <Password> --get-settings
-  
-    Verify from the output that \"Audit enabled\" is set to \"True\". If
-  \"Audit enabled\" is not set to true, this is finding.
   "
   desc  "fix", "
   Enable session auditing on the Couchbase cluster.
@@ -50,15 +41,10 @@ control "V-32365" do
   tag "cci": ["CCI-001464"]
   tag "nist": ["AU-14 (1)", "Rev_4"]
 
-  couchbase_version = command('couchbase-server -v').stdout
-
-  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
-    describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") do
-      its('stdout') { should include "True" }
-    end 
-  else
-    describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
-      its('auditdEnabled') { should eq true }
-    end 
-  end
+  describe "Couchbase log auditing should be enabled." do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+    its('auditdEnabled') { should eq true }
+  end 
+  
 end

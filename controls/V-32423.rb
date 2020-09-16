@@ -64,10 +64,11 @@ control "V-32423" do
   tag "cci": ["CCI-000381"]
   tag "nist": ["CM-7 a", "Rev_4"]
 
-  json_output = command("couchbase-cli bucket-list -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')}").stdout
+  json_output = command("couchbase-cli bucket-list -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')}").stdout
 
   input('sample_buckets').each do |bucket|
-    describe "The bucket list should" do
+    describe "The bucket list should not include sample buckets. #{bucket}" do
       subject { json_output }
       it { should_not include bucket }
     end

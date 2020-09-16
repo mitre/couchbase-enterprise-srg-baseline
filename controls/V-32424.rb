@@ -55,14 +55,16 @@ control "V-32424" do
     dpkg_packages = command("dpkg --get-selections | grep \"couchbase\"").stdout.split("\n")
     dpkg_packages.each do |package|
       package = command("echo #{package} | sed 's/ install$//'").stdout.split
-      describe(package) do
+      describe "Only approved packages should be installed. #{package}" do
+        subject { package }
         it { should be_in input('cb_debian_approved_packages') }
       end
     end
   elsif os.redhat?
     yum_packages = command("yum list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
     yum_packages.each do |package|
-      describe(package) do
+      describe "Only approved packages should be installed. #{package}" do
+        subject { package }
         it { should be_in input('cb_redhat_approved_packages') }
       end
     end

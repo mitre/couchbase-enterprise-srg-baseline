@@ -29,7 +29,7 @@ secrets.
 and \"disableUIOverHttps\" are both set to \"true\".
     If \"disableUIOverHttps\" is set to \"true\", as the Full Admin, change
 this value to \"false\" with the following command:
-     $  curl -v -X GET -u <Full Admin>:<Password>
+     $  curl -v -X POST -u <Full Admin>:<Password>
 http://<host>:<port>/settings/security -d disableUIOverHttps=false
 
   "
@@ -42,4 +42,10 @@ http://<host>:<port>/settings/security -d disableUIOverHttps=false
   tag "fix_id": "F-63259r1_fix"
   tag "cci": ["CCI-001844"]
   tag "nist": ["AU-3 (2)", "Rev_4"]
+
+  describe "The security setting" do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+    its('disableUIOverHttps') { should eq false }
+  end 
 end

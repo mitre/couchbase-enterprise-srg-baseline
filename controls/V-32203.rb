@@ -65,13 +65,14 @@ with applicable policy.
   tag "nist": ["AC-3", "Rev_4"]
 
   user_roles = []
-  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep '\"role\":'").stdout.split("\n")
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep '\"role\":'").stdout.split("\n")
   json_output.each do |output|
     role = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
     user_roles.push(role)
   end
   user_roles.each do |role|
-    describe 'Each role in the list' do
+    describe "Each role in the list should be documented. #{role}" do
       subject { role }
       it { should be_in input('cb_roles').uniq.flatten }
     end

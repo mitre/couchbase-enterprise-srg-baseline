@@ -66,7 +66,9 @@ control "V-32523" do
   tag "cci": ["CCI-001185"]
   tag "nist": ["SC-23 (1)", "Rev_4"]
 
-  describe json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") do
+  describe "The security setting" do 
+    subject { json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
     its('uiSessionTimeout') { should_not eq nil }
   end
 end

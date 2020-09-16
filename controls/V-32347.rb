@@ -71,11 +71,15 @@ control "V-32347" do
   couchbase_version = command('couchbase-server -v').stdout
 
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
-    describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") do
+    describe "Couchbase log auditing should be enabled." do 
+      subject { command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+      --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") }
       its('stdout') { should include "True" }
     end 
   else
-    describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
+    describe "Couchbase log auditing should be enabled." do
+      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
       its('auditdEnabled') { should eq true }
     end 
   end
