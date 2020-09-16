@@ -22,7 +22,6 @@ control "V-58183" do
   to obtain assurances from the development organization that this issue has been
   addressed, and must document what has been discovered.
   "
-  
   desc  "check", "
   Review system documentation to determine how input errors are to be handled
   in general and if any special handling is defined for specific circumstances.
@@ -38,7 +37,6 @@ control "V-58183" do
     $ cat /opt/couchbase/var/lib/couchbase/logs/event.log
   If it does not implement the documented behavior, this is a finding.
   "
-
   desc  "fix", "
   Configure Couchbase to generate audit records for all invalid inputs.
   Edit the configuration file and set all log components to the error level.
@@ -57,7 +55,7 @@ control "V-58183" do
   describe command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} -engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} --script=\"SELECT * TestDatabase user\"") do
   end
   
-  describe command('cat /opt/couchbase/var/lib/couchbase/logs/event.log') do
-    its('stdout') { should include 'Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1.' }
+  describe command("cat #{input('cb_audit_log')} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1\"") do
+    its('stdout') { should match /^.*Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1.*$/ }
   end
 end

@@ -16,7 +16,6 @@ control "V-61407" do
   Directory) must be configured to do so.  For other Couchbases, the rules must
   be enforced using available configuration parameters or custom code.
   "
-
   desc  "check", "
   If Couchbase password authentication is not used, this is not a finding.
   As the Full Admin, review the password policy set using the following
@@ -27,7 +26,6 @@ control "V-61407" do
   If \"enforceDigits\", \"enforceLowercase\", enforceSpecialChars\", and
   \"enforceUppercase\" are not set to \"true\", this is a finding.
   "
-
   desc  "fix", "
   Change password policy settings to be compliant.
   Couchbase Server 6.0.x and earlier -

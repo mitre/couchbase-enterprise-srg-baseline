@@ -104,7 +104,7 @@
    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase --lowercase --digit --special-char"
   when: "'6.0.0' in cbversion.stdout or '6.0.2' in cbversion.stdout"
 
-- name: Enable Compliant Password Policy Settings 6.5 and later
+- name: Enable Compliant Password Policy Settings 6.5.0 and later
   shell: "couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
   when: "'6.5.0' in cbversion.stdout or '6.6.0' in cbversion.stdout or '6.5.1' in cbversion.stdout"
