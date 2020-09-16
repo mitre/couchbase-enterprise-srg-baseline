@@ -84,7 +84,7 @@
   when: "'6.0.2' in cbversion.stdout or '6.5.0' in cbversion.stdout"
 
 - name: Enable Compliant Auditing Settings 6.5 and later
-  shell: "couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+  shell: "couchbase-cli setting-audit --cluster 127.0.0.1:8091 --u <Full Admin>
     --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
     604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
   when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
