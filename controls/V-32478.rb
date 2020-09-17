@@ -39,19 +39,28 @@ documentationhttps://docs.couchbase.com/server/current/manage/manage-security/ma
   tag "cci": ["CCI-000187"]
   tag "nist": ["IA-5 (2) (c)", "Rev_4"]
 
-  rbac_accounts = input('cb_admin_users').clone << input('cb_users')
-  user_accounts = []
-  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep 'id'").stdout.split("\n")
-  cn = command("openssl x509 -noout -subject -in client_cert")
-  json_output.each do |output|
-    user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    user_accounts.push(user_id)
-  end
-  user_accounts.each do |user|
+  if input('cb_use_pki') == "true"
+    rbac_accounts = input('cb_admin_users').clone << input('cb_users')
+    user_accounts = []
+    json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep 'id'").stdout.split("\n")
+    cn = command("openssl x509 -noout -subject -in client_cert")
+    json_output.each do |output|
+      user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      user_accounts.push(user_id)
+    end
+    user_accounts.each do |user|
     describe 'Each user in the list' do
       subject { user }
       it { should be_in rbac_accounts.uniq.flatten }
+      end
+    end   
+  else
+    impact 0.0
+    describe "Couchbase is not using PKI-based authentication, h
+    therefore this check is Not Applicable (NA)" do
+      skip "Couchbase is not using PKI-based authentication, 
+      therefore this check is Not Applicable (NA)"
     end
-  end   
+  end
 end
