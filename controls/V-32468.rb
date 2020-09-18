@@ -14,8 +14,11 @@ control "V-32468" do
   hashes when stored internally or externally to Couchbase.
   "
   desc  "check", "
-  If password authentication is used, SCRAM-SHA1, SCRAM-SHA256, and
-  SCRAM-SHA512,  authentication protocols are available with saslauthd enabled.
+  If Couchbase is not storing credentials locally, this check is Not Applicable (NA).
+  
+  If password authentication is used and Couchbase stores credentials locally,
+  SCRAM-SHA1, SCRAM-SHA256, and SCRAM-SHA512,  authentication protocols are 
+  available with saslauthd enabled.
   These protocols use one-way, salted hash functions for passwords as documented
   here:
   https://docs.couchbase.com/server/current/learn/security/authentication-overview.html
@@ -25,7 +28,6 @@ control "V-32468" do
     $ curl -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/saslauthdAuth
     
   If saslauthd it is not enabled, this is a finding.
-
   "
   desc  "fix", "
   As the Full Admin, enable saslauthd with the following command:
@@ -41,9 +43,16 @@ control "V-32468" do
   tag "cci": ["CCI-000196"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
 
-  describe "The saslauthd setting" do  
-    subject { json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/saslauthdAuth") }
-    its('enabled') { should eq true }
+  if input('cb_auth_domain') == "local"
+    describe "The saslauthd setting" do  
+      subject { json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/saslauthdAuth") }
+      its('enabled') { should eq true }
+    end
+  else 
+    impact 0.0 
+    describe "Couchbase is not storing credentials locally, therefore this check is Not Applicable (NA)" do
+      skip "Couchbase is not storing credentials locally, therefore this check is Not Applicable (NA)"
+    end
   end
 end

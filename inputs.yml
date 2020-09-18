@@ -68,11 +68,12 @@ cb_debian_approved_packages: [
   'couchbase-server'
 ]
 
-approved_ssl_protocols: [
-  'TLSv1.2'
-]
+approved_ssl_protocol: 'tlsv1.2'
 
-approved_ciphers: []
+approved_ciphers: [
+  'TLS_RSA_WITH_AES_128_CBC_SHA',
+  'TLS_RSA_WITH_AES_256_CBC_SHA'
+]
 
 
 

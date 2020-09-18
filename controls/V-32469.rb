@@ -17,34 +17,44 @@ control "V-32469" do
   "
   desc  "check", "
   Couchbase Server 6.0.x and earlier -
-    Review configuration settings for encrypting passwords in transit across
-the network. If passwords are not encrypted, this is a finding.
-    Couchbase Server Version 6.5.x and later -
-      As the Full Admin, verify that TLS is configured with the approved
-protocols and cipher suites with the following command:
-       $ couchbase-cli setting-security -c <host>:<port> -u <Full Admin> -p
-<Password> --get
-    Review the output of the command. If \"disableUIOverHttp\" is not set to
-\"true\", this is finding. If \"tlsMinVersion\" is not set to an approved
-version, this is a finding. If \"cipherSuites\" is empty or not set to approved
-cipher suites, this is a finding.
+  As the Full Admin, verify that HTTP access is disabled with the following
+  command:
+    $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/security
+
+  Review the output of the command. If \"disableUIOverHttp\" is not set to
+  \"true\", this is a finding.
+
+  Review configuration settings for encrypting passwords in transit across
+  the network. If passwords are not encrypted, this is a finding.
+  
+  Couchbase Server Version 6.5.x and later -
+  As the Full Admin, verify that TLS is configured with the approved
+  protocols and cipher suites with the following command:
+    $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/security
+  
+  Review the output of the command. If \"disableUIOverHttp\" is not set to
+  \"true\", this is finding. If \"tlsMinVersion\" is not set to an approved
+  version, this is a finding. If \"cipherSuites\" is empty or not set to approved
+  cipher suites, this is a finding.
   "
   desc  "fix", "
-    Ensure passwords remain encrypted from source to destination by configuring
-TLS.
-    Couchbase Server 6.0.x and earlier -
-      As the Full Admin, disable https access to the console with the following
-command:
+  Ensure passwords remain encrypted from source to destination by configuring
+  TLS.
+  Couchbase Server 6.0.x and earlier -
+  As the Full Admin, disable https access to the console with the following
+  command:
     $ couchbase-cli setting-security -c <host>:<port> -u <Full Admin> -p
-<Password> --disable-http-ui 1
-    Configure encryption for transmission of passwords across the network. If
-the database does not provide encryption for logon events natively, employ
-encryption at the OS or network level.
-    Couchbase Server Version 6.5.x and later -
-      As the Full Admin, configure TLS with the following command:
-       $ couchbase-cli setting-security -c <host>:<port> -u <Full Admin> -p
-<Password> --set --disable-http-ui 1 --tls-min-version <TLS Version>
---cipher-suites <Cipher Suites>
+    <Password> --disable-http-ui 1
+    
+  Configure encryption for transmission of passwords across the network. If
+  the database does not provide encryption for logon events natively, employ
+  encryption at the OS or network level.
+  
+  Couchbase Server Version 6.5.x and later -
+  As the Full Admin, configure TLS with the following command:
+    $ couchbase-cli setting-security -c <host>:<port> -u <Full Admin> -p
+    <Password> --set --disable-http-ui 1 --tls-min-version <TLS Version>
+    --cipher-suites <Cipher Suites>
   "
   impact 0.5
   tag "severity": "medium"
@@ -56,20 +66,38 @@ encryption at the OS or network level.
   tag "cci": ["CCI-000197"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
 
-  describe "The security setting" do
-    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
-    its('disableUIOverHttp') { should eq true }
-  end 
+  couchbase_version = command('couchbase-server -v').stdout
 
-  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-  -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'tlsMinVersion'") do
-  its('stdout') { should include input('approved_ssl_protocols') }
-  end 
- 
-  describe command("couchbase-cli setting-security -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-  -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --get | grep 'cipherSuites'") do
-  its('stdout') { should_not be "[]" }
-  its('stdout') {should include input('approved_ciphers')}
+  if couchbase_version.include?("6.0.") 
+    describe "The security setting" do
+      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+      its('disableUIOverHttp') { should eq true }
+    end 
+    describe "This test requires a Manual Review: Review configuration settings for 
+    encrypting passwords in transit across the network. If passwords are not encrypted, 
+    this is a finding." do 
+      skip "This test requires a Manual Review: Review configuration settings for 
+      encrypting passwords in transit across the network. If passwords are not encrypted, 
+      this is a finding."
+    end 
+  else
+    describe "The security setting" do
+      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+      its('disableUIOverHttp') { should eq true }
+    end 
+
+    describe "The security setting" do
+      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+      its('tlsMinVersion') { should eq input('approved_ssl_protocol') }
+    end 
+
+    describe "The security setting" do
+      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+      its('cipherSuites') { should be_in input('approved_ciphers') }
+    end 
   end 
 end

@@ -9,3 +9,12 @@ cb_config_dir: 'opt/couchbase/etc/couchbase'
 cb_static_conf: '/opt/couchbase/etc/couchbase/static_config'
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_samples_dir: '/opt/couchbase/samples'
+
+
+approved_ssl_protocol: 'tlsv1.2'
+
+
+approved_ciphers: [
+  'TLS_RSA_WITH_AES_128_CBC_SHA',
+  'TLS_RSA_WITH_AES_256_CBC_SHA'
+]
