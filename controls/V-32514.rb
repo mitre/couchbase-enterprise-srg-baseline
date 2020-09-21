@@ -27,26 +27,28 @@ control "V-32514" do
   desc  "check", "
   Check Couchbase settings and vendor documentation to verify that
   administrative functionality is separate from user functionality.
-    
-  As the Full Admin, list current users and roles using the following example
-  command:
-    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> -p <Password>
-    --list
-    
-  If any non-administrative account has the roles \"admin\" and
-  \"cluster_admin\", this is a finding.
+  
+  The Couchbase web console provides management functions while the standard 
+  client-to-node service accepts user and application connections to serve data. 
 
-  If administrator and general user functionality are not separated either
-  physically or logically, this is a finding.
+  Verify that the web console is not disabled.
+
+  As the Full Admin, verify that HTTPS access is not disabled with the
+  following command:
+   $ curl -v -X GET -u <Full Admin>:<Password>
+    http://<host>:<port>/settings/security
+
+  Review the output of the command. If \"disableUIOverHttps\" is set to
+  \"true\", this is finding.
   "
   desc  "fix", "
-  Configure Couchbase to separate database administration and general user
-  functionality.
+  The web console is available by default, unless both \"disableUIOverHttp\"
+  and \"disableUIOverHttps\" are both set to \"true\".
     
-  As the Full Admin, remove unauthorized roles from a user with the following
-  command:
-    $ cbq -u <Full Admin> -p <Password> -engine=http://<host>:<port>/
-    --script=\"REVOKE <role> FROM <username>\"
+  If \"disableUIOverHttps\" is set to \"true\", as the Full Admin, change
+  this value to \"false\" with the following command:
+    $ curl -v -X POST -u <Full Admin>:<Password>
+    http://<host>:<port>/settings/security -d disableUIOverHttps=false
   "
   impact 0.5
   tag "severity": "medium"
@@ -58,19 +60,9 @@ control "V-32514" do
   tag "cci": ["CCI-001082"]
   tag "nist": ["SC-2", "Rev_4"]
 
-  admin_users = []
-  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
-  
-  json_output.each do |output|
-    user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    admin_users.push(user)
-  end
-
-  admin_users.each do |user|
-    describe "Each admin user in the list should be documented. #{user}" do
-      subject { user }
-      it { should be_in input('cb_admin_users').uniq.flatten }
-    end
-  end
+  describe "The Couchbase Web Console should not be disabled. The security setting" do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
+    its('disableUIOverHttps') { should eq false }
+  end 
 end

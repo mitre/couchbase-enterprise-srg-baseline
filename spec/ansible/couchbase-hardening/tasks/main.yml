@@ -1,4 +1,4 @@
-# ---
+---
 - name: Start service couchbase-server, if not started
   service:
     name: couchbase-server
@@ -43,9 +43,16 @@
   {{ approved_ciphers | join(',') }}"
   when: "'6.5.' in cbversion.stdout or '6.6.' in cbversion.stdout"
 
-# - name: Enable saslauthd
-#   shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
-#--password {{ cb_full_admin_password }} --enabled 1"
+- name: Check if saslauthd is Required
+  shell: "echo {{ cb_use_saslauthd }}"
+  register: use_saslauthd
+
+- name: Enable saslauthd
+  shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
+  --password {{ cb_full_admin_password }} --enabled 1"
+  when: 
+    - "use_saslauthd.stdout == 'true'"
+    - "'6.5.' in cbversion.stdout or '6.6.' in cbversion.stdout"
 
 - name: Set UI Session Timeout
   shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
@@ -114,5 +121,21 @@
     mode: "0600"
     owner: "couchbase"
     group: "couchbase"
+
+- name: Check if Certificate Auth is Required
+  shell: "echo {{ cb_use_pki }}"
+  register: use_pki
+
+- name: Copy Client Auth Config
+  template: 
+    src: client-auth-config.json.j2 
+    dest: "{{ cb_client_auth_config }}"
+  when: "use_pki.stdout == 'true'"
+
+- name: Enable Client Auth
+  shell: "/opt/couchbase/bin/couchbase-cli ssl-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
+  --password {{ cb_full_admin_password }} --set-client-auth {{ cb_client_auth_config }}"
+  when: "use_pki.stdout == 'true'"
+
 
 # Add steps to harden
