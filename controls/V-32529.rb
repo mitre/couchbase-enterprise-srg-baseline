@@ -41,7 +41,7 @@ autofailover.html
     Enable auto failover and add additional parameters based on organizational
 demands:
     couchbase-cli setting-autofailover -c <host>:<port> --u <Full Admin> --p
-<Password> --enable-auto-failover 1 <parameters>
+<Password> --enable-auto-failover 1 <parameters> 
   "
   impact 0.5
   tag "severity": "medium"
@@ -53,7 +53,8 @@ demands:
   tag "cci": ["CCI-001665"]
   tag "nist": ["SC-24", "Rev_4"]
   
-  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/auto-failover") do
-    its('auto-failover') { should eq "enabled" }
+  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:\
+  #{input('cb_cluster_port')}/settings/autoFailover") do
+    its('enabled') { should eq true }
   end 
 end
