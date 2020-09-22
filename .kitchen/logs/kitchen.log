@@ -1,0 +1,71 @@
+I, [2020-09-17T09:46:26.126007 #24784]  INFO -- Kitchen: -----> Starting Test Kitchen (v2.5.4)
+I, [2020-09-17T09:46:40.396280 #24784]  INFO -- Kitchen: -----> Verifying <vanilla-rhel-7-couchbase-602-enterprise>...
+E, [2020-09-17T09:47:43.057588 #24784] ERROR -- Kitchen: ------Exception-------
+E, [2020-09-17T09:47:43.058646 #24784] ERROR -- Kitchen: Class: Kitchen::ActionFailed
+E, [2020-09-17T09:47:43.058774 #24784] ERROR -- Kitchen: Message: 1 actions failed.
+>>>>>>     Verify failed on instance <vanilla-rhel-7-couchbase-602-enterprise>.  Please see .kitchen/logs/vanilla-rhel-7-couchbase-602-enterprise.log for more details
+E, [2020-09-17T09:47:43.058878 #24784] ERROR -- Kitchen: ----------------------
+E, [2020-09-17T09:47:43.059002 #24784] ERROR -- Kitchen: ------Backtrace-------
+E, [2020-09-17T09:47:43.059182 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:183:in `report_errors'
+E, [2020-09-17T09:47:43.059518 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:174:in `run_action'
+E, [2020-09-17T09:47:43.059685 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command/action.rb:35:in `block in call'
+E, [2020-09-17T09:47:43.059815 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/2.6.0/benchmark.rb:293:in `measure'
+E, [2020-09-17T09:47:43.061658 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command/action.rb:33:in `call'
+E, [2020-09-17T09:47:43.063743 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/cli.rb:51:in `perform'
+E, [2020-09-17T09:47:43.063888 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/cli.rb:197:in `block (2 levels) in <class:CLI>'
+E, [2020-09-17T09:47:43.064106 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/thor-1.0.1/lib/thor/command.rb:27:in `run'
+E, [2020-09-17T09:47:43.064224 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/thor-1.0.1/lib/thor/invocation.rb:127:in `invoke_command'
+E, [2020-09-17T09:47:43.064334 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/thor-1.0.1/lib/thor.rb:392:in `dispatch'
+E, [2020-09-17T09:47:43.064446 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/thor-1.0.1/lib/thor/base.rb:485:in `start'
+E, [2020-09-17T09:47:43.064628 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/bin/kitchen:11:in `block in <top (required)>'
+E, [2020-09-17T09:47:43.064729 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/errors.rb:170:in `with_friendly_errors'
+E, [2020-09-17T09:47:43.064825 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/bin/kitchen:11:in `<top (required)>'
+E, [2020-09-17T09:47:43.064954 #24784] ERROR -- Kitchen: C:/Ruby26-x64/bin/kitchen:23:in `load'
+E, [2020-09-17T09:47:43.065085 #24784] ERROR -- Kitchen: C:/Ruby26-x64/bin/kitchen:23:in `<main>'
+E, [2020-09-17T09:47:43.065299 #24784] ERROR -- Kitchen: ----End Backtrace-----
+E, [2020-09-17T09:47:43.065405 #24784] ERROR -- Kitchen: -Composite Exception--
+E, [2020-09-17T09:47:43.065537 #24784] ERROR -- Kitchen: Class: Kitchen::InstanceFailure
+E, [2020-09-17T09:47:43.065639 #24784] ERROR -- Kitchen: Message: Verify failed on instance <vanilla-rhel-7-couchbase-602-enterprise>.  Please see .kitchen/logs/vanilla-rhel-7-couchbase-602-enterprise.log for more details
+E, [2020-09-17T09:47:43.065768 #24784] ERROR -- Kitchen: ----------------------
+E, [2020-09-17T09:47:43.065885 #24784] ERROR -- Kitchen: ------Backtrace-------
+E, [2020-09-17T09:47:43.065991 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/kitchen-inspec-2.0.0/lib/kitchen/verifier/inspec.rb:108:in `call'
+E, [2020-09-17T09:47:43.066112 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:458:in `block in verify_action'
+E, [2020-09-17T09:47:43.066351 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:551:in `synchronize_or_call'
+E, [2020-09-17T09:47:43.066900 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:513:in `block in action'
+E, [2020-09-17T09:47:43.067074 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/2.6.0/benchmark.rb:293:in `measure'
+E, [2020-09-17T09:47:43.067189 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:512:in `action'
+E, [2020-09-17T09:47:43.067293 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:450:in `verify_action'
+E, [2020-09-17T09:47:43.067400 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:381:in `block (2 levels) in transition_to'
+E, [2020-09-17T09:47:43.067500 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/lifecycle_hooks.rb:44:in `run_with_hooks'
+E, [2020-09-17T09:47:43.067598 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:380:in `block in transition_to'
+E, [2020-09-17T09:47:43.067694 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:379:in `each'
+E, [2020-09-17T09:47:43.067801 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:379:in `transition_to'
+E, [2020-09-17T09:47:43.067901 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:161:in `verify'
+E, [2020-09-17T09:47:43.068023 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:197:in `public_send'
+E, [2020-09-17T09:47:43.068136 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:197:in `run_action_in_thread'
+E, [2020-09-17T09:47:43.068246 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:168:in `block (2 levels) in run_action'
+E, [2020-09-17T09:47:43.068346 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/logging-2.3.0/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+E, [2020-09-17T09:47:43.068444 #24784] ERROR -- Kitchen: ----End Backtrace-----
+E, [2020-09-17T09:47:43.068544 #24784] ERROR -- Kitchen: ---Nested Exception---
+E, [2020-09-17T09:47:43.068643 #24784] ERROR -- Kitchen: Class: Kitchen::ActionFailed
+E, [2020-09-17T09:47:43.068741 #24784] ERROR -- Kitchen: Message: InSpec Runner returns 1
+E, [2020-09-17T09:47:43.068835 #24784] ERROR -- Kitchen: ----------------------
+E, [2020-09-17T09:47:43.068945 #24784] ERROR -- Kitchen: ------Backtrace-------
+E, [2020-09-17T09:47:43.069046 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/kitchen-inspec-2.0.0/lib/kitchen/verifier/inspec.rb:108:in `call'
+E, [2020-09-17T09:47:43.069149 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:458:in `block in verify_action'
+E, [2020-09-17T09:47:43.069270 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:551:in `synchronize_or_call'
+E, [2020-09-17T09:47:43.069381 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:513:in `block in action'
+E, [2020-09-17T09:47:43.070048 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/2.6.0/benchmark.rb:293:in `measure'
+E, [2020-09-17T09:47:43.070171 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:512:in `action'
+E, [2020-09-17T09:47:43.070296 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:450:in `verify_action'
+E, [2020-09-17T09:47:43.070402 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:381:in `block (2 levels) in transition_to'
+E, [2020-09-17T09:47:43.070535 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/lifecycle_hooks.rb:44:in `run_with_hooks'
+E, [2020-09-17T09:47:43.070640 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:380:in `block in transition_to'
+E, [2020-09-17T09:47:43.070753 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:379:in `each'
+E, [2020-09-17T09:47:43.070871 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:379:in `transition_to'
+E, [2020-09-17T09:47:43.071064 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:161:in `verify'
+E, [2020-09-17T09:47:43.071172 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:197:in `public_send'
+E, [2020-09-17T09:47:43.071310 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:197:in `run_action_in_thread'
+E, [2020-09-17T09:47:43.071413 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:168:in `block (2 levels) in run_action'
+E, [2020-09-17T09:47:43.071510 #24784] ERROR -- Kitchen: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/logging-2.3.0/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+E, [2020-09-17T09:47:43.071632 #24784] ERROR -- Kitchen: ----End Backtrace-----

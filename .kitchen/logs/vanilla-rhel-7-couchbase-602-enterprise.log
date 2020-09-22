@@ -1,0 +1,26 @@
+I, [2020-09-17T09:46:40.403710 #24784]  INFO -- vanilla-rhel-7-couchbase-602-enterprise: -----> Verifying <vanilla-rhel-7-couchbase-602-enterprise>...
+I, [2020-09-17T09:47:02.489182 #24784]  INFO -- vanilla-rhel-7-couchbase-602-enterprise: Loaded Database_Generic_SRG 
+E, [2020-09-17T09:47:43.029940 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: Verify failed on instance <vanilla-rhel-7-couchbase-602-enterprise>.
+E, [2020-09-17T09:47:43.030613 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: ------Exception-------
+E, [2020-09-17T09:47:43.030742 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: Class: Kitchen::ActionFailed
+E, [2020-09-17T09:47:43.030848 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: Message: InSpec Runner returns 1
+E, [2020-09-17T09:47:43.030948 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: ----------------------
+E, [2020-09-17T09:47:43.031120 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: ------Backtrace-------
+E, [2020-09-17T09:47:43.031225 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/kitchen-inspec-2.0.0/lib/kitchen/verifier/inspec.rb:108:in `call'
+E, [2020-09-17T09:47:43.031329 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:458:in `block in verify_action'
+E, [2020-09-17T09:47:43.031461 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:551:in `synchronize_or_call'
+E, [2020-09-17T09:47:43.031574 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:513:in `block in action'
+E, [2020-09-17T09:47:43.031720 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/2.6.0/benchmark.rb:293:in `measure'
+E, [2020-09-17T09:47:43.031896 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:512:in `action'
+E, [2020-09-17T09:47:43.032011 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:450:in `verify_action'
+E, [2020-09-17T09:47:43.032160 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:381:in `block (2 levels) in transition_to'
+E, [2020-09-17T09:47:43.032299 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/lifecycle_hooks.rb:44:in `run_with_hooks'
+E, [2020-09-17T09:47:43.032457 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:380:in `block in transition_to'
+E, [2020-09-17T09:47:43.032641 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:379:in `each'
+E, [2020-09-17T09:47:43.032787 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:379:in `transition_to'
+E, [2020-09-17T09:47:43.032926 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/instance.rb:161:in `verify'
+E, [2020-09-17T09:47:43.033160 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:197:in `public_send'
+E, [2020-09-17T09:47:43.033261 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:197:in `run_action_in_thread'
+E, [2020-09-17T09:47:43.033359 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/test-kitchen-2.5.4/lib/kitchen/command.rb:168:in `block (2 levels) in run_action'
+E, [2020-09-17T09:47:43.034361 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/logging-2.3.0/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+E, [2020-09-17T09:47:43.034469 #24784] ERROR -- vanilla-rhel-7-couchbase-602-enterprise: ----End Backtrace-----
