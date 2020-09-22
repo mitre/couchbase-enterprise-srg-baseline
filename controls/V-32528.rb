@@ -65,4 +65,9 @@ https://docs.couchbase.com/server/current/cli/cbcli/couchbase-cli-xdcr-replicate
   tag "fix_id": "F-36443r2_fix"
   tag "cci": ["CCI-001190"]
   tag "nist": ["SC-24", "Rev_4"]
+
+  describe command("couchbase-cli xdcr-replicate -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}\
+  :#{input('cb_cluster_port')} --list") do
+    its('stdout') { should_not eq "" }
+  end
 end

@@ -52,4 +52,8 @@ demands:
   tag "fix_id": "F-36444r2_fix"
   tag "cci": ["CCI-001665"]
   tag "nist": ["SC-24", "Rev_4"]
+  
+  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/auto-failover") do
+    its('auto-failover') { should eq "enabled" }
+  end 
 end

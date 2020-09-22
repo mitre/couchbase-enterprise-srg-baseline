@@ -52,4 +52,8 @@ http://<host>:<port>/settings/security \\ -d \"uiSessionTimeout=600\"
   tag "fix_id": "F-63233r1_fix"
   tag "cci": ["CCI-002361"]
   tag "nist": ["AC-12", "Rev_4"]
+
+  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") do
+    its('uiSessionTimeout') { should be > 0 }
+  end 
 end

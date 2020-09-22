@@ -52,4 +52,7 @@ standards:
   tag "nist": ["AU-4", "Rev_4"]
 
 
+  describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'audit-log-rotate-size'") do
+    its('stdout') { should_not eq 0 }
+    end 
 end

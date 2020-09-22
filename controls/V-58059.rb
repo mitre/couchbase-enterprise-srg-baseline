@@ -31,12 +31,12 @@ curl -u <Admin>:<Admin Password> http://<localhost>:8091/settings/alerts
 Verify that email alerts are being sent to the correct recipients and that the 
 following options have been enabled: 
   - \"enabled\" set to true
-  - \"--alert-audit-msg-dropped\"
-  - \"--alert-disk-space\" 
+  - \"audit_dropped_events\"
+  - \"disk\" 
 
 
 If the email alerts are not enabled, this is a finding. If the email alerts are 
-enabled, but do not have the \"--alert-audit-msg-dropped\" and \"--alert-disk-space\" 
+enabled, but do not have the \"audit_dropped_events\" and \"disk\" 
 options set, this is a finding.
  
   "
@@ -59,4 +59,10 @@ log failures:
   tag "cci": ["CCI-001858"]
   tag "nist": ["AU-5 (2)", "Rev_4"]
 
+  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/alerts") do
+    its('enabled') { should eq true }
+    its(['alerts','audit_dropped_events']) { should eq nil }
+    its(['alerts', 'disk']) { should eq nil }
+    its(['alerts', 'testerrr']) { should eq nil }
+  end 
 end
