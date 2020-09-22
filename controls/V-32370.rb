@@ -26,7 +26,7 @@ application.
     - \"filtering_permitted\" - Whether the event is filterable
     - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
       format) and \"user\" fields
-      
+
   Note that different event-types generate different field-subsets. Below are some 
   of the fields required to establish where the event occurred: 
     - \"sessionid\" - ID of current Session 
@@ -64,7 +64,8 @@ application.
   tag "nist": ["AU-3", "Rev_4"]
 
   describe "Create a Bucket. The" do 
-    subject { command("couchbase-cli bucket-create -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} \
     --bucket test-data --bucket-type couchbase --bucket-ramsize 100") }
     its('exit_status') { should eq 0 }
@@ -77,8 +78,10 @@ application.
   end
 
   describe "Delete the Bucket. The" do 
-    subject { command("couchbase-cli bucket-delete -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} --bucket test-data") }
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-delete \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} \
+    --bucket test-data") }
     its('exit_status') { should eq 0 }
   end
 end

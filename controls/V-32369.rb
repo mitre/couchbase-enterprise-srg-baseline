@@ -71,10 +71,11 @@ with the audit record, the record itself is of very limited use.
   tag "nist": ["AU-3", "Rev_4"]
 
   describe "Create the jdoe user. The" do 
-    subject { command("couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --set --rbac-username jdoe --rbac-password cbpass \
-    --rbac-name 'John Doe' --roles replication_admin \
-    --auth-domain local") }
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 
@@ -84,9 +85,10 @@ with the audit record, the record itself is of very limited use.
   end
 
   describe "Delete the jdoe user. The" do 
-    subject { command("couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --delete --rbac-username jdoe \
-    --auth-domain local") }
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --delete --rbac-username jdoe --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 end

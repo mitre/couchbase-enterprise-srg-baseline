@@ -27,6 +27,7 @@ cb_private_key_path: '/etc/ssl/ca.key'
 cb_ca_file_path: '/etc/ssl/ca.pem'
 
 cb_home_dir: '/opt/couchbase'
+cb_bin_dir: '/opt/couchbase/bin'
 cb_config_dir: 'opt/couchbase/etc/couchbase'
 cb_static_conf: 'opt/couchbase/etc/couchbase/static_config'
 
