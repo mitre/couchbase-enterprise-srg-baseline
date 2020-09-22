@@ -9,10 +9,13 @@ control "V-58137" do
   desc  "check", "
   Review system settings to determine whether the organization-defined limit
   for cached authentication is implemented.
+ 
   If Couchbase is configured to authenticate using LDAP verify that the
   \"cache-value-lifetime\" value is set to an organization-defined time period.
+  
   As the Full Admin, get the current settings with the following command:
     $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>:settings/ldap
+  
   If cache-value-lifetime is not set, this is a finding.
   "
   desc  "fix", "
@@ -31,7 +34,9 @@ control "V-58137" do
   tag "cci": ["CCI-002007"]
   tag "nist": ["IA-5 (13)", "Rev_4"]
 
-  describe json(command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}:settings/ldap)") do
+  describe "Couchbase should have a defined cache-value-lifetime." do
+    subject{ json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}:settings/ldap)") }
     its('cache-value-lifetime') { should_not eq '0' }
   end        
 end

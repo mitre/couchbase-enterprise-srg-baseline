@@ -13,24 +13,29 @@ control "V-58123" do
   If Couchbase does not generate audit records for all direct access to the
   database(s), this is a finding.
   Couchbase Server 6.5.0 and earlier-
+ 
   Verify that the \"http_access.log\" and \"http_access_internal.log\" files
   exists in the Couchbase log directory. If the logs do not exist or do not
   generate records, this is a finding.
   Couchbase Server Version 6.5.1 and later-
+ 
   Verify that auditing is enabled:
     $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
     <Password> --get-settings
-  Review the output. If \"Audit enabled\" is not true, this is finding.
+ 
+    Review the output. If \"Audit enabled\" is not true, this is finding.
   "
   desc  "fix", "
   Configure Couchbase to generate audit records for all direct access to the
   database(s).
+ 
   Couchbase Server 6.5.0 and earlier -
     As the Full Admin, execute the following command to enable auditing:
       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
       --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
       --audit-log-path /opt/couchbase/var/lib/couchbase/logs
-  Couchbase Server Version 6.5.1 and later -
+ 
+      Couchbase Server Version 6.5.1 and later -
     As the Full Admin, execute the following command to enable auditing:
       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
       --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
@@ -46,16 +51,20 @@ control "V-58123" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Verify that audit records for all direct access 
-  to the database(s)." do
-    skip "This test requires a Manual Review: Verify that audit records for all direct access 
-    to the database(s)."
+  couchbase_version = command('couchbase-server -v').stdout
+
+  describe "This test requires a Manual Review: Couchbase is not currently capable of distinguishing
+  direct access to the database(s) from standard access." do
+    skip "This test requires a Manual Review:  Couchbase is not currently capable of distinguishing
+    direct access to the database(s) from standard access."
   end 
 
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
-    describe json({ command: "couchbase-cli setting-audit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get-settings"} ) do
-      its('Audit enabled') { should eq 'true' }
-    end
+    describe "Couchbase log auditing should be enabled." do
+      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+      its('auditdEnabled') { should eq true }
+    end 
   else
     describe command("cat #{input('cb_http_access_log')}") do
       its('stdout') { should_not eq '' }

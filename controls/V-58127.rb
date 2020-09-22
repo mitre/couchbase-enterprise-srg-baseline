@@ -19,22 +19,27 @@ control "V-58127" do
   Review Couchbase documentation to verify that audit records can be produced
   when the system denies or fails to complete attempts to change the
   configuration of Couchbase or database(s).
+ 
   If Couchbase is not capable of this, this is a finding.
   Review Couchbase/database security and audit configurations to verify that
   audit records are produced when the system denies attempts to change the
   configuration of Couchbase or database(s).
+  
   If they are not produced, this is a finding.
   Review Couchbase/database security and audit configurations to verify that
   audit records are produced when other errors prevent attempts to change the
   configuration of Couchbase or database(s).
+  
   If they are not produced, this is a finding.
   "
   desc  "fix", "
   Couchbase capable of producing the required audit records when it denies or
   fails to complete attempts to change the configuration of Couchbase or
   database(s).
+  
   Configure Couchbase to produce audit records when it denies attempts to
   change the configuration of Couchbase or database(s).
+  
   Configure Couchbase to produce audit records when other errors prevent
   attempts to change the configuration of Couchbase or database(s).
   "
@@ -48,17 +53,9 @@ control "V-58127" do
   tag "cci": ["CCI-001814"]
   tag "nist": ["CM-5 (1)", "Rev_4"]
 
-  describe "This test requires a Manual Review: Verify that audit records are produced when the
-  system fails attempts to change the configuration of Couchbase or database(s)." do
-    skip "This test requires a Manual Review: Verify that audit records are produced when the
-    system fails attempts to change the configuration of Couchbase or database(s)."
+  describe "This test requires a Manual Review: Couchbase is not currently
+  capable of logging when configuration changes fail." do
+    skip "This test requires a Manual Review: Couchbase is not currently
+    capable of logging when configuration changes fail."
   end 
- 
-  describe "This test requires a Manual Review: Verify that audit records are produced when the system denies attempts to change the configuration of Couchbase or  database(s)." do
-    skip "This test requires a Manual Review: Verify that audit records are produced when the system denies attempts to change the configuration of Couchbase or  database(s)."
-  end
-
-  describe "This test requires a Manual Review: Verify that audit records are produced when other errors prevent attempts to change theconfiguration of Couchbase or database(s)." do
-    skip "This test requires a Manual Review: Verify that audit records are produced when other errors prevent attempts to change theconfiguration of Couchbase or database(s)."
-  end  
 end

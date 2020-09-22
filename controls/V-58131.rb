@@ -18,7 +18,9 @@ control "V-58131" do
   Review the Couchbase documentation and configuration to determine if
   Couchbase is configured in accordance with DoD security configuration and
   implementation guidance, including STIGs, NSA configuration guides, CTOs, and
-  DTMs and IAVMs. If Couchbase is not configured in accordance with security 
+  DTMs and IAVMs. 
+  
+  If Couchbase is not configured in accordance with security 
   configuration settings, this is a finding.
   "
   desc  "fix", "

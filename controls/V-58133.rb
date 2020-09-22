@@ -11,12 +11,14 @@ control "V-58133" do
   Review the network functions, ports, protocols, and services in the
   Couchbase config:
     $ vi /opt/couchbase/etc/couchbase/static_config
+  
   If any protocol is prohibited by the PPSM guidance and is enabled, this is
   a finding.
   "
   desc  "fix", "
   Ensure Couchbase is capable of disabling a network function, port,
   protocol, or service prohibited by the PPSM guidance.
+  
   Disable each prohibited network function, port, protocol, or service.
   "
   impact 0.5
@@ -29,17 +31,26 @@ control "V-58133" do
   tag "cci": ["CCI-001762"]
   tag "nist": ["CM-7 (1) (b)", "Rev_4"]
 
-  describe command("cat /opt/couchbase/etc/couchbase/static_config | grep \"port\"") do
-    its('stdout') { should include input('cb_cluster_port') }
+  active_ports = command("cat #{input('cb_static_config')} | grep 'port' | egrep -o '[0-9999]*'").stdout.split("\n")
+
+  describe "Couchbase's static config should have defined ports." do
+    subject {active_ports}
+    it { should_not eq [] }
+  end
+
+  active_ports.each do |port|
+    describe "Each port defined in the Couchbase config should be approved. #{port}" do
+      subject {port}  
+      it { should be_in input('cb_approved_ports') }
+    end
   end  
 
   if virtualization.system == 'docker'
-  describe "This test requires a Manual Review: The docker container must have networking tools 
-  to check its ports and their processes" do
-	  skip "This test requires a Manual Review: The docker container must have networking tools 
-    to check its ports and their processes"
-	end
-
+    describe "The docker container must have networking tools to check its ports and their processes.
+    If the currently defined port configuration is deemed prohibited, this is a finding." do
+      skip "The docker container must have networking tools to check its ports and their processes.
+      If the currently defined port configuration is deemed prohibited, this is a finding."
+    end
   else
     describe port(input('cb_cluster_port')) do
       it { should be_listening }

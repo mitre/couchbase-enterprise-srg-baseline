@@ -1,16 +1,19 @@
-# ---
+---
+# - name: Add default port to static config
+#   shell: "echo '{default_port, 8091}' >> /opt/couchbase/etc/couchbase/static_config"
+
 - name: Start service couchbase-server, if not started
   service:
     name: couchbase-server
     state: started
 
-- name: Setup new cluster
-  shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
-  --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
+# - name: Setup new cluster
+#   shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
+#   --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
 
-- name: Create a Bucket
-  shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
-  --password {{ cb_full_admin_password }} --bucket test-data --bucket-type couchbase --bucket-ramsize 100"
+# - name: Create a Bucket
+#   shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
+#   --password {{ cb_full_admin_password }} --bucket test-data --bucket-type couchbase --bucket-ramsize 100"
 
 - name: Create Admin User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
@@ -23,7 +26,7 @@
   --roles bucket_admin[test-data] --auth-domain local"
 
 - name: Check version of Couchbase Server
-  shell: "/opt/couchbase/bin/couchbase-server -v"
+  shell: "/opt/couchbase/bin/couchbase-server -v | egrep -o '[0-9].*-[0-9]' | cut -f1,2 -d'.'"
   register: cbversion
 
 - name: Enable Auditing for Enterprise 6.5.0 and earlier
@@ -37,12 +40,23 @@
   --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
   when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout"
 
-# - name: Enable saslauthd
-#   shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enabled 1"
+- name: Check if saslauthd is Required
+  shell: "echo {{ cb_use_saslauthd }}"
+  register: use_saslauthd
 
-- name: Set UI Session Timeout
-  shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
-  -d 'uiSessionTimeout=600'"
+- name: Enable saslauthd
+  shell: "/opt/couchbase/bin/couchbase-cli setting-saslauthd -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
+  --password {{ cb_full_admin_password }} --enabled 1"
+  when: 
+    - "use_saslauthd.stdout == 'true'"
+    - "'6.5.' in cbversion.stdout or '6.6.' in cbversion.stdout"
+
+- name: Set Ownership/Permissions on Home Directory
+  file:
+    path: "{{ cb_home_dir }}"
+    mode: "700"
+    owner: "couchbase"
+    group: "couchbase"
 
 - name: Set Ownership/Permissions on all Couchbase Config Files
   file:
@@ -74,6 +88,13 @@
     owner: "couchbase"
     group: "couchbase"
 
+- name: Set Ownership/Permissions on Data Directory
+  file:
+    path: "{{ cb_data_dir }}"
+    mode: "700"
+    owner: "couchbase"
+    group: "couchbase"
+    
 - name: Remove Samples Directory
   file:
     path: "{{ cb_samples_dir }}"
@@ -84,6 +105,13 @@
   -newkey rsa:4096 -keyout /etc/ssl/ca.key -out /etc/ssl/ca.pem -days 365"
   args:
     creates: "/etc/ssl/ca.key"
+
+- name: The static config should only be readable by owner
+  file:
+    path: "{{ cb_static_config }}"
+    mode: "0600"
+    owner: "couchbase"
+    group: "couchbase"
 
 - name: The private key should only be readable by owner
   file:
@@ -98,24 +126,28 @@
     mode: "0600"
     owner: "couchbase"
     group: "couchbase"
-
-# Add steps to harden
+    
+- name: Check if Certificate Auth is Required
+  shell: "echo {{ cb_use_pki }}"
+  register: use_pki
 
 - name: Enable Compliant Password Policy Settings 6.0.0 and earlier
-  shell: "couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+  shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase --lowercase --digit --special-char"
-  when: "'6.0.0' in cbversion.stdout or '6.0.2' in cbversion.stdout"
+  when: cbversion.stdout is version('6.5', '<')
 
 - name: Enable Compliant Password Policy Settings 6.5.0 and later
-  shell: "couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+  shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
-  when: "'6.5.0' in cbversion.stdout or '6.6.0' in cbversion.stdout or '6.5.1' in cbversion.stdout"
+  when: cbversion.stdout is version('6.5', '>=')
 
-- name: Configure Couchbase to to implement a limit on the lifetime of cached authenticator
-  shell: "couchbase-cli setting-ldap -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --cache-value-lifetime 300000"
+- name: Enable LDAP 6.0.0 and earlier
+  shell: "/opt/couchbase/bin/couchbase-cli setting-ldap -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+  -p {{ cb_full_admin_password }} --ldap-enabled 1"
+  when: cbversion.stdout is version('6.5', '<')
 
-- name: Configure Couchbase authorization to be Mandatory 
-  shell: "couchbase-cli ssl-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set-client-auth mandatory"
-
+- name: Enable LDAP 6.5.0 and later
+  shell: "/opt/couchbase/bin/couchbase-cli setting-ldap -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+  -p {{ cb_full_admin_password }} --authentication-enabled 1 --authorization-enabled 1 --cache-value-lifetime 300000"
+  when: cbversion.stdout is version('6.5', '>=')
+  

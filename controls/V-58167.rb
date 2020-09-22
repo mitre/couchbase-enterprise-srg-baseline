@@ -9,8 +9,10 @@ control "V-58167" do
   PKIs lacking sufficient security controls and identity vetting procedures risk
   being compromised and issuing certificates that enable adversaries to
   impersonate legitimate users.
+  
   The authoritative list of DoD-approved PKIs is published at
   http://iase.disa.mil/pki-pke/interoperability.
+  
   This requirement focuses on communications protection for Couchbase session
   rather than for the network packet.
   "
@@ -20,8 +22,8 @@ control "V-58167" do
   "
   desc  "fix", "
   Revoke trust in any certificates not issued by a DoD-approved
-  certificate authority. Configure Couchbase to accept only DoD and DoD-approved
-  PKI end-entity certificates.
+  certificate authority. 
+    $ openssl ca -revoke <cert-locationt>
   "
   impact 0.5
   tag "severity": "medium"
@@ -33,12 +35,17 @@ control "V-58167" do
   tag "cci": ["CCI-002470"]
   tag "nist": ["SC-23 (5)", "Rev_4"]
 
-  describe command('openssl x509 -in -text | grep -i "issuer"') do
-  end 
-
-  describe "This test requires a Manual Review: Ensure Couchbase will only accept DoD-approved PKI
-  end-entity certificates" do
-    skip "This test requires a Manual Review: Ensure Couchbase will only accept DoD-approved PKI
-    end-entity certificates"
+  certificate_issuer = command("openssl x509 -in -text | grep -i 'issuer'").stdout.split("\n")
+ 
+  describe "Couchbase's should have certificates with issuers." do
+    subject {certificate_issuer}
+    it { should_not eq [] }
   end
+
+  certificate_issuer.each do |issuer|
+    describe "The Couchbase certificate issuer should be DoD approved. #{issuer}" do
+      subject {issuer}  
+      it { should include 'DoD' }
+    end
+  end  
 end

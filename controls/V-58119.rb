@@ -44,13 +44,9 @@ control "V-58119" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Verify that administrative users can specify database objects for which access must be audited and which kinds of access must be audited." do
-    skip "This test requires a Manual Review: Verify that administrative users can specify database objects for which access must be audited and which kinds of access must be audited."
-  end
-  
-  describe "This test requires a Manual Review: Verify that the specified access to the specified objects is
-  audited." do
-    skip "This test requires a Manual Review: Verify that the specified access to the specified objects is
-    audited."
-  end
+  describe "This test requires a Manual Review: Couchbase is not currently capable of specification
+  of objects for auditing." do
+    skip "This test requires a Manual Review: Couchbase is not currently capable of specification
+    of objects for auditing."
+  end 
 end

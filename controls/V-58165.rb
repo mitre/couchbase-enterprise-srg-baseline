@@ -23,7 +23,10 @@ control "V-58165" do
   Verify Couchbase has SSL enabled:
     $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin> -p
     <Password> --client-auth --extended
-  If Couchbase does not have SSL enabled, this is a finding.
+  
+  Review the output. If \"state\" is not set to \"enabled\" or \"mandatory\", 
+  this is a finding.  
+  
   Review Couchbase settings to determine whether protections against
   man-in-the-middle attacks that guess at session identifier values are enabled.
   If they are not, this is a finding.
@@ -43,7 +46,9 @@ control "V-58165" do
   tag "cci": ["CCI-001188"]
   tag "nist": ["SC-23 (3)", "Rev_4"]
 
-  describe json({ command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended"} ) do
+  describe "Couchbase should have SSL enabled" do
+    subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
     its('state') { should eq 'enable' }
   end
 end

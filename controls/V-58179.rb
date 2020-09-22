@@ -33,6 +33,7 @@ control "V-58179" do
   desc  "check", "
   Review Couchbase source code (stored procedures, functions, triggers) and
   application source code, to identify cases of dynamic code execution.
+  
   If dynamic code execution is employed in circumstances where the objective
   could practically be satisfied by static execution with strongly typed
   parameters, this is a finding.

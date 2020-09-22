@@ -23,18 +23,23 @@ control "V-58121" do
   Review Couchbase documentation to verify that administrative users can
   specify database objects for which access must be audited, and can specify
   which kinds of access must be audited.
+  
   If Couchbase is not capable of this, this is a finding.
+  
   Review Couchbase documentation to determine whether the application owner
   has specified database objects (tables, views, procedures, functions, etc.) for
   which access must be audited.
+  
   Review the Couchbase/database security and audit settings to verify that
   audit records are created for unsuccessful attempts at the specified access to
   the specified objects.
+  
   If not, this is a finding.
   "
   desc  "fix", "
   Ensure couchbase is capable of producing the required audit records when
   object access occurs.
+  
   Configure audit settings to create audit records when the specified access
   to the specified objects occurs.
   "
@@ -48,15 +53,9 @@ control "V-58121" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Verify that administrative users can specify database
-  objects for which access must be audited and can specify which kinds of access must be audited." do
-    skip "This test requires a Manual Review: Verify that administrative users can specify database
-    objects for which access must be audited and can specify which kinds of access must be audited."
-  end 
- 
-  describe "This test requires a Manual Review: Verify that audit records are created for unsuccessful
-  attempts at the specified access to the specified objects." do
-    skip "This test requires a Manual Review: Verify that audit records are created for unsuccessful
-    attempts at the specified access to the specified objects"
+  describe "This test requires a Manual Review: Couchbase is not currently capable of specification
+  of objects for auditing." do
+    skip "This test requires a Manual Review: Couchbase is not currently capable of specification
+    of objects for auditing."
   end 
 end

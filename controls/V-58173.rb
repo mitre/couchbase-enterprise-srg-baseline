@@ -13,12 +13,15 @@ control "V-58173" do
   "
   desc  "check", "
   If Couchbase is running within a Docker container, this is not a finding.
+ 
   Review Couchbase architecture to find out if and how it protects the
   private resources of one process (such as working memory, temporary tables,
   uncommitted data and, especially, executable code) from unauthorized access or
   modification by another user or process.
+  
   If it is not capable of maintaining a separate execution domain for each
   executing process, this is a finding.
+  
   If Couchbase is capable of maintaining a separate execution domain for each
   executing process, but is configured not to do so, this is a finding.
   "
@@ -38,10 +41,10 @@ control "V-58173" do
   tag "nist": ["SC-39", "Rev_4"]
 
   if virtualization.system == 'docker'
-    describe "If Couchbase is running within a Docker container, there is separate execution
-    space and this is not a finding." do
-      skip "If Couchbase is running within a Docker container, there is separate execution
-      space and this is not a finding."
+    describe "The Couchbase Server is running within a Docker container. While containerized there is 
+    separate execution space so this is not a finding." do
+      subject { virtualization.system }
+      it {should cmp 'docker'}
     end
   else
     describe "This test requires a Manual Review: Ensure Couchbase is capable of maintaining a 

@@ -14,14 +14,13 @@ control "V-58161" do
   "
   desc  "check", "
   As the system administrator, run the following:
-  $ openssl version
+    $ openssl version
+  
   If \"fips\" is not included in the openssl version, this is a finding.
-  Run the following command to check if the OS has FIPS enabled:
-  $ cat /proc/sys/crypto/fips_enabled
-  If fips_enabled is not 1, this is a finding.
   "
   desc  "fix", "
   Configure OpenSSL to meet FIPS Compliance.
+  
   To configure OpenSSL to be FIPS 140-2 compliant, see the official RHEL
   Documentation:
   https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-Federal_Standards_And_Regulations-Federal_Information_Processing_Standard.html
@@ -39,6 +38,7 @@ control "V-58161" do
   describe command('openssl version') do
     its('stdout') { should include 'fips' }
   end
+  
   describe kernel_parameter('crypto.fips_enabled') do
     its('value') { should cmp 1 }
   end 

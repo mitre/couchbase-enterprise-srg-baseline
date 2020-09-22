@@ -36,10 +36,13 @@ control "V-58177" do
   desc  "check", "
   Obtain evidence that software patches are consistently applied to Couchbase
   within the time frame defined for each patch.
+  
   To list the current version of Couchbase installed:
-    $ couchbase-cli --version
+    $ couchbase-server -v
+  
   Verify the version is the most recent available by visiting the following link:
   https://docs.couchbase.com/server/current/release-notes/relnotes.html
+  
   If the current Couchbase version is not the latest this is a finding.
   "
   desc  "fix", "
@@ -56,7 +59,8 @@ control "V-58177" do
   tag "cci": ["CCI-002605"]
   tag "nist": ["SI-2 c", "Rev_4"]
 
-  describe command('couchbase-cli --version') do
-    its('stdout') { should match input('cb_version')}
+  describe "Couchbases server version should match the latest reported version." do
+    subject { command("couchbase-server -v | egrep -o '[0-9].*-[0-9]' | cut -f1,2 -d'.'") }
+      its('stdout') { should match input('cb_latest_version')}
   end  
 end

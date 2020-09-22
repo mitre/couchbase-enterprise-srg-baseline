@@ -20,14 +20,17 @@ control "V-58155" do
   If Couchbase is deployed in an unclassified environment, this is not
   applicable (NA). If Couchbase is not maintaining the confidentiality and integrity of
   information during receptions, this is a finding.
+  
   Verify Couchbase has SSL enabled:
     $ couchbase-cli ssl-manage -c <host>:<port>-u Administrator -p password
     --client-auth --extended
+  
   If the response does not show SSL is enabled, this is a finding.
   "
   desc  "fix", "
   Implement protective measures against unauthorized disclosure and
   modification during reception.
+  
   Configure Couchbase to enforce SSL:
     $ couchbase-cli ssl-manage -c <host>:<port> -u <Full Admin> -p <Password>
     --set-client-auth <Config File>
@@ -42,7 +45,15 @@ control "V-58155" do
   tag "cci": ["CCI-002422"]
   tag "nist": ["SC-8 (2)", "Rev_4"]
 
-  describe json({ command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended"}) do
+  describe "This test requires a Manual Review: Verify that Couchbase is maintaining the confidentiality and integrity of
+  information during receptions, if not this is a finding." do
+    skip "This test requires a Manual Review: Verify that Couchbase is maintaining the confidentiality and integrity of
+    information during receptions, if not this is a finding."
+  end
+
+  describe "Couchbase should have SSL enabled" do
+    subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
     its('state') { should eq 'enable' }
   end    
 end

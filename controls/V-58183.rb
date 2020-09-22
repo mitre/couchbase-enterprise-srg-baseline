@@ -25,17 +25,22 @@ control "V-58183" do
   desc  "check", "
   Review system documentation to determine how input errors are to be handled
   in general and if any special handling is defined for specific circumstances.
+
   Review the source code for database program objects (stored procedures,
   functions, triggers) and application source code to identify how the system
   responds to invalid input.
+
   As database administrator, make a small syntax error (missing key word FROM
   before dataset TestDatabase):
     $ cbq -u <Full Admin> -p <Password> -engine=http://<host>:<port>/
     --script=\"SELECT * TestDatabase user\"
-  Verify the syntax error was logged by Couchbase (change the log file name
-  and part to suit the circumstances).
-    $ cat /opt/couchbase/var/lib/couchbase/logs/event.log
-  If it does not implement the documented behavior, this is a finding.
+  
+    Verify the syntax error was recognized by Couchbase by returning a syntax error
+  in the command's output. 
+  
+  For example:
+    \"msg\": \"syntax error - at TestDatabase\"
+  If this behavior is not implemented, this is a finding.
   "
   desc  "fix", "
   Configure Couchbase to generate audit records for all invalid inputs.
@@ -52,12 +57,9 @@ control "V-58183" do
   tag "cci": ["CCI-002754"]
   tag "nist": ["SI-10 (3)", "Rev_4"]
 
-  describe command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-  -engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} --script=\"SELECT * TestDatabase user\"") do
-  end
-  
-  describe command("cat #{input('cb_audit_log')} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` \
-  | grep \"Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1\"") do
-    its('stdout') { should match /^.*Syntax error: In line 2 >>TestDatabase user;<< Encountered <IDENTIFIER> \"TestDatabase\" at column 1.*$/ }
+  describe "Couchbase should recognize and reject input errors." do
+    subject { command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    -engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} --script=\"SELECT * TestDatabase user\"")}
+      its('stdout') { should include 'syntax error - at TestDatabase' }  
   end
 end

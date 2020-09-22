@@ -18,11 +18,14 @@ control "V-61407" do
   "
   desc  "check", "
   If Couchbase password authentication is not used, this is not a finding.
+  
   As the Full Admin, review the password policy set using the following
   command:
     $ couchbase-cli setting-password-policy -c <host>:<port> -u <Full Admin> -p
     <Password> --get
+  
   Review the output. If \"minLength\" is not equal to 15, this is a finding.
+  
   If \"enforceDigits\", \"enforceLowercase\", enforceSpecialChars\", and
   \"enforceUppercase\" are not set to \"true\", this is a finding.
   "
@@ -50,12 +53,13 @@ control "V-61407" do
   tag "cci": ["CCI-000192"]
   tag "nist": ["IA-5 (1) (a)", "Rev_4"]
 
-  describe json({ command: "couchbase-cli setting-password-policy -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-  -u #{input('cb_full_admin')} -p  #{input('cb_full_admin_password')} --get"} ) do
-    its('minLength') { should eq '15' }
-    its('enforceDigits') { should eq 'true' }
-    its('enforceLowercase') { should eq 'true' }
-    its('enforceSpecialChars') { should eq 'true' }
-    its('enforceUppercase') { should eq 'true' }
+  describe "Couchbase password policy settings should be compliant to secure practices." do 
+    subject{ json( command: "couchbase-cli setting-password-policy -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get")}
+    its('minLength') { should cmp '15' }
+    its('enforceDigits') { should cmp 'true' }
+    its('enforceLowercase') { should cmp 'true' }
+    its('enforceSpecialChars') { should cmp 'true' }
+    its('enforceUppercase') { should cmp 'true' }
   end
 end

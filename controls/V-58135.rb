@@ -30,12 +30,14 @@ control "V-58135" do
   If Couchbase supports only software development, experimentation and/or
   developer-level testing (that is, excluding production systems, integration
   testing, stress testing, and user acceptance testing), this is not a finding.
+  
   Review Couchbase and database security settings with respect to
   non-administrative users ability to create, alter, or replace logic modules,
   to include but not necessarily only stored procedures, functions, triggers, and
   views.
     $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> -p <Password>
     --list
+  
   If any such permissions exist and are not documented and approved, this is
   a finding.
   "
@@ -58,7 +60,8 @@ control "V-58135" do
   tag "nist": ["CM-11 (2)", "Rev_4"]
 
   admin_users = []
-  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
+  json_output = command("couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
   json_output.each do |output|
     user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip

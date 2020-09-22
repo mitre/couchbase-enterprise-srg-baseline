@@ -14,25 +14,34 @@ control "V-58149" do
   desc  "check", "
   Review the permissions granted to users by the operating system/file system
   on the database files, database log files and database backup files.
+ 
   Verify the permissions for the following database files directories with
   the following commands: 
-  Couchbase configuration files directory -
-    $ ls -la /opt/couchbase/etc/couchbase
-  Couchbase default directory (contains data and logs):
-    $ ls -la /opt/couchbase/var/lib/couchbase
+  
+  Couchbase configuration data directory -
+    $ ls -la /opt/couchbase/var/lib/couchbase/data
+ 
+    Couchbase home directory -
+    $ ls -la /opt/couchbase
+ 
   If the owner and group are not both \"couchbase\" for the files, this is a finding.
   If the files permissions are more permissive than \"600\", this is a finding.
   "
   desc  "fix", "
   Configure Couchbase to effectively protect the private resources of one
   process or user from unauthorized access by another user or process.
+  
   As the root or sudo user, change the permission of the following files:
-  Couchbase configuration files directory:
-    $ chown -R couchbase:couchbase /opt/couchbase/etc/couchbase
-    $ chmod 700 /opt/couchbase/etc/couchbase/
-  Couchbase default directory (contains data and logs):
-    $ chown -R couchbase:couchbase /opt/couchbase/var/lib/couchbase
-    $ chmod 600 /opt/couchbase/var/lib/couchbase/*
+ 
+  Couchbase data files directory:
+    $ chown -R couchbase:couchbase /opt/couchbase/var/lib/couchbase/data
+    $ chmod 700 /opt/couchbase/var/lib/couchbase/data/
+    $ chmod 600 /opt/couchbase/var/lib/couchbase/data/*
+  
+    Couchbase home directory (contains data and logs):
+    $ chown -R couchbase:couchbase /opt/couchbase
+    $ chmod 700 /opt/couchbase/
+    $ chmod 600 /opt/couchbase/*
   "
   impact 0.5
   tag "severity": "medium"
@@ -44,18 +53,36 @@ control "V-58149" do
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
 
-  describe file(input('cb_log_dir')) do
-    its('owner') { should be_in input('cb_service_user') }
-    its('group') { should be_in input('cb_service_group') }
+  describe directory(input('cb_data_dir')) do
+    it { should be_directory }
+    its('owner') { should eq 'couchbase' }
+    its('group') { should eq 'couchbase' }
+    it { should_not be_more_permissive_than('0700') }
+  end  
+
+  data_files = command("ls -p #{input('cb_data_dir')} | grep -v '/'").stdout.split("\n")
+
+  data_files.each do |file|
+    describe file("#{input('cb_data_dir')}/#{file}") do
+    its('owner') { should eq 'couchbase' }
+    its('group') { should eq 'couchbase' }
+      it { should_not be_more_permissive_than('0600') }
+    end
+  end 
+  
+  describe directory(input('cb_home_dir')) do
+    it { should be_directory }
+    its('owner') { should eq 'couchbase' }
+    its('group') { should eq 'couchbase' }
     it { should_not be_more_permissive_than('0700') }
   end
 
-  log_files = command("ls -p #{input('cb_log_dir')} | grep -v '/'").stdout.split("\n")
+  home_files = command("ls -p #{input('cb_home_dir')} | grep -v '/'").stdout.split("\n")
 
-  log_files.each do |file|
-    describe file("#{input('cb_log_dir')}/#{file}") do
-      its('owner') { should be_in input('cb_service_user') }
-      its('group') { should be_in input('cb_service_group') }
+  home_files.each do |file|
+    describe file("#{input('cb_home_dir')}/#{file}") do
+    its('owner') { should eq 'couchbase' }
+    its('group') { should eq 'couchbase' }
       it { should_not be_more_permissive_than('0600') }
     end
   end 

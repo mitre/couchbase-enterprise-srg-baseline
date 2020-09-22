@@ -19,10 +19,13 @@ control "V-58129" do
   "
   desc  "check", "
   Identify the group(s)/role(s) established for Couchbase modification.
+  
   Obtain the list of users in those group(s)/roles:
     $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> -p <Password>
     --list
+  
   Identify the individuals authorized to modify Couchbase.
+  
   If unauthorized access to the group(s)/role(s) has been granted, this is a
   finding.
   "
@@ -50,7 +53,7 @@ control "V-58129" do
   end
 
   admin_users.each do |user|
-    describe 'Each admin user in the list' do
+    describe 'Each user in the list should be an Admin.' do
       subject { user }
       it { should be_in input('cb_admin_users').uniq.flatten }
     end
