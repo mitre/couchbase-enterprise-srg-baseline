@@ -44,7 +44,9 @@ control "V-58135" do
   desc  "fix", "
   Document and obtain approval for any non-administrative users who require
   the ability to create, alter or replace logic modules.
+  
   Implement the approved permissions. Revoke any unapproved permissions.
+  
   To remove undocumented accounts, execute the following command:
     $ couchbase-cli user-manage -u <Full Admin> -p <Password> --cluster
     <host>:<port> --set --delete --rbac-username <username> --auth-domain <domain>

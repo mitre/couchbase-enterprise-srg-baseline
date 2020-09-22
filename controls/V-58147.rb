@@ -56,5 +56,11 @@ control "V-58147" do
     to re-authenticate, if Couchbase does not force re-authentication, this is a finding" do
     skip "This test requires a Manual Review: Determine all situations where a user must re-authenticate
     to re-authenticate, if Couchbase does not force re-authentication, this is a finding"
-  end 
+  end
+
+  describe "This test requires a Manual Review: Couchbase does not support changing roles or escalating 
+  privileges without re-authenticating as a different account." do
+    skip "This test requires a Manual Review: Couchbase does not support changing roles or escalating 
+    privileges without re-authenticating as a different account."
+  end    
 end
