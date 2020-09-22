@@ -10,7 +10,7 @@
 
 - name: Create a Bucket
   shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
-  --password {{ cb_full_admin_password }} --bucket test-data --bucket-type couchbase --bucket-ramsize 100"
+  --password {{ cb_full_admin_password }} --bucket test-bucket --bucket-type couchbase --bucket-ramsize 100"
 
 - name: Create Admin User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
@@ -20,7 +20,7 @@
 - name: Create Regular User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
   -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password cbpass --rbac-name 'CB User' \
-  --roles bucket_admin[test-data] --auth-domain local"
+  --roles bucket_admin[test-bucket] --auth-domain local"
 
 - name: Check version of Couchbase Server
   shell: "/opt/couchbase/bin/couchbase-server -v"

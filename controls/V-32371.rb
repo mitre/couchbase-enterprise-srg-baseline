@@ -31,20 +31,23 @@ application.
     - \"filtering_permitted\" - Whether the event is filterable
     - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
       format) and \"user\" fields
-  Note that different event-types generate different field-subsets. Below are
-  some of the fields provided:
-    - \"node_id\" - ID of Node
-    - \"session_id\" - ID of current Session
+
+  Note that different event-types generate different field-subsets. Below are some 
+  additional fields provided to establish what type of events occured. 
     - \"ip\" - Remote IP address
     - \"port\" - Remote port
-    - \"bucket_name\" - Name of Bucket
-
-  As the Full Admin, verify that auditing is enabled by executing the following command:
-
-  $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
-
-  Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
-  is not set to \"true\", this is finding.
+    
+  As the Full Admin, create a user account by executing the following command:
+    $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
+    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    --rbac-name \"John Doe\" --roles replication_admin \
+    --auth-domain local
+    
+  Verify that the event logged contains the required fields:
+    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log 
+    
+  If the log does not contain the \"ip\" and \"port\" fields,
+  this is a finding.
   "
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce sufficient
@@ -72,10 +75,24 @@ application.
   tag "cci": ["CCI-000133"]
   tag "nist": ["AU-3", "Rev_4"]
 
-  describe "Couchbase log auditing should be enabled." do
-    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-    its('auditdEnabled') { should eq true }
-  end 
+  describe "Create the jdoe user. The" do 
+    subject { command("couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --set --rbac-username jdoe --rbac-password cbpass \
+    --rbac-name 'John Doe' --roles replication_admin \
+    --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
 
+  describe "The logged event should contain required fields. The" do
+    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"ip"/}
+    its('stdout') { should match /"port"/}
+  end
+
+  describe "Delete the jdoe user. The" do 
+    subject { command("couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --delete --rbac-username jdoe \
+    --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
 end

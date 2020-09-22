@@ -26,20 +26,17 @@ application.
     - \"filtering_permitted\" - Whether the event is filterable
     - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
       format) and \"user\" fields
-  Note that different event-types generate different field-subsets. Below are
-  some of the fields provided:
-    - \"node_id\" - ID of Node
-    - \"session_id\" - ID of current Session
-    - \"ip\" - Remote IP address
-    - \"port\" - Remote port
+      
+  Note that different event-types generate different field-subsets. Below are some 
+  of the fields required to establish where the event occurred: 
+    - \"sessionid\" - ID of current Session 
     - \"bucket_name\" - Name of Bucket
-
-  As the Full Admin, verify that auditing is enabled by executing the following command:
-
-  $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
-
-  Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
-  is not set to \"true\", this is finding.
+    
+  As the Full Admin, create a bucket in the cluster by executing the following command:
+    $ couchbase-cli bucket-create -c <host>:<port> --username <Full Admin>  --password <Password> 
+    --bucket test-data --bucket-type couchbase --bucket-ramsize 100
+  
+  If the log does not contain the \"sessionid\" and \"bucket_name\" fields, this is a finding
   "
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce sufficient
@@ -66,10 +63,22 @@ application.
   tag "cci": ["CCI-000132"]
   tag "nist": ["AU-3", "Rev_4"]
 
-  describe "Couchbase log auditing should be enabled." do
-    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-    its('auditdEnabled') { should eq true }
-  end 
+  describe "Create a Bucket. The" do 
+    subject { command("couchbase-cli bucket-create -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} \
+    --bucket test-data --bucket-type couchbase --bucket-ramsize 100") }
+    its('exit_status') { should eq 0 }
+  end
 
+  describe "The logged event should contain required fields. The" do
+    subject { command("grep 'test-data' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"sessionid"/}
+    its('stdout') { should match /"bucket_name"/}
+  end
+
+  describe "Delete the Bucket. The" do 
+    subject { command("couchbase-cli bucket-delete -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} --bucket test-data") }
+    its('exit_status') { should eq 0 }
+  end
 end

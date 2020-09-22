@@ -63,7 +63,7 @@ control "V-32363" do
   end
 
   admin_users.each do |user|
-    describe "Each admin user in the list should be docuemented. #{user}" do
+    describe "Each admin user in the list should be documented. #{user}" do
       subject { user }
       it { should be_in input('cb_admin_users').uniq.flatten }
     end
