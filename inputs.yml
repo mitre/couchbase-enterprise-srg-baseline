@@ -59,8 +59,8 @@ cb_cluster_port: '8091'
 is_docker: 'true'
 
 cb_redhat_approved_packages: [
-  'couchbase-release.x86_64',
-  'couchbase-server.x86_64'
+  'couchbase-release',
+  'couchbase-server'
 ]
 
 cb_debian_approved_packages: [

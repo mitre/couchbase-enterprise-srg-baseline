@@ -66,9 +66,9 @@ control "V-32469" do
   tag "cci": ["CCI-000197"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
 
-  couchbase_version = command('couchbase-server -v').stdout
+  couchbase_version = command('couchbase-server -v | egrep -o "([0-9]{1,}\.)+[0-9]{1,}"').stdout.strip
 
-  if couchbase_version.include?("6.0.") 
+  if couchbase_version <= '6.0.2'
     describe "The security setting" do
       subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
       http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }

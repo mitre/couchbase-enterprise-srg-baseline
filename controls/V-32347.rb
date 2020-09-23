@@ -25,21 +25,12 @@ control "V-32347" do
   that need to be protected from repudiation by means of audit trails.
   When enabled, Couchbase can identify a unique user for each record.
 
-  Couchbase Server 6.5.0 and earlier -
   As the Full Admin, verify that auditing is enabled by executing the following command:
 
   $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
 
   Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
-  is not set to \"true\", this is finding.
-
-  Couchbase Server Version 6.5.1 and later -
-  As the Full Admin, verify that auditing is enabled by executing the
-  following command:
-    $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
-    <Password> --get-settings
-  Verify from the output that \"Audit enabled\" is set to \"True\". If
-  \"Audit enabled\" is not set to true, this is finding."
+  is not set to \"true\", this is finding."
 
   desc  "fix", "
   Use accounts assigned to individual users. Where the application connects
@@ -68,20 +59,9 @@ control "V-32347" do
   tag "cci": ["CCI-000166"]
   tag "nist": ["AU-10", "Rev_4"]
 
-  couchbase_version = command('couchbase-server -v').stdout
-
-  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
-    describe "Couchbase log auditing should be enabled." do 
-      subject { command("#{input('cb_bin_dir')}/couchbase-cli setting-audit -u #{input('cb_full_admin')} \
-      -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-      --get-settings | grep 'Audit enabled:'") }
-      its('stdout') { should include "True" }
-    end 
-  else
-    describe "Couchbase log auditing should be enabled." do
-      subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-      http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-      its('auditdEnabled') { should eq true }
-    end 
-  end
+  describe "Couchbase log auditing should be enabled." do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+    its('auditdEnabled') { should eq true }
+  end 
 end
