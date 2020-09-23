@@ -72,8 +72,9 @@ control "V-32347" do
 
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
     describe "Couchbase log auditing should be enabled." do 
-      subject { command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-      --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") }
+      subject { command("#{input('cb_bin_dir')}/couchbase-cli setting-audit -u #{input('cb_full_admin')} \
+      -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+      --get-settings | grep 'Audit enabled:'") }
       its('stdout') { should include "True" }
     end 
   else

@@ -78,7 +78,7 @@ response.
   end
 
   describe "Delete the jdoe user. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
     --delete --rbac-username jdoe --auth-domain local") }

@@ -43,8 +43,10 @@ control "V-32478" do
 
   if input('cb_use_pki') == "true"
     describe "The path validation should be set to 'subject.cn'. The" do 
-      subject { command("couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --client-auth --extended") }
+      subject { command("#{input('cb_bin_dir')}/couchbase-cli ssl-manage \
+      -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
+      --client-auth --extended") }
       its('stdout') { should match /subject.cn/ }
     end
   else

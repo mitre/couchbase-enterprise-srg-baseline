@@ -94,8 +94,9 @@ control "V-32362" do
   if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.")
     input('cb_required_audit_events').each do |event_name|
       describe "The #{event_name} event should be enabled." do
-        subject { command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-        --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep '#{event_name}'") }
+        subject { command("#{input('cb_bin_dir')}/couchbase-cli setting-audit -u #{input('cb_full_admin')} \
+        -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+        --get-settings | grep '#{event_name}'") }
         its('stdout') { should include "True" }
       end 
     end 

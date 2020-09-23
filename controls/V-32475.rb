@@ -64,14 +64,21 @@ control "V-32475" do
 
   if input('cb_use_pki') == "true"
     describe.one do 
-      describe json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --client-auth --extended") do
+
+      describe json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage \
+      -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
+      --client-auth --extended") do
         its('state') { should eq "enabled" }
       end
-      describe json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  --client-auth --extended") do
+
+      describe json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage \
+      -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
+      --client-auth --extended") do
         its('state') { should eq "mandatory" }
       end
+      
     end 
   else
     impact 0.0
