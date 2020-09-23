@@ -51,10 +51,9 @@ control "V-58103" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "Couchbase log auditing should be enabled." do
-    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-      its('auditdEnabled') { should eq true }
-      its('stdout') { should include 'timestamp' }
-  end   
+  describe "This test requires a Manual Review: Couchbase is not currently
+  capable of differentiating between catergories of information." do
+    skip "This test requires a Manual Review: Couchbase is not currently
+    capable of differentiating between catergories of information."
+  end 
 end

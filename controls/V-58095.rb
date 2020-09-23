@@ -14,6 +14,7 @@ control "V-58095" do
   desc  "check", "
   When enabled on the cluster, Couchbase auditing is capable of logging all
   reads, creations, modifications, and deletions.
+  
   Couchbase Server 6.5.0 and earlier -
     As root or a sudo user, verify that the \"audit.log\" file exists in the
     var/lib/couchbase/logs directory of the Couchbase application home (example:
@@ -51,10 +52,9 @@ control "V-58095" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "Couchbase log auditing should be enabled." do
-    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-      its('auditdEnabled') { should eq true }
-      its('stdout') { should include 'timestamp' }
-  end  
+  describe "This test requires a Manual Review: Couchbase is not currently
+  capable of differentiating between catergories of information." do
+    skip "This test requires a Manual Review: Couchbase is not currently
+    capable of differentiating between catergories of information."
+  end 
 end

@@ -47,40 +47,46 @@ control "V-58115" do
   objective is to have a complete audit trail of all administrative activity.
   "
   desc  "check", "
-  When enabled on the cluster, Couchbase auditing configuration includes
-  certain privilege events by default. The Full Admin can specify events that
-  should be audited.
-  Couchbase Server 6.5.0 and earlier -
-    As root or a sudo user, verify that the \"audit.log\" file exists in the
-    var/lib/couchbase/logs directory of the Couchbase application home (example:
-    /opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
-    Review the audit.log file. If it does not exist or not populated with
-    data captured, this is a finding.
-  Couchbase Server Version 6.5.1 and later -
-    As the Full Admin, verify that auditing is enabled by executing the
-    following command:
-      $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
-      <Password> --get-settings
-    Review the output of the command. If \"Audit enabled\" is not set to
-    \"true\", this is finding.
+  Once enabled on the cluster, Couchbase auditing provides the following
+  fields by default:
+    - \"id\" - ID of Event
+    - \"name\" - Name of Event (can indicate success/failure)
+    - \"description\" - Event Description (can indicate success/failure)
+    - \"filtering_permitted\" - Whether the event is filterable
+    - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
+      format) and \"user\" fields
+
+  As the Full Admin, create a user account by executing the following command:
+    $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
+    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    --rbac-name \"John Doe\" --roles replication_admin \
+    --auth-domain local
+  
+  As the Full Admin, delete a user account by executing the following command:
+    $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
+    -p <Password> --delete --rbac-username jdoe \
+    --auth-domain local
+
+  Verify that the event logged contains a record of the user's creation and deletion.
+    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log 
+      
+  If the log does not contain the audit record, this is a finding.
   "
   desc  "fix", "
-  Enable session auditing on the Couchbase cluster to configure required
-  events to be audited.
+  Enable session auditing on the Couchbase cluster to produce sufficient
+  information regarding the types of events that have occurred.
+
   Couchbase Server 6.5.0 and earlier -
-    As the Full Admin, execute the following command to enable auditing:
-      $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+  As the Full Admin, execute the following command to enable auditing:
+    $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
     --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
     --audit-log-path /opt/couchbase/var/lib/couchbase/logs
-  Couchbase Server Version 6.5.1 and later -
-    As the Full Admin, execute the following command to enable auditing:
-      $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+
+  Couchbase Server Version 6.51 and later -
+  As the Full Admin, execute the following command to enable auditing:
+    $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
     --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
     604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
-    Enable other events that should be audited:
-    As the Full Admin, log into the cluster and use  the following
-    documentation to enable events:
-      https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
   "
   impact 0.5
   tag "severity": "medium"
@@ -92,10 +98,30 @@ control "V-58115" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   
-  describe "Couchbase log auditing should be enabled." do
-    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
-    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-      its('auditdEnabled') { should eq true }
-      its('stdout') { should include 'timestamp' }
+  describe "Create the jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --roles replication_admin --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
+  describe "The logged event should contain record of user creation. The" do
+    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"User was created"/}
+  end
+
+  describe "Delete the jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --delete --rbac-username jdoe --auth-domain local") }
+    its('exit_status') { should eq 0 }
   end 
+   
+  describe "The logged event should contain record of user deletion. The" do
+    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"User was deleted"/}
+  end
 end
