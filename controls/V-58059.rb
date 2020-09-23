@@ -59,10 +59,9 @@ log failures:
   tag "cci": ["CCI-001858"]
   tag "nist": ["AU-5 (2)", "Rev_4"]
 
-  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/alerts") do
-    its('enabled') { should eq true }
-    its(['alerts','audit_dropped_events']) { should eq nil }
-    its(['alerts', 'disk']) { should eq nil }
-    its(['alerts', 'testerrr']) { should eq nil }
+  describe command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/alerts") do
+    its('stdout') { should match "audit_dropped_events" }
+    its('stdout') { should match "disk" }
+    its('stdout') { should match '"enabled":true'}
   end 
 end

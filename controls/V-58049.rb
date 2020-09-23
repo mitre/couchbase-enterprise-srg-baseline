@@ -62,15 +62,32 @@ management system.
   tag "cci": ["CCI-001844"]
   tag "nist": ["AU-3 (2)", "Rev_4"]
 
-  couchbase_version = command('couchbase-server -v').stdout
+  describe "Create the jdoe user. The" do 
+    subject { command("couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --set --rbac-username jdoe --rbac-password cbpass \
+    --rbac-name 'John Doe' --roles replication_admin \
+    --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
 
-  if couchbase_version.include?("6.5.1") || couchbase_version.include?("6.6.0")
-    describe command("couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Audit enabled:'") do
-      its('stdout') { should include "True" }
-    end 
-  else
-    describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") do
-      its('auditdEnabled') { should eq true }
-    end 
+  describe "The logged event should contain required fields. The" do
+    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"description"/}
+    its('stdout') { should match /"timestamp"/}
+    its('stdout') { should match /"real_userid"/}
+  end
+
+  describe "Delete the jdoe user. The" do 
+    subject { command("couchbase-cli user-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --delete --rbac-username jdoe \
+    --auth-domain local") }
+    its('exit_status') { should eq 0 }
   end
 end
+
+
+
+
+
+
+
