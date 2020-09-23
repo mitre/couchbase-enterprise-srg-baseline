@@ -43,15 +43,15 @@
   {{ approved_ciphers | join(',') }}"
   when: cbversion.stdout is version('6.5.0', '>=')
 
-- name: Enable Compliant Password Policy Settings - 6.0.2 and earlier
-  shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-   -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase --lowercase --digit --special-char"
-  when: cbversion.stdout is version('6.0.2', '<=')
+# - name: Enable Compliant Password Policy Settings - 6.0.2 and earlier
+#   shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+#    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase --lowercase --digit --special-char"
+#   when: cbversion.stdout is version('6.0.2', '<=')
 
-- name: Enable Compliant Password Policy Settings - 6.5.0 and later
-  shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-   -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
-  when: cbversion.stdout is version('6.5.0', '>=')
+# - name: Enable Compliant Password Policy Settings - 6.5.0 and later
+#   shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+#    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
+#   when: cbversion.stdout is version('6.5.0', '>=')
 
 - name: Check if LDAP is Required
   shell: "echo {{ cb_use_ldap }}"
