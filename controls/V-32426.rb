@@ -57,8 +57,9 @@ control "V-32426" do
       end
     end
   elsif os.redhat?
-    yum_packages = command("yum list installed | grep \"couchbase\"").stdout.strip.tr(' ','').split("\n")
+    yum_packages = command("yum list installed | grep \"couchbase\"").stdout.split("\n")
     yum_packages.each do |package|
+      package = command("echo #{package} | sed 's/.x86.*//'").stdout.split
       describe "Only approved packages should be installed. #{package}" do
         subject { package }
         it { should be_in input('cb_redhat_approved_packages') }
