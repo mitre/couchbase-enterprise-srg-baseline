@@ -1,4 +1,9 @@
 ---
+- name: Start service couchbase-server, if not started	
+  service:	
+    name: couchbase-server	
+    state: started
+
 - name: Setup new cluster
   shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
   --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
