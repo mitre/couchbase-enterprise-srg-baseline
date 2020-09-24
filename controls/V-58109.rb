@@ -65,6 +65,6 @@ control "V-58109" do
 
   describe "The logged event should contain required fields. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"Unsuccessful attempt"/}
+    its('stdout') { should match /"unsuccessful attempt"/}
   end
 end

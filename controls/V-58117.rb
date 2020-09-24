@@ -112,7 +112,7 @@ control "V-58117" do
 
   describe "The logged event should contain record of failed user creation. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"Unsuccessful attempt"/}
+    its('stdout') { should match /"unsuccessful attempt"/}
   end
 
   describe "As jdoe attempt to delete the janedoe user. The" do 
@@ -124,7 +124,7 @@ control "V-58117" do
 
   describe "The logged event should contain record of failed user deletion. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"Unsuccessful attempt"/}
+    its('stdout') { should match /"unsuccessful attempt"/}
   end
 
   describe "Delete the jdoe user. The" do 
