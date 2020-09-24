@@ -19,15 +19,15 @@ modifications, and deletions.
     First, as the Full Admin, create two user accounts by executing the
 following commands:
       $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
+     -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
      --rbac-name \"John Doe\" --roles replication_admin \\
      --auth-domain local
       $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username janedoe --rbac-password cbpass \\
+     -p <Password> --set --rbac-username janedoe --rbac-password doe_cbP@ssw0rd2020 \\
      --rbac-name \"Jane Doe\" --roles replication_admin,cluster_admin \\
      --auth-domain local
     Then, as the John Doe user, revoke the \"cluster_admin\" role from Jane Doe:
-      $ cbq -u jdoe -p cbpass -engine=http://<host>:<port>/ --script=\"REVOKE
+      $ cbq -u jdoe -p doe_cbP@ssw0rd2020 -engine=http://<host>:<port>/ --script=\"REVOKE
 cluster_admin FROM janedoe\"
     Verify the events were logged with the following command:
       $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log

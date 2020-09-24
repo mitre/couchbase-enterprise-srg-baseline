@@ -2,34 +2,34 @@
 
 control "V-32398" do
   title "Couchbase must protect its audit configuration from unauthorized
-modification."
+  modification."
   desc  "Protecting audit data also includes identifying and protecting the
-tools used to view and manipulate log data. Therefore, protecting audit tools
-is necessary to prevent unauthorized operation on audit data.
+  tools used to view and manipulate log data. Therefore, protecting audit tools
+  is necessary to prevent unauthorized operation on audit data.
 
-    Applications providing tools to interface with audit data will leverage
-user permissions and roles identifying the user accessing the tools and the
-corresponding rights the user enjoys in order make access decisions regarding
-the modification of audit tools.
+  Applications providing tools to interface with audit data will leverage
+  user permissions and roles identifying the user accessing the tools and the
+  corresponding rights the user enjoys in order make access decisions regarding
+  the modification of audit tools.
 
-    Audit tools include, but are not limited to, vendor-provided and open
-source audit tools needed to successfully view and manipulate audit information
-system activity and records. Audit tools include custom queries and report
-generators.
+  Audit tools include, but are not limited to, vendor-provided and open
+  source audit tools needed to successfully view and manipulate audit information
+  system activity and records. Audit tools include custom queries and report
+  generators.
   "
   desc  "fix", "
-    Remove users who should not have Full Admin role. To manage the roles this
-can be done by running the following command (Note: Do not include the
-\"admin\" role in command):
+  Remove users who should not have Full Admin role. To manage the roles this
+  can be done by running the following command (Note: Do not include the
+  \"admin\" role in command):
     $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
      -p <Password> --set --rbac-username <user> --rbac-password <password> \\
      --rbac-name <name> --roles <roles> \\
      --auth-domain <domain>
-    As the root or sudo user, assign the correct permissions to the config file
-fun the following commands:
-      $ sudo chown -R couchbase:couchbase
-/opt/couchbase/etc/couchbase/static_config
-      $ sudo chmod 600 /opt/couchbase/etc/couchbase/static_config
+  
+  As the root or sudo user, assign the correct permissions to the config file
+  fun the following commands:
+    $ sudo chown -R couchbase:couchbase /opt/couchbase/etc/couchbase/static_config
+    $ sudo chmod 600 /opt/couchbase/etc/couchbase/static_config
   "
   impact 0.5
   tag "severity": "medium"

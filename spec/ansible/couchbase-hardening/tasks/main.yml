@@ -1,9 +1,4 @@
 ---
-- name: Start service couchbase-server, if not started	
-  service:	
-    name: couchbase-server	
-    state: started
-
 - name: Setup new cluster
   shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
   --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
@@ -14,12 +9,12 @@
 
 - name: Create Admin User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set --rbac-username cbadmin --rbac-password cbpass --rbac-name 'Admin User' \
+  -p {{ cb_full_admin_password }} --set --rbac-username cbadmin --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'Admin User' \
   --roles {{ cb_full_admin }} --auth-domain local"
 
 - name: Create Regular User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password cbpass --rbac-name 'CB User' \
+  -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'CB User' \
   --roles bucket_admin[test-bucket] --auth-domain local"
 
 - name: Check version of Couchbase Server
@@ -43,15 +38,15 @@
   {{ approved_ciphers | join(',') }}"
   when: cbversion.stdout is version('6.5.0', '>=')
 
-# - name: Enable Compliant Password Policy Settings - 6.0.2 and earlier
-#   shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-#    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase --lowercase --digit --special-char"
-#   when: cbversion.stdout is version('6.0.2', '<=')
+- name: Enable Compliant Password Policy Settings - 6.0.2 and earlier
+  shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+   -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase --lowercase --digit --special-char"
+  when: cbversion.stdout is version('6.0.2', '<=')
 
-# - name: Enable Compliant Password Policy Settings - 6.5.0 and later
-#   shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-#    -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
-#   when: cbversion.stdout is version('6.5.0', '>=')
+- name: Enable Compliant Password Policy Settings - 6.5.0 and later
+  shell: "/opt/couchbase/bin/couchbase-cli setting-password-policy -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+   -p {{ cb_full_admin_password }} --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1"
+  when: cbversion.stdout is version('6.5.0', '>=')
 
 - name: Check if LDAP is Required
   shell: "echo {{ cb_use_ldap }}"
@@ -164,4 +159,4 @@
   --password {{ cb_full_admin_password }} --set-client-auth {{ cb_client_auth_config }}"
   when: "use_pki.stdout == 'true'"
 
-# Add steps to harden
+# # Add steps to harden

@@ -2,17 +2,17 @@
 
 control "V-32374" do
   title "Couchbase must produce audit records containing sufficient information
-to establish the identity of any user/subject or process associated with the
-event."
+  to establish the identity of any user/subject or process associated with the
+  event."
   desc  "Information system auditing capability is critical for accurate
-forensic analysis. Without information that establishes the identity of the
-subjects (i.e., users or processes acting on behalf of users) associated with
-the events, security personnel cannot determine responsibility for the
-potentially harmful event.
+  forensic analysis. Without information that establishes the identity of the
+  subjects (i.e., users or processes acting on behalf of users) associated with
+  the events, security personnel cannot determine responsibility for the
+  potentially harmful event.
 
-    Identifiers (if authenticated or otherwise known) include, but are not
-limited to, user database tables, primary key values, user names, or process
-identifiers.
+  Identifiers (if authenticated or otherwise known) include, but are not
+  limited to, user database tables, primary key values, user names, or process
+  identifiers.
   "
   desc  "check", "
   Once enabled on the cluster, Couchbase auditing provides the following
@@ -30,7 +30,7 @@ identifiers.
       
   As the Full Admin, create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \
     --rbac-name \"John Doe\" --roles replication_admin \
     --auth-domain local
       
@@ -70,7 +70,7 @@ identifiers.
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end

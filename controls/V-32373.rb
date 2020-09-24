@@ -2,17 +2,17 @@
 
 control "V-32373" do
   title "Couchbase must produce audit records containing sufficient information
-to establish the outcome (success or failure) of the events."
+  to establish the outcome (success or failure) of the events."
   desc  "Information system auditing capability is critical for accurate
-forensic analysis. Without information about the outcome of events, security
-personnel cannot make an accurate assessment as to whether an attack was
-successful or if changes were made to the security state of the system.
+  forensic analysis. Without information about the outcome of events, security
+  personnel cannot make an accurate assessment as to whether an attack was
+  successful or if changes were made to the security state of the system.
 
-    Event outcomes can include indicators of event success or failure and
-event-specific results (e.g., the security state of the information system
-after the event occurred). As such, they also provide a means to measure the
-impact of an event and help authorized personnel to determine the appropriate
-response.
+  Event outcomes can include indicators of event success or failure and
+  event-specific results (e.g., the security state of the information system
+  after the event occurred). As such, they also provide a means to measure the
+  impact of an event and help authorized personnel to determine the appropriate
+  response.
   "
   desc  "check", "
   Once enabled on the cluster, Couchbase auditing provides the following
@@ -26,7 +26,7 @@ response.
 
   As the Full Admin, create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \
     --rbac-name \"John Doe\" --roles replication_admin \
     --auth-domain local
       
@@ -66,7 +66,7 @@ response.
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end

@@ -18,7 +18,7 @@ modifications, and deletions.
     First, as the Full Admin, create a user account by executing the following
 command:
       $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
+     -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
      --rbac-name \"John Doe\" --roles replication_admin \\
      --auth-domain local
     Then, as the Full Admin, grant the John Doe user a new role:

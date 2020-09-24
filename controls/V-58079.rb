@@ -18,7 +18,7 @@ modifications, and deletions.
     As the Full Admin, create a user account and grant roles by running the
 following command:
       $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
+     -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
      --rbac-name \"John Doe\" --roles replication_admin,cluster_admin \\
      --auth-domain local
     As the Full Admin, revoke the \"cluster_admin\" role from John Doe:

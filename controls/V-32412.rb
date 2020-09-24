@@ -2,18 +2,18 @@
 
 control "V-32412" do
   title "Database objects (including but not limited to tables, indexes,
-storage, stored procedures, functions, triggers, links to software external to
-Couchbase, etc.) must be owned by database/Couchbase principals authorized for
-ownership."
+  storage, stored procedures, functions, triggers, links to software external to
+  Couchbase, etc.) must be owned by database/Couchbase principals authorized for
+  ownership."
   desc  "Within the database, object ownership implies full privileges to the
-owned object, including the privilege to assign access to the owned objects to
-other subjects. Database functions and procedures can be coded using definer's
-rights. This allows anyone who utilizes the object to perform the actions if
-they were the owner. If not properly managed, this can lead to privileged
-actions being taken by unauthorized individuals.
+  owned object, including the privilege to assign access to the owned objects to
+  other subjects. Database functions and procedures can be coded using definer's
+  rights. This allows anyone who utilizes the object to perform the actions if
+  they were the owner. If not properly managed, this can lead to privileged
+  actions being taken by unauthorized individuals.
 
-    Conversely, if critical tables or other objects rely on unauthorized owner
-accounts, these objects may be lost when an account is removed.
+  Conversely, if critical tables or other objects rely on unauthorized owner
+  accounts, these objects may be lost when an account is removed.
   "
   desc  "check", "
   Review system documentation to identify accounts authorized to own database
