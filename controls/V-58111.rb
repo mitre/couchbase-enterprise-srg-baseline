@@ -72,7 +72,7 @@ control "V-58111" do
   describe "The logged event should contain required fields. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
     its('stdout') { should match /"timestamp"/}
-    its('stdout') { should match /"username"/}
+    its('stdout') { should match /"user":"jdoe"/}
   end
 
   describe "Delete the jdoe user. The" do 

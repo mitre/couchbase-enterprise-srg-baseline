@@ -60,11 +60,11 @@ control "V-58109" do
     -u #{input('cb_full_admin')} -p wrongpassword \
     --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") }
-    its('exit_status') { should eq 0 }
+    its('exit_status') { should eq 1 }
   end
 
   describe "The logged event should contain required fields. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"Unsuccessful attempt to login"/}
+    its('stdout') { should match /"Unsuccessful attempt"/}
   end
 end

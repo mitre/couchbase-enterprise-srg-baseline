@@ -109,7 +109,7 @@ control "V-58115" do
 
   describe "The logged event should contain record of user creation. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"User was created"/}
+    its('stdout') { should match /User was added/}
   end
 
   describe "Delete the jdoe user. The" do 
@@ -122,6 +122,6 @@ control "V-58115" do
    
   describe "The logged event should contain record of user deletion. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"User was deleted"/}
+    its('stdout') { should match /User was deleted/}
   end
 end

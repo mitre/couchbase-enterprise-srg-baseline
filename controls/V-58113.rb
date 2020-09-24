@@ -79,8 +79,8 @@ control "V-58113" do
     its('stdout') { should match /"timestamp"/}
     its('stdout') { should match /"ip"/}
     its('stdout') { should match /"port"/}
-    its('stdout') { should match /"sessionid"/}
-    its('stdout') { should match /"username"/}
+    its('stdout') { should match /"id"/}
+    its('stdout') { should match /"user":"jdoe"/}
   end
 
   describe "Delete the jdoe user. The" do 
