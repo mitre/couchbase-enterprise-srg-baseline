@@ -17,7 +17,7 @@ control "V-58107" do
 
   As the Full Admin, create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \
     --rbac-name \"John Doe\" --roles replication_admin \
     --auth-domain local
   
@@ -56,7 +56,7 @@ control "V-58107" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end

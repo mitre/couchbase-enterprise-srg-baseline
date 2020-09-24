@@ -41,13 +41,13 @@ control "V-58117" do
 
   As the Full Admin, create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \
     --rbac-name \"John Doe\" --roles ro_admin \
     --auth-domain local
 
   As the Jdoe user, try to create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u jdoe \
-    -p cbpass --set --rbac-username janedoe --rbac-password cbpass \
+    -p @dminP@asswd2020 --set --rbac-username janedoe --rbac-password @dminP@asswd2020 \
     --rbac-name \"Joane Doe\" --roles ro_admin \
     --auth-domain local
   
@@ -58,7 +58,7 @@ control "V-58117" do
 
   As the Jdoe user, try to delete a user account by executing the following command:
   $couchbase-cli user-manage -c <host>:<port> -u jdoe \
-  -p cbpass --delete --rbac-username janedoe \
+  -p @dminP@asswd2020 --delete --rbac-username janedoe \
   --auth-domain local
 
   Verify that unsuccessful attempts to delete a user is auditted:
@@ -96,7 +96,7 @@ control "V-58117" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
     --roles ro_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end  
@@ -105,7 +105,7 @@ control "V-58117" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username janedoe --rbac-password cbpass --rbac-name 'Jane Doe' \
+    --set --rbac-username janedoe --rbac-password @dminP@asswd2020 --rbac-name 'Jane Doe' \
     --roles ro_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end  

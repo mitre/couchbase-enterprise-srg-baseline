@@ -19,15 +19,15 @@ modifications, and deletions.
     First, as the Full Admin, create two user accounts by executing the
 following commands:
       $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
+     -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \\
      --rbac-name \"John Doe\" --roles replication_admin \\
      --auth-domain local
       $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username janedoe --rbac-password cbpass \\
+     -p <Password> --set --rbac-username janedoe --rbac-password @dminP@asswd2020 \\
      --rbac-name \"Jane Doe\" --roles replication_admin \\
      --auth-domain local
     Then, as the John Doe, grant the Jane Doe user a new role:
-      $ cbq -u jdoe -p cbpass -engine=http://<host>:<port>/ --script=\"GRANT
+      $ cbq -u jdoe -p @dminP@asswd2020 -engine=http://<host>:<port>/ --script=\"GRANT
 cluster_admin TO janedoe\"
     Verify the events were logged with the following command:
       $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log

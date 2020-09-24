@@ -9,7 +9,7 @@
     - name: Create a Bucket
       shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c 127.0.0.1:8091 --username admin --password password --bucket test-data --bucket-type couchbase --bucket-ramsize 100"
     - name: Create Admin User
-      shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbadmin --rbac-password cbpass --rbac-name 'Admin User' --roles admin --auth-domain local"
+      shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbadmin --rbac-password @dminP@asswd2020 --rbac-name 'Admin User' --roles admin --auth-domain local"
     - name: Create Regular User
-      shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbuser --rbac-password cbpass --rbac-name 'CB User' --roles bucket_admin[test-data] --auth-domain local"
+      shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbuser --rbac-password @dminP@asswd2020 --rbac-name 'CB User' --roles bucket_admin[test-data] --auth-domain local"
 

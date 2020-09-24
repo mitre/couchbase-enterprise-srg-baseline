@@ -41,7 +41,7 @@ control "V-32368" do
     
   As the Full Admin, create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password cbpass \
+    -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \
     --rbac-name \"John Doe\" --roles replication_admin \
     --auth-domain local
     
