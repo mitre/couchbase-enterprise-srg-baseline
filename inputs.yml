@@ -1,4 +1,7 @@
 
+cb_service_user: 'couchbase'
+cb_service_group: 'couchbase'
+
 cb_full_admin: 'admin'
 cb_full_admin_password: 'password'
 
@@ -10,26 +13,68 @@ cb_users: [
   'cbuser'
   ]
 
+cb_roles: [
+  'admin',
+  'bucket_admin'
+]
+
+cb_use_saslauthd: 'true'
+cb_use_ldap: 'false'
+cb_use_pki: 'true'
+cb_auth_domain: 'local'
+
+cb_private_key_path: '/etc/ssl/ca.key'
+cb_ca_file_path: '/etc/ssl/ca.pem'
+
 cb_auth_method: 'saslauthd'
 
+cb_bin_dir: '/opt/couchbase/bin'
 cb_home_dir: '/opt/couchbase'
 cb_data_dir: '/opt/couchbase/var/lib/couchbase/data'
 cb_config_dir: 'opt/couchbase/etc/couchbase'
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
+
 cb_static_config: '/opt/couchbase/etc/couchbase/static_config'
 cb_http_access_log: '/opt/couchbase/var/lib/couchbase/logs/http_access.log' 
 cb_http_access_internal_log: '/opt/couchbase/var/lib/couchbase/logs/ http_access_internal.log'
+
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'
 
-cb_version: '6.5'
+cb_samples_dir: '/opt/couchbase/samples'
+
+sample_buckets: [
+  'travel-sample',
+  'gamesim-sample', 
+  'beer-sample'
+]
+
+cb_required_audit_events: [
+  'Service configuration change',
+  'authentication succeeded',
+  'session terminated'
+]
+
+cb_required_audit_event_ids: [
+  '36865',
+  '20493'
+]
+
+cb_latest_version: '6.6'
+
+cb_redhat_approved_packages: [
+  'couchbase-release',
+  'couchbase-server'
+]
 
 cb_debian_approved_packages: [
-  ''
-  ]
+  'couchbase-server'
+]
 
-  
-cb_redhat_approved_package: [
-  ''
-  ]
+approved_ssl_protocol: 'tlsv1.2'
+
+approved_ciphers: [
+  'TLS_RSA_WITH_AES_128_CBC_SHA',
+  'TLS_RSA_WITH_AES_256_CBC_SHA'
+]

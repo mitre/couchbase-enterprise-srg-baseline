@@ -2,9 +2,9 @@ name: Verify the Baseline using Vagrant
 
 on:
   push:
-    branches: [ master, feature/** ]
+    branches: [ Sb-Controls, feature/** ]
   pull_request:
-    branches: [ master, feature/** ]
+    branches: [ Sb-Controls, feature/** ]
   release:
     types:
       - published
