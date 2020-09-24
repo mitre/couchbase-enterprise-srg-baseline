@@ -86,9 +86,26 @@ control "V-58073" do
     its('exit_status') { should eq 0 }
   end
 
+  describe "Create the janedoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --set --rbac-username janedoe --rbac-password cbpass --rbac-name 'Jane Doe' \
+    --roles replication_admin --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
+  describe "Grant permissions to janedoe user by jdoe. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u jdoe -p cbpass --set --roles admin --rbac-username janedoe \
+    --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
   describe "The logged event should contain required fields. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"timestamp"/}
+    its('stdout') { should match /"add"/}
   end
 
   describe "Delete the jdoe user. The" do 
@@ -96,6 +113,14 @@ control "V-58073" do
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
     --delete --rbac-username jdoe --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
+  describe "Delete the janedoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --delete --rbac-username janedoe --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 end
