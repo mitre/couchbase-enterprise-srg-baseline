@@ -1,0 +1,11 @@
+Vagrant.configure("2") do |c|
+  c.berkshelf.enabled = false if Vagrant.has_plugin?("vagrant-berkshelf")
+  c.vm.box = "bento/centos-7"
+  c.vm.hostname = "hardened-rhel-7-couchbase-602-enterprise.vagrantup.com"
+  c.vm.synced_folder ".", "/vagrant", disabled: true
+  c.vm.synced_folder "C:/Users/zhangc/.kitchen/cache", "/tmp/omnibus/cache", create: true
+  c.vm.provider :virtualbox do |p|
+    p.name = "kitchen-couchbase-enterprise-srg-baseline-hardened-rhel-7-couchbase-602-enterprise-7aec2757-dccf-4cfb-96b0-9499f7f40da0"
+    p.customize ["modifyvm", :id, "--audio", "none"]
+  end
+end

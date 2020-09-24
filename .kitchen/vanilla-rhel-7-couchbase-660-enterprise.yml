@@ -1,0 +1,7 @@
+---
+hostname: 127.0.0.1
+port: '2202'
+username: vagrant
+ssh_key: C:/Users/zhangc/git/couchbase-enterprise-srg-baseline/.kitchen/kitchen-vagrant/vanilla-rhel-7-couchbase-660-enterprise/.vagrant/machines/default/virtualbox/private_key
+last_action: setup
+last_error: Kitchen::ActionFailed
