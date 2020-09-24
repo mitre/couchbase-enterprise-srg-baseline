@@ -26,12 +26,11 @@ cb_auth_domain: 'local'
 cb_private_key_path: '/etc/ssl/ca.key'
 cb_ca_file_path: '/etc/ssl/ca.pem'
 
-cb_auth_method: 'saslauthd'
-
-cb_bin_dir: '/opt/couchbase/bin'
 cb_home_dir: '/opt/couchbase'
-cb_data_dir: '/opt/couchbase/var/lib/couchbase/data'
-cb_config_dir: 'opt/couchbase/etc/couchbase'
+cb_bin_dir: '/opt/couchbase/bin'
+cb_config_dir: '/opt/couchbase/etc/couchbase'
+cb_static_conf: '/opt/couchbase/etc/couchbase/static_config'
+
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
@@ -62,6 +61,26 @@ cb_required_audit_event_ids: [
 ]
 
 cb_latest_version: '6.6'
+cb_cluster_host: 'localhost'
+cb_cluster_port: '8091'
+
+is_docker: 'true'
+
+cb_redhat_approved_packages: [
+  'couchbase-release',
+  'couchbase-server'
+]
+
+cb_debian_approved_packages: [
+  'couchbase-server'
+]
+
+approved_ssl_protocol: 'tlsv1.2'
+
+approved_ciphers: [
+  'TLS_RSA_WITH_AES_128_CBC_SHA',
+  'TLS_RSA_WITH_AES_256_CBC_SHA'
+]
 
 cb_redhat_approved_packages: [
   'couchbase-release',

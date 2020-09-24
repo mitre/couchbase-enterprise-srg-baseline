@@ -18,17 +18,17 @@ modifications, and deletions.
     As the Full Admin, create a user account and grant the user the
 cluster_admin role by executing the following command:
       $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-     -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \\
+     -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
      --rbac-name \"John Doe\" --roles cluster_admin \\
      --auth-domain local
     As the John Doe user, create a bucket in the cluster by executing the
 following command:
       $ couchbase-cli bucket-create -c <host>:<port> --username jdoe --password
-@dminP@asswd2020 --bucket test-data --bucket-type couchbase  --bucket-ramsize 256
+doe_cbP@ssw0rd2020 --bucket test-data --bucket-type couchbase  --bucket-ramsize 256
     As the John Doe user, edit memory allocated for the bucket created by
 executing the following command:
       $ couchbase-cli bucket-edit -c <host>:<port> --username jdoe \\
-     --password @dminP@asswd2020  --bucket test-data --bucket-ramsize 100
+     --password doe_cbP@ssw0rd2020  --bucket test-data --bucket-ramsize 100
     Verify the events were logged with the following command:
       $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
       Output:

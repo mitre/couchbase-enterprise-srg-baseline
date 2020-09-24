@@ -10,11 +10,11 @@ control "V-32383" do
   capturing mechanisms; and audit storage capacity being reached or exceeded.
   Responses to audit failure depend upon the nature of the failure mode.
 
-    When the need for system availability does not outweigh the need for a
+  When the need for system availability does not outweigh the need for a
   complete audit trail, Couchbase should shut down immediately, rolling back all
   in-flight transactions.
 
-    Systems where audit trail completeness is paramount will most likely be at
+  Systems where audit trail completeness is paramount will most likely be at
   a lower MAC level than MAC I; the final determination is the prerogative of the
   application owner, subject to Authorizing Official concurrence. In any case,
   sufficient auditing resources must be allocated to avoid a shutdown in all but
