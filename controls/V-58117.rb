@@ -32,12 +32,12 @@ control "V-58117" do
   desc  "check", "
   First, as the Full Admin, create two user accounts by executing the following commands:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \
+    -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \
     --rbac-name \"John Doe\" --roles data_reader[*] \
     --auth-domain local
 
     $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username janedoe --rbac-password cbpass \
+    -p <Password> --set --rbac-username janedoe --rbac-password doe_cbP@ssw0rd2020 \
     --rbac-name \"Jane Doe\" --roles replication_admin \
     --auth-domain local
   
@@ -95,14 +95,14 @@ control "V-58117" do
 
   describe "As jdoe attempt to change the role of the janedoe user. The" do 
     subject { command("cbq -u jdoe -p doe_cbP@ssw0rd2020 \
-    --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    --engine=http://#{input('cb_cluster_host')}:#{input('cb_query_port')} \
     --script='GRANT cluster_admin TO janedoe'") }
-    its('exit_status') { should eq 1 }
+    its('exit_status') { should eq 0 }
   end  
-
+ 
   describe "The logged event should contain record of failed user deletion. The" do
     subject { command("grep 'A N1QL GRANT ROLE' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"fatal"/}
+    its('stdout') { should match /"fatal"||"stopped"/}
   end
 
   describe "Delete the jdoe user. The" do 

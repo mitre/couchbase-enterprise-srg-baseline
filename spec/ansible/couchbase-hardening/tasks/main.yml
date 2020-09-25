@@ -1,4 +1,4 @@
----
+# ---
 - name: Start service couchbase-server, if not started	
   service:	
     name: couchbase-server	
@@ -89,6 +89,10 @@
 - name: Disable UI Access Over HTTP
   shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
   -d disableUIOverHttp=true"
+
+- name: Disable UI Access Over HTTP
+  shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
+  -d disableUIOverHttps=false"
 
 - name: Set Ownership/Permissions on Couchbase Home Directory
   file:
@@ -182,4 +186,4 @@
   --password {{ cb_full_admin_password }} --set-client-auth {{ cb_client_auth_config }}"
   when: "use_pki.stdout == 'true'"
 
-# # Add steps to harden
+# # # Add steps to harden

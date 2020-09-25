@@ -66,6 +66,7 @@ cb_required_audit_event_ids: [
 cb_latest_version: '6.6'
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'
+cb_query_port: '8093'
 
 is_docker: 'true'
 
@@ -102,7 +103,7 @@ approved_ciphers: [
 ]
 
 cb_audit_categories_of_information: 'false'
-cb_audit_accesses_to_objects: 'false'
+cb_audit_access_to_objects: 'false'
 
 cb_require_encryption_at_rest: 'false'
 

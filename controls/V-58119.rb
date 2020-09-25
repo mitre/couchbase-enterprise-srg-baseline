@@ -48,7 +48,7 @@ control "V-58119" do
   tag "nist": ["AU-12 c", "Rev_4"]
 
   describe "Couchbase is not currently capable of specification of objects for auditing." do
-    subject { input('cb_audit_accesses_to_object')}
+    subject { input('cb_audit_access_to_objects') }
     it { should eq 'true'}
   end 
 end
