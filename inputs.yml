@@ -20,13 +20,14 @@ cb_roles: [
 
 cb_use_saslauthd: 'true'
 cb_use_ldap: 'false'
-cb_use_pki: 'true'
+cb_use_pki: 'false'
 cb_auth_domain: 'local'
 
 cb_private_key_path: '/etc/ssl/ca.key'
 cb_ca_file_path: '/etc/ssl/ca.pem'
 
 cb_home_dir: '/opt/couchbase'
+cb_data_dir: '/opt/couchbase/var/lib/couchbase/data'
 cb_bin_dir: '/opt/couchbase/bin'
 cb_config_dir: '/opt/couchbase/etc/couchbase'
 cb_static_conf: '/opt/couchbase/etc/couchbase/static_config'
@@ -36,10 +37,12 @@ cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
 cb_static_config: '/opt/couchbase/etc/couchbase/static_config'
 cb_http_access_log: '/opt/couchbase/var/lib/couchbase/logs/http_access.log' 
-cb_http_access_internal_log: '/opt/couchbase/var/lib/couchbase/logs/ http_access_internal.log'
+cb_http_access_internal_log: '/opt/couchbase/var/lib/couchbase/logs/http_access_internal.log'
 
 cb_cluster_host: 'localhost'
 cb_cluster_port: '8091'
+
+cb_use_standard_ports: 'true'
 
 cb_samples_dir: '/opt/couchbase/samples'
 
@@ -97,3 +100,9 @@ approved_ciphers: [
   'TLS_RSA_WITH_AES_128_CBC_SHA',
   'TLS_RSA_WITH_AES_256_CBC_SHA'
 ]
+
+cb_audit_categories_of_information: 'false'
+cb_audit_accesses_to_objects: 'false'
+
+cb_require_encryption_at_rest: 'false'
+

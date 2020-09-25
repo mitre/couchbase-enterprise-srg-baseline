@@ -33,16 +33,9 @@ control "V-58169" do
   If any of the information defined as requiring cryptographic protection
   from modification is not encrypted in a manner that provides the required level
   of protection, this is a finding.
-
-  As the Full Admin, verify that SSL encryption is enabled:
-    $ couchbase-cli ssl-manage -c <host>:<port> -u <Full Admin> -p <Password> 
-    --client-auth --extended
   
-  Review the output. If \"state\" is not set to \"enabled\" or \"mandatory\", 
-  this is a finding.
-  
-  If an encryption at rest is required but the
-  encryption tool is not installed on the server, this is a finding.
+  If an encryption at rest is required but the encryption tool is not installed 
+  on the server, this is a finding.
   "
   desc  "fix", "
   Configure Couchbase settings to enable protections against
@@ -64,23 +57,16 @@ control "V-58169" do
   tag "cci": ["CCI-002475"]
   tag "nist": ["SC-28 (1)", "Rev_4"]
 
-  describe "Couchbase should have SSL enabled" do
-    subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
-    its('state') { should eq 'mandatory' || 'enabled' }
-  end   
-  
-  describe "This test requires a Manual Review: Ensure any information requiring
-  cryptographic protection from modification is encrypted to the required level
-  of protection" do
-    skip "This test requires a Manual Review: Ensure any information requiring
-    cryptographic protection from modification is encrypted to the required level
-    of protection"
-  end
-  
-  describe "This test requires a Manual Review: Verify if encryption at rest is required 
-  that encryption tools are installed on the server" do
-    skip "This test requires a Manual Review: Verify if encryption at rest is required 
-    that encryption tools are installed on the server"
+  if input('cb_require_encryption_at_rest') == 'true'
+    describe "This test requires a Manual Review: Verify if encryption at rest is required 
+    that encryption tools are installed on the server" do
+      skip "This test requires a Manual Review: Verify if encryption at rest is required 
+      that encryption tools are installed on the server"
+    end
+  else
+    describe "No information is identified as requiring such protection, this is not a finding." do
+      subject { input('cb_require_encryption_at_rest') } 
+      it { should eq 'false'}
+    end
   end
 end

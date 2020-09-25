@@ -47,15 +47,6 @@ control "V-58115" do
   objective is to have a complete audit trail of all administrative activity.
   "
   desc  "check", "
-  Once enabled on the cluster, Couchbase auditing provides the following
-  fields by default:
-    - \"id\" - ID of Event
-    - \"name\" - Name of Event (can indicate success/failure)
-    - \"description\" - Event Description (can indicate success/failure)
-    - \"filtering_permitted\" - Whether the event is filterable
-    - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
-      format) and \"user\" fields
-
   As the Full Admin, create a user account by executing the following command:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
     -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \

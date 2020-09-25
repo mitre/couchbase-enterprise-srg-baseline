@@ -59,9 +59,9 @@ control "V-58097" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Couchbase is not currently capable 
-  of differentiating catergories of information." do
-    skip "This test requires a Manual Review: Couchbase is not currently capable 
-    of differentiating catergories of information."
+  describe "Couchbase is not currently capable of differentiating between catergories of information." do
+    subject { input('cb_audit_categories_of_information') }
+    it { should eq 'true'}
   end
+
 end

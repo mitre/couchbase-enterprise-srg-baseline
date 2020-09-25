@@ -20,12 +20,15 @@ control "V-58119" do
   Review Couchbase documentation to verify that administrative users can
   specify database objects for which access must be audited and can specify which
   kinds of access must be audited.
+
   If Couchbase is not capable of this, this is a finding.
+
   Review system documentation to determine whether the application owner has
   specified database objects (tables, views, procedures, functions, etc.) for
   which access must be audited. Review Couchbase/database security and audit
   settings to verify that the specified access to the specified objects is
   audited.
+
   If not, this is a finding.
   "
   desc  "fix", "
@@ -44,9 +47,8 @@ control "V-58119" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Couchbase is not currently capable of specification
-  of objects for auditing." do
-    skip "This test requires a Manual Review: Couchbase is not currently capable of specification
-    of objects for auditing."
+  describe "Couchbase is not currently capable of specification of objects for auditing." do
+    subject { input('cb_audit_accesses_to_object')}
+    it { should eq 'true'}
   end 
 end

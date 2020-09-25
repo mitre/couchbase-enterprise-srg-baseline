@@ -30,41 +30,24 @@ control "V-58117" do
   addition to the successful ones.
   "
   desc  "check", "
-  Once enabled on the cluster, Couchbase auditing provides the following
-  fields by default:
-    - \"id\" - ID of Event
-    - \"name\" - Name of Event (can indicate success/failure)
-    - \"description\" - Event Description (can indicate success/failure)
-    - \"filtering_permitted\" - Whether the event is filterable
-    - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
-      format) and \"user\" fields
-
-  As the Full Admin, create a user account by executing the following command:
+  First, as the Full Admin, create two user accounts by executing the following commands:
     $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
     -p <Password> --set --rbac-username jdoe --rbac-password @dminP@asswd2020 \
-    --rbac-name \"John Doe\" --roles ro_admin \
+    --rbac-name \"John Doe\" --roles data_reader[*] \
     --auth-domain local
 
-  As the Jdoe user, try to create a user account by executing the following command:
-    $couchbase-cli user-manage -c <host>:<port> -u jdoe \
-    -p @dminP@asswd2020 --set --rbac-username janedoe --rbac-password @dminP@asswd2020 \
-    --rbac-name \"Joane Doe\" --roles ro_admin \
+    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
+    -p <Password> --set --rbac-username janedoe --rbac-password cbpass \
+    --rbac-name \"Jane Doe\" --roles replication_admin \
     --auth-domain local
   
-  Verify that unsuccessful attempts to create a user is auditted:
+  Then, as the John Doe, grant the Jane Doe user a new role:
+    $ cbq -u jdoe -p cbpass -engine=http://<host>:<port>/ --script=\"GRANT cluster_admin TO janedoe\"
+  
+  Verify the unsuccessful attempt to assign a role is auditted:
     $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log 
       
-  If the log does not contain the audit, this is a finding.  
-
-  As the Jdoe user, try to delete a user account by executing the following command:
-  $couchbase-cli user-manage -c <host>:<port> -u jdoe \
-  -p @dminP@asswd2020 --delete --rbac-username janedoe \
-  --auth-domain local
-
-  Verify that unsuccessful attempts to delete a user is auditted:
-    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log 
-      
-  If the log does not contain the audit, this is a finding. 
+  If the audit log does not include the event, this is a finding.
   "
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce sufficient
@@ -96,35 +79,30 @@ control "V-58117" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
-    --roles ro_admin --auth-domain local") }
+    --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'John Doe' \
+    --roles data_reader[*] --auth-domain local") }
     its('exit_status') { should eq 0 }
-  end  
-
-  describe "As jdoe attempt to create the janedoe user. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
-    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username janedoe --rbac-password @dminP@asswd2020 --rbac-name 'Jane Doe' \
-    --roles ro_admin --auth-domain local") }
-    its('exit_status') { should eq 0 }
-  end  
-
-  describe "The logged event should contain record of failed user creation. The" do
-    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"unsuccessful attempt"/}
   end
 
-  describe "As jdoe attempt to delete the janedoe user. The" do 
+  describe "Create the janedoe user. The" do 
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --delete --rbac-username janedoe --auth-domain local") }
+    --set --rbac-username janedoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'Jane Doe' \
+    --roles replication_admin --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
+  describe "As jdoe attempt to change the role of the janedoe user. The" do 
+    subject { command("cbq -u jdoe -p doe_cbP@ssw0rd2020 \
+    --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    --script='GRANT cluster_admin TO janedoe'") }
+    its('exit_status') { should eq 1 }
   end  
 
   describe "The logged event should contain record of failed user deletion. The" do
-    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"unsuccessful attempt"/}
+    subject { command("grep 'A N1QL GRANT ROLE' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"fatal"/}
   end
 
   describe "Delete the jdoe user. The" do 
@@ -132,6 +110,14 @@ control "V-58117" do
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
     --delete --rbac-username jdoe --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
+  describe "Delete the janedoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --delete --rbac-username janedoe --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 end

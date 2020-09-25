@@ -8,25 +8,16 @@ control "V-58109" do
   possible in a case of failed authentication, as much information as possible
   about the incident must be captured."
   desc  "check", "
-  Once enabled on the cluster, Couchbase auditing provides the following
-  fields by default:
-    - \"id\" - ID of Event
-    - \"name\" - Name of Event (can indicate success/failure)
-    - \"description\" - Event Description (can indicate success/failure)
-    - \"filtering_permitted\" - Whether the event is filterable
-    - \"mandatory_fields\" - Includes \"timestamp\" (UTC time and ISO 8601
-      format) and \"user\" fields
+  When enabled on the cluster, Couchbase auditing is capable of logging 
+  unsuccessful logins and connections by default. 
 
-  As the Full Admin, create a user account by executing the following command:
-    $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \
-    -p <Password> --set --rbac-username jdoe --rbac-password wrongpassword \
-    --rbac-name \"John Doe\" --roles replication_admin \
-    --auth-domain local
-  
-  Verify that the event unsuccessful login attempt is audited:
-    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log 
-      
-  If the log does not contain the audited record, this is a finding.
+  As the Full Admin, verify that auditing is enabled by executing the 
+  following command:
+
+  $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
+
+  Verify from the output that \"auditEnabled\" is set to \"true\". 
+  If  \"auditEnabled\" is not set to \"true\", this is finding.
   "
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce sufficient
@@ -54,17 +45,9 @@ control "V-58109" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   
-  describe "Create the jdoe user. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
-    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p wrongpassword \
-    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
-    --roles replication_admin --auth-domain local") }
-    its('exit_status') { should eq 1 }
-  end
-
-  describe "The logged event should contain required fields. The" do
-    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"unsuccessful attempt"/}
-  end
+  describe "Couchbase log auditing should be enabled." do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+    its('auditdEnabled') { should eq true }
+  end 
 end

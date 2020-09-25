@@ -17,8 +17,12 @@ control "V-58167" do
   rather than for the network packet.
   "
   desc  "check", "
-  If Couchbase will accept non-DoD approved PKI end-entity
-  certificates, this is a finding.
+  Verify that certificate used is issued by a valid DoD certificate authority 
+  using the following command:
+   $ openssl x509 -in <path_to_certificate_pem_file> -text | grep -i \"issuer\").
+
+  If there is any issuer present in the certificate that is not a DoD approved
+  certificate authority, this is a finding
   "
   desc  "fix", "
   Revoke trust in any certificates not issued by a DoD-approved
@@ -35,17 +39,9 @@ control "V-58167" do
   tag "cci": ["CCI-002470"]
   tag "nist": ["SC-23 (5)", "Rev_4"]
 
-  certificate_issuer = command("openssl x509 -in -text | grep -i 'issuer'").stdout.split("\n")
- 
-  describe "Couchbase's should have certificates with issuers." do
-    subject {certificate_issuer}
-    it { should_not eq [] }
-  end
-
-  certificate_issuer.each do |issuer|
-    describe "The Couchbase certificate issuer should be DoD approved. #{issuer}" do
-      subject {issuer}  
-      it { should include 'DoD' }
-    end
+  describe 'The Couchbase ssl certificate issuer' do
+    subject { command("openssl x509 -in #{input('cb_ca_file_path')} -text | grep -i 'issuer'").stdout }
+    it { should include 'DoD' }
   end  
+
 end

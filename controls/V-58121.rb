@@ -53,9 +53,8 @@ control "V-58121" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "This test requires a Manual Review: Couchbase is not currently capable of specification
-  of objects for auditing." do
-    skip "This test requires a Manual Review: Couchbase is not currently capable of specification
-    of objects for auditing."
+  describe "Couchbase is not currently capable of specification of objects for auditing." do
+    subject { input('cb_audit_accesses_to_object')}
+    it { should eq 'true'}
   end 
 end

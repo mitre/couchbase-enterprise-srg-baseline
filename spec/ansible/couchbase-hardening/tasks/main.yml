@@ -90,10 +90,6 @@
   shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
   -d disableUIOverHttp=true"
 
-- name: Enable UI Access Over HTTPS
-  shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
-  -d disableUIOverHttps=false"
-
 - name: Set Ownership/Permissions on Couchbase Home Directory
   file:
     path: "{{ cb_home_dir }}"
