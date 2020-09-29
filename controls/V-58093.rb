@@ -49,11 +49,9 @@ control "V-58093" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   
-  describe "This test requires a Manual Review: Review Couchbase documentation to verify the architecture makes it impossible for any user, even with
-  the highest privileges, to directly view or directly modify the contents of its built-in security objects, and if there are no additional, locally-defined
-  security objects in the database(s)." do
-    skip "This test requires a Manual Review: Review Couchbase documentation to verify the architecture makes it impossible for any user, even with
-    the highest privileges, to directly view or directly modify the contents of its built-in security objects, and if there are no additional, locally-defined
-    security objects in the database(s)." 
+  describe "Couchbase is not currently capable of generating audit records when unsuccessful attempts to \
+  delete security objects occur." do
+    subject{ input('cb_audit_categories_of_information')}
+    it { should eq 'true'}
   end
 end
