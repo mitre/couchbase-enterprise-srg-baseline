@@ -22,6 +22,7 @@ cb_use_saslauthd: 'true'
 cb_use_ldap: 'false'
 cb_use_pki: 'false'
 cb_auth_domain: 'local'
+cb_unclassified_environment: 'true'
 
 cb_private_key_path: '/etc/ssl/ca.key'
 cb_ca_file_path: '/etc/ssl/ca.pem'
@@ -106,4 +107,3 @@ cb_audit_categories_of_information: 'false'
 cb_audit_access_to_objects: 'false'
 
 cb_require_encryption_at_rest: 'false'
-

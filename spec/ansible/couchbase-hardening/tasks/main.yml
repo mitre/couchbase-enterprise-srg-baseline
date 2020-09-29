@@ -1,26 +1,26 @@
 # ---
-- name: Start service couchbase-server, if not started	
-  service:	
-    name: couchbase-server	
-    state: started
+# - name: Start service couchbase-server, if not started	
+#   service:	
+#     name: couchbase-server	
+#     state: started
     
-- name: Setup new cluster
-  shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
-  --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
+# - name: Setup new cluster
+#   shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
+#   --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
 
-- name: Create a Bucket
-  shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
-  --password {{ cb_full_admin_password }} --bucket test-bucket --bucket-type couchbase --bucket-ramsize 100"
+# - name: Create a Bucket
+#   shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
+#   --password {{ cb_full_admin_password }} --bucket test-bucket --bucket-type couchbase --bucket-ramsize 100"
 
-- name: Create Admin User
-  shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set --rbac-username cbadmin --rbac-password admin_cbP@ssw0rd2020 --rbac-name 'Admin User' \
-  --roles {{ cb_full_admin }} --auth-domain local"
+# - name: Create Admin User
+#   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+#   -p {{ cb_full_admin_password }} --set --rbac-username cbadmin --rbac-password admin_cbP@ssw0rd2020 --rbac-name 'Admin User' \
+#   --roles {{ cb_full_admin }} --auth-domain local"
 
-- name: Create Regular User
-  shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password user_cbP@ssw0rd2020 --rbac-name 'CB User' \
-  --roles bucket_admin[test-bucket] --auth-domain local"
+# - name: Create Regular User
+#   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
+#   -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password user_cbP@ssw0rd2020 --rbac-name 'CB User' \
+#   --roles bucket_admin[test-bucket] --auth-domain local"
 
 - name: Check version of Couchbase Server
   shell: '/opt/couchbase/bin/couchbase-server -v | egrep -o "([0-9]{1,}\.)+[0-9]{1,}"'
@@ -100,6 +100,41 @@
     mode: "700"
     owner: "couchbase"
     group: "couchbase"
+
+- name: Set Ownership/Permissions on for Couchbase README
+  file:
+    path: "{{ cb_home_dir }}/README.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Home LICENSE
+  file:
+    path: "{{ cb_home_dir }}/LICENSE.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Home VARIANT
+  file:
+    path: "{{ cb_home_dir }}/VARIANT.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on Couchbase Home VERSION
+  file:
+    path: "{{ cb_home_dir }}/VERSION.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"    
+
+- name: Set Ownership/Permissions on Couchbase Home manifest
+  file:
+    path: "{{ cb_home_dir }}/manifest.xml"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"        
 
 - name: Set Ownership/Permissions on all Couchbase Config Files
   file:
@@ -186,4 +221,10 @@
   --password {{ cb_full_admin_password }} --set-client-auth {{ cb_client_auth_config }}"
   when: "use_pki.stdout == 'true'"
 
+- name: Set Ownership/Permissions on Couchbase Home clientauthconfig
+  file:
+    path: "{{ cb_home_dir }}/client-auth-config.json"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"    
 # # # Add steps to harden

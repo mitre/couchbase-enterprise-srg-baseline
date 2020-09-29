@@ -54,7 +54,7 @@ control "V-61407" do
   tag "nist": ["IA-5 (1) (a)", "Rev_4"]
 
   describe "Couchbase password policy settings should be compliant to secure practices." do 
-    subject{ json( command: "couchbase-cli setting-password-policy -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+    subject{ json( command: "#{input('cb_bin_dir')}/couchbase-cli setting-password-policy -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --get")}
     its('minLength') { should cmp '15' }
     its('enforceDigits') { should cmp 'true' }
