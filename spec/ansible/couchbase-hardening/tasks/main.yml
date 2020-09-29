@@ -238,7 +238,7 @@
   --email-host tester@couchbase.com --email-port 8091 --email-recipients recipient@couchbase.com --email-sender noreply@couchbase.com \
   --alert-audit-msg-dropped --alert-disk-space"
 
-- name: Configure Couchbase to fail to a secure state (xdcr setup).
+- name: Configure Couchbase to fail to a secure state (xdcr setup)
   shell: "/opt/couchbase/bin/couchbase-cli xdcr-setup --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \
   --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --create --xdcr-cluster-name tester \
   --xdcr-hostname {{ cb_cluster_host }}:{{ cb_cluster_port }} --xdcr-username {{ cb_full_admin }} --xdcr-password {{ cb_full_admin_password }}"
@@ -247,7 +247,6 @@
   shell: "/opt/couchbase/bin/couchbase-cli bucket-create --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \
   --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --bucket bucket1 \
   --bucket-type couchbase --bucket-ramsize 200"
-
 
 - name: Configure Couchbase to fail to a secure state (create from bucket).
   shell: "/opt/couchbase/bin/couchbase-cli bucket-create --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \
