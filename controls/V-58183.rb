@@ -57,8 +57,11 @@ control "V-58183" do
   tag "cci": ["CCI-002754"]
   tag "nist": ["SI-10 (3)", "Rev_4"]
 
+  command ("#{input('cb_bin_dir')}/cbq \\CONNECT #{input('cb_cluster_host')}:#{input('cb_cluster_port')}") do
+  end
+
   describe "Couchbase should recognize and reject input errors." do
-    subject { command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    subject { command("#{input('cb_bin_dir')}/cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
     -engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} --script=\"SELECT * TestDatabase user\"")}
       its('stdout') { should include 'syntax error - at TestDatabase' }  
   end

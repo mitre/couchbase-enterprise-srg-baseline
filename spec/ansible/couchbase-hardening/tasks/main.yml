@@ -1,4 +1,4 @@
-# ---
+---
 - name: Start service couchbase-server, if not started	
   service:	
     name: couchbase-server	
@@ -101,6 +101,41 @@
     owner: "couchbase"
     group: "couchbase"
 
+- name: Set Ownership/Permissions on for Couchbase README
+  file:
+    path: "{{ cb_home_dir }}/README.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Home LICENSE
+  file:
+    path: "{{ cb_home_dir }}/LICENSE.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Home VARIANT
+  file:
+    path: "{{ cb_home_dir }}/VARIANT.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on Couchbase Home VERSION
+  file:
+    path: "{{ cb_home_dir }}/VERSION.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"    
+
+- name: Set Ownership/Permissions on Couchbase Home manifest
+  file:
+    path: "{{ cb_home_dir }}/manifest.xml"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"        
+
 - name: Set Ownership/Permissions on all Couchbase Config Files
   file:
     path: "{{ cb_config_dir }}"
@@ -186,4 +221,10 @@
   --password {{ cb_full_admin_password }} --set-client-auth {{ cb_client_auth_config }}"
   when: "use_pki.stdout == 'true'"
 
+- name: Set Ownership/Permissions on Couchbase Home clientauthconfig
+  file:
+    path: "{{ cb_home_dir }}/client-auth-config.json"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"    
 # # # Add steps to harden

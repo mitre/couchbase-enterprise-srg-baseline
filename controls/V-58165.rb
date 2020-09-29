@@ -1,9 +1,4 @@
 # encoding: UTF-8
-input('cb_cluster_host')
-input('cb_cluster_port')
-input('cb_full_admin')
-input('cb_full_admin_password')
-
 control "V-58165" do
   title "Couchbase must maintain the authenticity of communications sessions by
   guarding against man-in-the-middle attacks that guess at Session ID values."
@@ -47,8 +42,10 @@ control "V-58165" do
   tag "nist": ["SC-23 (3)", "Rev_4"]
 
   describe "Couchbase should have SSL enabled" do
-    subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
-    its('state') { should eq 'mandatory' || 'enable' }
+    subject { json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
+    --client-auth --extended") }
+      its('state') { should eq 'mandatory' || 'enable' }
   end
 end

@@ -59,8 +59,8 @@ control "V-58177" do
   tag "cci": ["CCI-002605"]
   tag "nist": ["SI-2 c", "Rev_4"]
 
-  describe "Couchbases server version should match the latest reported version." do
-    subject { command("couchbase-server -v | egrep -o '[0-9].*-[0-9]' | cut -f1,2 -d'.'") }
+  describe "Couchbases server version should match the latest reported Couchbase version." do
+    subject { command("#{input('cb_bin_dir')}/couchbase-server -v | egrep -o '[0-9].*-[0-9]' | cut -f1,2 -d'.'") }
       its('stdout') { should match input('cb_latest_version')}
   end  
 end

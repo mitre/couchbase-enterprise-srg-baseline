@@ -55,19 +55,4 @@ control "V-32413" do
   tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
 
-  if input('is_docker') == 'true'
-    describe "The Couchbase Server is installed within a Docker container so it is 
-    separate from the host OS, therefore this is not a finding." do
-      subject { virtualization.system }
-      it {should cmp 'docker'}
-    end
-  else
-    describe "This test requires a Manual Review: Ensure all database software, 
-    including DBMS configuration files, is stored in dedicated directories, or 
-    DASD pools, separate from the host OS and other applications." do
-      skip "This test requires a Manual Review: Ensure all database software, 
-      including DBMS configuration files, is stored in dedicated directories, or 
-      DASD pools, separate from the host OS and other applications."
-    end
-  end  
 end

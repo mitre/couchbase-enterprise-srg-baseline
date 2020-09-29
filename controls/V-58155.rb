@@ -46,7 +46,7 @@ control "V-58155" do
   tag "nist": ["SC-8 (2)", "Rev_4"]
 
   describe "Couchbase should have SSL enabled" do
-    subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    subject { json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
     its('state') { should eq 'mandatory' || 'enable' }
   end    

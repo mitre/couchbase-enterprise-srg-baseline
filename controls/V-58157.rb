@@ -48,10 +48,14 @@ control "V-58157" do
   tag "cci": ["CCI-002450"]
   tag "nist": ["SC-13", "Rev_4"]
 
-
-  describe "Couchbase should have SSL enabled" do
-    subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+  if input('cb_unclassified_environment') == "true"
+    impact 0.0
+    describe "Couchbase is deployed in an unclassified enviromment, therefore this check is Not Applicable (NA)" do
+      skip "Couchbase is deployed in an unclassified enviromment, therefore this check is Not Applicable (NA)"
+    end
+  else
+    subject { json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
     its('state') { should eq 'mandatory' || 'enable' }
-  end 
+  end
 end
