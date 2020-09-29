@@ -1,125 +1,108 @@
-#description: Couchbase Service User
-cb_service_user: 'couchbase' 
+cb_service_user: 'couchbase'
+cb_service_group: 'couchbase'
 
-#description: Couchbase Service Group
-cb_service_group: 'couchbase' 
-
-#description: Couchbase Full Admin Account
 cb_full_admin: 'admin'
-
-#description: Couchbase Full Admin Account Password
 cb_full_admin_password: '@dminP@asswd2020'
 
+cb_admin_users: [
+  'cbadmin'
+  ]
 
-#description: list of Couchbase admin users
-cb_admin_users: [ 
-  'cbadmin' 
+cb_users: [
+  'cbuser'
+  ]
+
+cb_roles: [
+  'admin',
+  'bucket_admin'
 ]
 
- #description: list of Couchbase users
-cb_users: [ 
-  'cbuser' 
-  ] 
- 
-#description: list of Couchbase user roles
-cb_roles: [ 
-  'admin', 
-  'bucket_admin' 
-] 
-
-#description: true/false - Couchbase uses saslauthd
 cb_use_saslauthd: 'true'
-
-#description: true/false - Couchbase uses ldap
 cb_use_ldap: 'false'
-
-#description: true/false - Couchbase uses pki
-cb_use_pki: 'true'
-
-#description: Couchbase authorization domain
+cb_use_pki: 'false'
 cb_auth_domain: 'local'
+cb_unclassified_environment: 'true'
 
-#description: path for private key 
 cb_private_key_path: '/etc/ssl/ca.key'
-
-#description: path for server certificate 
 cb_ca_file_path: '/etc/ssl/ca.pem'
 
-#description: Couchbase home directory
-cb_home_dir: '/opt/couchbase' 
-
-#description: Couchbase bin directory
+cb_home_dir: '/opt/couchbase'
+cb_data_dir: '/opt/couchbase/var/lib/couchbase/data'
 cb_bin_dir: '/opt/couchbase/bin'
+cb_config_dir: '/opt/couchbase/etc/couchbase'
+cb_static_conf: '/opt/couchbase/etc/couchbase/static_config'
 
-#description: Couchbase configuration directory
-cb_config_dir: '/opt/couchbase/etc/couchbase' 
+cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
+cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
-#description: Couchbase static configuration directory
-cb_static_conf: '/opt/couchbase/etc/couchbase/static_config' 
+cb_static_config: '/opt/couchbase/etc/couchbase/static_config'
+cb_http_access_log: '/opt/couchbase/var/lib/couchbase/logs/http_access.log' 
+cb_http_access_internal_log: '/opt/couchbase/var/lib/couchbase/logs/http_access_internal.log'
 
-#description: Couchbase data directory
-cb_data_dir: '/opt/couchbase/var/lib/couchbase/data' 
+cb_cluster_host: 'localhost'
+cb_cluster_port: '8091'
 
-#description: Couchbase log directory
-cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs' 
+cb_use_standard_ports: 'true'
 
-#description: Couchbase audit log file
-cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log' 
-
-#description: Couchbase samples directory
 cb_samples_dir: '/opt/couchbase/samples'
 
- #description: list of sample buckets
 sample_buckets: [
   'travel-sample',
   'gamesim-sample', 
   'beer-sample'
 ]
 
-#description: list of Couchbase required audit events
-cb_required_audit_events: [ 
-  'Service configuration change', 
-  'authentication succeeded', 
-  'session terminated' 
-] 
+cb_required_audit_events: [
+  'Service configuration change',
+  'authentication succeeded',
+  'session terminated'
+]
 
-#description: list of Couchbase required audit event ids
-cb_required_audit_event_ids: [ 
-  '36865', 
-  '20493'  
-] 
+cb_required_audit_event_ids: [
+  '36865',
+  '20493'
+]
 
-#description: Couchbase cluster host
-cb_cluster_host: 'localhost' 
-
-#description: Couchbase cluster port
-cb_cluster_port: '8091' 
-
-#Couchbase query port
+cb_latest_version: '6.6'
+cb_cluster_host: 'localhost'
+cb_cluster_port: '8091'
 cb_query_port: '8093'
 
-#description: true/false - Couchbase is run as a docker container
-is_docker: 'true' 
+is_docker: 'true'
 
-#description: list of Couchbase RedHat approved packages
 cb_redhat_approved_packages: [
   'couchbase-release',
   'couchbase-server'
 ]
 
-#description: list of Couchbase Debian approved packages
 cb_debian_approved_packages: [
   'couchbase-server'
 ]
 
-#description: approved SSL protocol
 approved_ssl_protocol: 'tlsv1.2'
 
-#description: list of Couchbase approved ciphers
 approved_ciphers: [
   'TLS_RSA_WITH_AES_128_CBC_SHA',
   'TLS_RSA_WITH_AES_256_CBC_SHA'
 ]
 
-#Couchbase categories of information
+cb_redhat_approved_packages: [
+  'couchbase-release',
+  'couchbase-server'
+]
+
+cb_debian_approved_packages: [
+  'couchbase-server'
+]
+
+approved_ssl_protocol: 'tlsv1.2'
+
+approved_ciphers: [
+  'TLS_RSA_WITH_AES_128_CBC_SHA',
+  'TLS_RSA_WITH_AES_256_CBC_SHA'
+]
+
 cb_audit_categories_of_information: 'false'
+cb_audit_access_to_objects: 'false'
+
+cb_require_encryption_at_rest: 'false'
