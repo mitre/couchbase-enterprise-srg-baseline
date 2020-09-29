@@ -54,8 +54,19 @@ control "V-58157" do
       skip "Couchbase is deployed in an unclassified enviromment, therefore this check is Not Applicable (NA)"
     end
   else
-    subject { json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
-    its('state') { should eq 'mandatory' || 'enable' }
+    describe.one do 
+      describe json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage \
+      -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
+      --client-auth --extended") do
+        its('state') { should eq "enable" }
+      end
+      describe json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage \
+      -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+      -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
+      --client-auth --extended") do
+        its('state') { should eq "mandatory" }
+      end
+    end
   end
 end
