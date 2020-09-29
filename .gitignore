@@ -8,3 +8,5 @@ Gemfile.lock
 spec/results/rhel-7-couchbase-6.0.2-enterprise-vanilla-test-result.json
 spec/results/rhel-7-couchbase-6.0.2-enterprise-hardened-test-result.json
 .kitchen/
+Dockerfile*
+results
