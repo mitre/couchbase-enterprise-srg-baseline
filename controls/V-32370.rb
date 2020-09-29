@@ -73,7 +73,6 @@ control "V-32370" do
 
   describe "The logged event should contain required fields. The" do
     subject { command("grep 'Bucket was created' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"sessionid"/}
     its('stdout') { should match /"bucket_name"/}
   end
 

@@ -105,7 +105,6 @@ control "V-32362" do
       describe "The #{event_id} event id should not be disabled. The" do
         subject { command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
         http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
-        its('stdout') { should_not include event_id }
       end 
     end
   end
