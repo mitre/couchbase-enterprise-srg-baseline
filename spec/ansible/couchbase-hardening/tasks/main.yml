@@ -1,8 +1,174 @@
-# ---
-- name: Start service couchbase-server, if not started
-  service:
-    name: couchbase-server
-    state: started
 
+- name: Setup new cluster 
 
-# Add steps to harden
+  shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c 127.0.0.1 --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256" 
+
+ 
+
+ 
+
+- name: Create a Bucket 
+
+  shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c 127.0.0.1:8091 --username admin --password password --bucket test-data --bucket-type couchbase --bucket-ramsize 100" 
+
+ 
+
+ 
+
+- name: Create Admin User 
+
+  shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbadmin --rbac-password cbpass --rbac-name 'Admin User' --roles admin --auth-domain local" 
+
+ 
+
+ 
+
+- name: Create Regular User 
+
+  shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbuser --rbac-password cbpass --rbac-name 'CB User' --roles bucket_admin[test-data] --auth-domain local" 
+
+ 
+
+ 
+
+- name: Check version of Couchbase Server 
+
+  shell: "/opt/couchbase/bin/couchbase-server -v" 
+
+  register: cbversion 
+
+ 
+
+ 
+
+- name: Enable Auditing for Enterprise 6.5.0 and earlier 
+
+  shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs" 
+
+  when: "'6.0.2' in cbversion.stdout or '6.5.0' in cbversion.stdout" 
+
+ 
+
+ 
+
+- name: Enable Auditing for Enterprise 6.5.1 and later 
+
+  shell: "/opt/couchbase/bin/couchbase-cli setting-audit -c 127.0.0.1:8091 -u admin -p password --set --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs" 
+
+  when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout" 
+
+ 
+
+ 
+
+- name: Set Ownership/Permissions on Couchbase Static Config file 
+
+  file: 
+
+    path: "{{ cb_static_conf }}" 
+
+    mode: "600" 
+
+    owner: "couchbase" 
+
+    group: "couchbase" 
+
+ 
+
+ 
+
+- name: Set Ownership/Permissions on all Log Files 
+
+  file: 
+
+    path: "{{ cb_log_dir }}" 
+
+    recurse: yes 
+
+    mode: "600" 
+
+    owner: "couchbase" 
+
+    group: "couchbase" 
+
+ 
+
+ 
+
+- name: Set Ownership/Permissions on Log Directory 
+
+  file: 
+
+    path: "{{ cb_log_dir }}" 
+
+    mode: "700" 
+
+    owner: "couchbase" 
+
+    group: "couchbase" 
+
+ 
+
+- name: Enable Compliant Password Policy Settings 6.0.2 and earlier 
+
+  shell: "couchbase-cli setting-password-policy -c 127.0.0.1:8091 -u admin -p password --set  
+
+  --min-length 15 --uppercase --lowercase --digit --special-char" 
+
+  when: "'6.0.2' in cbversion.stdout or '6.5.0' in cbversion.stdout" 
+
+  
+
+- name: Enable Compliant Password Policy Settings 6.5 and later 
+
+  shell: "couchbase-cli setting-password-policy -c 127.0.0.1:8091 -u admin -p password  
+
+  --set --min-length 15 --uppercase 1 --lowercase 1 --digit 1 --special-char 1" 
+
+  when: "'6.5.1' in cbversion.stdout or '6.6.0' in cbversion.stdout" 
+
+ 
+
+- name: Configure Couchbase to to implement a limit on the lifetime of cached authenticator 
+
+  shell: "couchbase-cli setting-ldap -c 127.0.0.1:8091 -u admin -p password --cache-value-lifetime 300000" 
+
+ 
+- name: Configure Couchbase to configure disableUIOverHttps 
+
+  shell: “curl -v -X POST -u admin:password http://localhost:8091/settings/security -d disableUIOverHttps=false”   
+
+ 
+ 
+
+- name: Configure Couchbase to implement a limit on the UiSessionTimeout  
+
+  shell: “curl -v -X POST -u admin:password http://localhost:8091/settings/security -d uiSessionTimeout=600”  
+
+ 
+ 
+
+- name: Configure Couchbase to enable auto failover  
+
+  shell: “couchbase-cli setting-autofailover --cluster localhost:8091 --username admin --password password --enable-auto-failover 1”  
+
+ 
+ 
+
+- name: Configure Couchbase to implement an audit log rotate size 
+
+  shell: “couchbase-cli setting-audit --cluster localhost:8091 --u admin --password password --set  --audit-enabled 1 --audit-log-rotate-interval 604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs”  
+
+ 
+ 
+
+- name: Configure Couchbase to implement email alerts 
+
+  shell: “couchbase-cli setting-alert --cluster localhost:8091 --u admin --password password --enable-email-alert 1 --email-user tester --email-password tester --email-host tester@couchbase.com --email-port 8091 --email-recipients recipient@couchbase.com --email-sender noreply@couchbase.com --alert-audit-msg-dropped --alert-disk-space” 
+
+ 
+
+ 
+
+ 
+

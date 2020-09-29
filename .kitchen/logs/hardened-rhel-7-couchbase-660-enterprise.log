@@ -1,0 +1,28 @@
+I, [2020-09-24T13:57:58.789349 #55876]  INFO -- hardened-rhel-7-couchbase-660-enterprise: -----> Setting up <hardened-rhel-7-couchbase-660-enterprise>...
+I, [2020-09-24T13:57:58.789894 #55876]  INFO -- hardened-rhel-7-couchbase-660-enterprise: Finished setting up <hardened-rhel-7-couchbase-660-enterprise> (0m0.00s).
+I, [2020-09-24T13:57:58.789964 #55876]  INFO -- hardened-rhel-7-couchbase-660-enterprise: -----> Verifying <hardened-rhel-7-couchbase-660-enterprise>...
+I, [2020-09-24T13:57:59.344712 #55876]  INFO -- hardened-rhel-7-couchbase-660-enterprise: Loaded Database_Generic_SRG 
+E, [2020-09-24T13:58:04.983208 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: Verify failed on instance <hardened-rhel-7-couchbase-660-enterprise>.
+E, [2020-09-24T13:58:04.983271 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: ------Exception-------
+E, [2020-09-24T13:58:04.983288 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: Class: Kitchen::ActionFailed
+E, [2020-09-24T13:58:04.983300 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: Message: InSpec Runner returns 1
+E, [2020-09-24T13:58:04.983313 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: ----------------------
+E, [2020-09-24T13:58:04.983324 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: ------Backtrace-------
+E, [2020-09-24T13:58:04.983334 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/kitchen-inspec-2.0.0/lib/kitchen/verifier/inspec.rb:108:in `call'
+E, [2020-09-24T13:58:04.983346 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:458:in `block in verify_action'
+E, [2020-09-24T13:58:04.983357 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:551:in `synchronize_or_call'
+E, [2020-09-24T13:58:04.983369 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:513:in `block in action'
+E, [2020-09-24T13:58:04.983380 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/2.7.0/benchmark.rb:293:in `measure'
+E, [2020-09-24T13:58:04.983391 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:512:in `action'
+E, [2020-09-24T13:58:04.983402 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:450:in `verify_action'
+E, [2020-09-24T13:58:04.983413 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:381:in `block (2 levels) in transition_to'
+E, [2020-09-24T13:58:04.983424 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/lifecycle_hooks.rb:44:in `run_with_hooks'
+E, [2020-09-24T13:58:04.983436 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:380:in `block in transition_to'
+E, [2020-09-24T13:58:04.983447 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:379:in `each'
+E, [2020-09-24T13:58:04.983458 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:379:in `transition_to'
+E, [2020-09-24T13:58:04.983469 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/instance.rb:161:in `verify'
+E, [2020-09-24T13:58:04.983480 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/command.rb:197:in `public_send'
+E, [2020-09-24T13:58:04.983499 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/command.rb:197:in `run_action_in_thread'
+E, [2020-09-24T13:58:04.983549 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/test-kitchen-2.6.0/lib/kitchen/command.rb:168:in `block (2 levels) in run_action'
+E, [2020-09-24T13:58:04.983559 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: /opt/chef-workstation/embedded/lib/ruby/gems/2.7.0/gems/logging-2.3.0/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+E, [2020-09-24T13:58:04.983568 #55876] ERROR -- hardened-rhel-7-couchbase-660-enterprise: ----End Backtrace-----
