@@ -24,7 +24,7 @@ control "V-58165" do
     $ couchbase-cli ssl-manage -c <localhost>:<port> -u <Full Admin> -p
     <Password> --client-auth --extended
   
-  Review the output. If \"state\" is not set to \"enabled\" or \"mandatory\", 
+  Review the output. If \"state\" is not set to \"enable\" or \"mandatory\", 
   this is a finding.  
   
   Review Couchbase settings to determine whether protections against
@@ -49,6 +49,6 @@ control "V-58165" do
   describe "Couchbase should have SSL enabled" do
     subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
-    its('state') { should eq 'mandatory' || 'enabled' }
+    its('state') { should eq 'mandatory' || 'enable' }
   end
 end

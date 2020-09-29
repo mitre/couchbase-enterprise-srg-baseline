@@ -94,7 +94,7 @@ control "V-58117" do
   end
 
   describe "As jdoe attempt to change the role of the janedoe user. The" do 
-    subject { command("cbq -u jdoe -p doe_cbP@ssw0rd2020 \
+    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p doe_cbP@ssw0rd2020 \
     --engine=http://#{input('cb_cluster_host')}:#{input('cb_query_port')} \
     --script='GRANT cluster_admin TO janedoe'") }
     its('exit_status') { should eq 0 }

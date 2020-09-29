@@ -49,15 +49,9 @@ control "V-58153" do
   tag "cci": ["CCI-002420"]
   tag "nist": ["SC-8 (2)", "Rev_4"]
 
-  describe "This test requires a Manual Review: Verify that Couchbase is employing protective measures against unauthorized
-  disclosure and modification during preparation for transmission, if not this is a finding." do
-    skip "This test requires a Manual Review: Verify that Couchbase is employing protective measures against unauthorized
-    disclosure and modification during preparation for transmission, if not this is a finding."
-  end
-
   describe "Couchbase should have SSL enabled" do
     subject { json( command: "couchbase-cli ssl-manage -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --client-auth --extended") }
-    its('state') { should eq 'mandatory' || 'enabled' }
+    its('state') { should eq 'mandatory' || 'enable' }
   end   
 end
