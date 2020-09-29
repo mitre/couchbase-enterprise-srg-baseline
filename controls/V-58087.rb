@@ -70,32 +70,29 @@ control "V-58087" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "Create bucket. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create \ 
+  describe "Create a Bucket. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --bucket test-data --bucket-type couchbase  --bucket-ramsize 256") } 
+    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} \
+    --bucket test-data --bucket-type couchbase --bucket-ramsize 100") }
     its('exit_status') { should eq 0 }
   end
 
   describe "Edit bucket. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-edit \ 
-    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --bucket test-data --bucket-ramsize 100") } 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-edit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --bucket test-data --bucket-ramsize 100") } 
     its('exit_status') { should eq 0 }
   end
-
+  
   describe "The logged event should contain required fields. The" do
-    subject { command("grep 'bucket' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match "modified"}
+    subject { command("grep 'Bucket was created' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"bucket_name"/}
   end
 
-  describe "Edit bucket. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-delete \ 
+  describe "Delete the Bucket. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-delete \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --bucket test-data") } 
+    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} \
+    --bucket test-data") }
     its('exit_status') { should eq 0 }
   end
 end
