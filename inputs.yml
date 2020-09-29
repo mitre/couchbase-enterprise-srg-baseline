@@ -121,7 +121,7 @@ approved_ciphers: [
 cb_audit_categories_of_information: 'false'
 cb_audit_access_to_objects: 'false'
 cb_require_encryption_at_rest: 'false'
-=======
+
 #description: Couchbase Requires Encryption at Rest - True/False
 cb_require_encryption_at_rest: 'false'
 
