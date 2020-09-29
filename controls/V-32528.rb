@@ -46,11 +46,11 @@ control "V-32528" do
   desc  "fix", "
   As the Full Admin, setup XDCR for Couchbase with the following command:
   $ couchbase-cli xdcr-setup -c <host>:<port>-u <Full Admin> -p <Password>
-  --create \\
-  --xdcr-cluster-name <remote-cluster>--xdcr-hostname <host>:<port>
-  --xdcr-username \\
+  --create --xdcr-cluster-name <remote-cluster> --xdcr-hostname <host>:<port>
+  --xdcr-username 
   <Full Admin> --xdcr-password <Password>
-  $ couchbase-cli xdcr-replicate -c <host>:<port>-u <Full Admin> \\
+
+  $ couchbase-cli xdcr-replicate -c <host>:<port>-u <Full Admin> 
   -p <Password> --create --xdcr-cluster-name <remote-cluster>
   --xdcr-from-bucket    <bucket> --xdcr-to-bucket <remote-bucket>
   --xdcr-replication-mode xmem
@@ -58,6 +58,7 @@ control "V-32528" do
   https://docs.couchbase.com/server/current/cli/cbcli/couchbase-cli-xdcr-setup.html
   https://docs.couchbase.com/server/current/cli/cbcli/couchbase-cli-xdcr-replicate.html
   "
+
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000225-DB-000153"
@@ -68,7 +69,7 @@ control "V-32528" do
   tag "cci": ["CCI-001190"]
   tag "nist": ["SC-24", "Rev_4"]
 
-  describe command("couchbase-cli xdcr-replicate -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}\
+  describe command("#{input('cb_bin_dir')}/couchbase-cli xdcr-replicate -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}\
   :#{input('cb_cluster_port')} --list") do
     its('stdout') { should_not eq "" }
   end
