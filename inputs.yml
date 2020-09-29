@@ -1,109 +1,130 @@
 
+#description: Couchbase Service Account and Group
 cb_service_user: 'couchbase'
 cb_service_group: 'couchbase'
 
+#description: Couchbase Full Admin Account
 cb_full_admin: 'admin'
 cb_full_admin_password: '@dminP@asswd2020'
 
+#description: Couchbase Cluster Host
+cb_cluster_host: 'localhost'
+
+#description: Couchbase Cluster Port
+cb_cluster_port: '8091'
+
+#description: Couchbase Cluster Query Port
+cb_query_port: '8093'
+
+#description: Couchbase Latest Version
+cb_latest_version: '6.6'
+
+#description: couchbase is Running in Docker Environment - True/False
+is_docker: 'true'
+
+#description: Couchbase Admin User Accounts
 cb_admin_users: [
   'cbadmin'
   ]
 
+#description: Couchbase User Accounts
 cb_users: [
   'cbuser'
   ]
 
+#description: Couchbase Roles
 cb_roles: [
   'admin',
   'bucket_admin'
 ]
 
+#description: Couchbase Authentication Options
 cb_use_saslauthd: 'true'
 cb_use_ldap: 'false'
-cb_use_pki: 'false'
+cb_use_pki: 'true'
 cb_auth_domain: 'local'
+
+#description: Couchbase Unclassified Env - True/False
 cb_unclassified_environment: 'true'
 
+#description: Path to Server Private Key File
 cb_private_key_path: '/etc/ssl/ca.key'
+
+#description: Path to Server CA File
 cb_ca_file_path: '/etc/ssl/ca.pem'
 
+#description: Path to Couchbase Home Directory
 cb_home_dir: '/opt/couchbase'
+
+#description: Path to Couchbase Data Directory 
 cb_data_dir: '/opt/couchbase/var/lib/couchbase/data'
+
+#description: Path to Couchbase Bin Directory 
 cb_bin_dir: '/opt/couchbase/bin'
+
+#description: Path to Couchbase Configuration Directory 
 cb_config_dir: '/opt/couchbase/etc/couchbase'
+
+#description: Path to Couchbase Static Configuration File
 cb_static_conf: '/opt/couchbase/etc/couchbase/static_config'
 
+#description: Path to Couchbase Log Directory 
 cb_log_dir: '/opt/couchbase/var/lib/couchbase/logs'
+
+#description: Path to Couchbase Audit Log File
 cb_audit_log: '/opt/couchbase/var/lib/couchbase/logs/audit.log'
 
-cb_static_config: '/opt/couchbase/etc/couchbase/static_config'
-cb_http_access_log: '/opt/couchbase/var/lib/couchbase/logs/http_access.log' 
-cb_http_access_internal_log: '/opt/couchbase/var/lib/couchbase/logs/http_access_internal.log'
-
-cb_cluster_host: 'localhost'
-cb_cluster_port: '8091'
-
-cb_use_standard_ports: 'true'
-
+#description: Path to Couchbase Bucket Samples Directory
 cb_samples_dir: '/opt/couchbase/samples'
 
+#description: Couchbase Sample Buckets
 sample_buckets: [
   'travel-sample',
   'gamesim-sample', 
   'beer-sample'
 ]
 
+#description: Couchbase Sample Buckets
 cb_required_audit_events: [
   'Service configuration change',
   'authentication succeeded',
   'session terminated'
 ]
 
+#description: Couchbase Sample Buckets
 cb_required_audit_event_ids: [
   '36865',
   '20493'
 ]
 
-cb_latest_version: '6.6'
-cb_cluster_host: 'localhost'
-cb_cluster_port: '8091'
-cb_query_port: '8093'
-
-is_docker: 'true'
-
+#description: Couchbase Approved Packages - Redhat
 cb_redhat_approved_packages: [
   'couchbase-release',
   'couchbase-server'
 ]
 
+#description: Couchbase Approved Packages - Debian
 cb_debian_approved_packages: [
   'couchbase-server'
 ]
 
+#description: Couchbase Approved TLS Protocol
 approved_ssl_protocol: 'tlsv1.2'
 
+#description: Couchbase Approved Ciphers
 approved_ciphers: [
   'TLS_RSA_WITH_AES_128_CBC_SHA',
   'TLS_RSA_WITH_AES_256_CBC_SHA'
 ]
 
-cb_redhat_approved_packages: [
-  'couchbase-release',
-  'couchbase-server'
-]
-
-cb_debian_approved_packages: [
-  'couchbase-server'
-]
-
-approved_ssl_protocol: 'tlsv1.2'
-
-approved_ciphers: [
-  'TLS_RSA_WITH_AES_128_CBC_SHA',
-  'TLS_RSA_WITH_AES_256_CBC_SHA'
-]
-
+#description: Couchbase Capabilities - True/False
 cb_audit_categories_of_information: 'false'
 cb_audit_access_to_objects: 'false'
-
 cb_require_encryption_at_rest: 'false'
+=======
+#description: Couchbase Requires Encryption at Rest - True/False
+cb_require_encryption_at_rest: 'false'
+
+#description: Couchbase Uses Standard Ports - True/False
+cb_use_standard_ports: 'true'
+
