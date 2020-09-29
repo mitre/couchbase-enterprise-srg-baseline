@@ -89,4 +89,24 @@ control "V-32362" do
   tag "cci": ["CCI-000169"]
   tag "nist": ["AU-12 a", "Rev_4"]
 
+  couchbase_version = command('couchbase-server -v | egrep -o "([0-9]{1,}\.)+[0-9]{1,}"').stdout.strip
+
+  if couchbase_version >= '6.5.1'
+    input('cb_required_audit_events').each do |event_name|
+      describe "The #{event_name} event should be enabled. The" do
+        subject { command("#{input('cb_bin_dir')}/couchbase-cli setting-audit -u #{input('cb_full_admin')} \
+        -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+        --get-settings | grep '#{event_name}'") }
+        its('stdout') { should include "True" }
+      end 
+    end 
+  else
+    input('cb_required_audit_event_ids').each do |event_id|
+      describe "The #{event_id} event id should not be disabled. The" do
+        subject { command("curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+        http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+        its('stdout') { should_not include event_id }
+      end 
+    end
+  end
 end
