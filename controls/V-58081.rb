@@ -97,7 +97,7 @@ control "V-58081" do
   end
 
   describe "Revoke permissions from janedoe by jdoe. The" do 
-    subject { command("cbq -u jdoe -p cbpass --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p cbpass --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
     --script='REVOKE replication_admin FROM janedoe'")}
     its('exit_status') { should eq 0 }
   end

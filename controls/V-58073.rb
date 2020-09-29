@@ -96,7 +96,7 @@ control "V-58073" do
   end
 
   describe "Grant permissions to janedoe user by jdoe. The" do 
-    subject { command("cbq -u jdoe -p cbpass --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p cbpass --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
     --script='GRANT cluster_admin TO janedoe'")}
     its('exit_status') { should eq 0 }
   end

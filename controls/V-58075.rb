@@ -84,7 +84,7 @@ control "V-58075" do
   end
 
   describe "Grant permissions to jdoe user. The" do 
-    subject { command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    subject { command("#{input('cb_bin_dir')}/cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
     --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}
     --script='GRANT cluster_admin TO jdoe'")}
     its('exit_status') { should eq 0 }
