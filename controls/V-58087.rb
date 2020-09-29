@@ -14,24 +14,29 @@ control "V-58087" do
   the highest privileges, to directly view or directly modify the contents of its
   built-in security objects, and if there are no additional, locally-defined
   security objects in the database(s), this is not a finding.
-      Couchbase auditing is capable of logging all reads, creations,
+    
+  Couchbase auditing is capable of logging all reads, creations,
   modifications, and deletions.
-      As the Full Admin, create a user account and grant the user the
+    
+  As the Full Admin, create a user account and grant the user the
   cluster_admin role by executing the following command:
-        $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-       -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
-       --rbac-name \"John Doe\" --roles cluster_admin \\
-       --auth-domain local
-      As the John Doe user, create a bucket in the cluster by executing the
+    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+    -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
+    --rbac-name \"John Doe\" --roles cluster_admin \\
+    --auth-domain local
+  
+  As the John Doe user, create a bucket in the cluster by executing the
   following command:
-        $ couchbase-cli bucket-create -c <host>:<port> --username jdoe --password
-  cbpass --bucket test-data --bucket-type couchbase  --bucket-ramsize 256
-      As the John Doe user, edit memory allocated for the bucket created by
+    $ couchbase-cli bucket-create -c <host>:<port> --username jdoe --password
+    doe_cbP@ssw0rd2020 --bucket test-data --bucket-type couchbase  --bucket-ramsize 256
+    
+  As the John Doe user, edit memory allocated for the bucket created by
   executing the following command:
-        $ couchbase-cli bucket-edit -c <host>:<port> --username jdoe \\
-       --password cbpass  --bucket test-data --bucket-ramsize 100
-    Verify the events were logged with the following command:
-      $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
+    $ couchbase-cli bucket-edit -c <host>:<port> --username jdoe \\
+    --password doe_cbP@ssw0rd2020  --bucket test-data --bucket-ramsize 100
+  
+  Verify the events were logged with the following command:
+    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
       Output:
       {\"bucket_name\":\"test-data\",\"description\":\"Bucket was
       modified\",\"id\":8202,\"name\":\"modify bucket\",\"props\"
@@ -39,9 +44,8 @@ control "V-58087" do
       \"real_use\"rid\"\":{\"domain\":\"local\",\"user\":\"jdoe\"},
       \"remote\":{\"ip\":\"127.0.0.1\",\"port\":46976},\"timestamp\"
       :\"2020-08-20T21:06:09.746Z\",\"type\":\"membase\"}
-    If the above steps cannot verify that audit records are produced when
-    security objects are modified, this is a finding."
-
+  If the above steps cannot verify that audit records are produced when
+  security objects are modified, this is a finding."
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce audit records
   when security objects are modified.

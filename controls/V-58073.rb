@@ -17,23 +17,24 @@ control "V-58073" do
   desc  "check", "
   Couchbase auditing is capable of logging all reads, creations,
   modifications, and deletions.
-    First, as the Full Admin, create two user accounts by executing the
-    following commands:
-      $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-      -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
-      --rbac-name \"John Doe\" --roles replication_admin \\
-      --auth-domain local
-        
-      $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-      -p <Password> --set --rbac-username janedoe --rbac-password cbpass \\
-      --rbac-name \"Jane Doe\" --roles replication_admin \\
-      --auth-domain local
+    
+  First, as the Full Admin, create two user accounts by executing the
+  following commands:
+  $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+  -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
+  --rbac-name \"John Doe\" --roles replication_admin \\
+  --auth-domain local
 
-    Then, as the John Doe, grant the Jane Doe user a new role:
-      $ cbq -u jdoe -p cbpass -engine=http://<host>:<port>/ --script=\"GRANT
-      cluster_admin TO janedoe\"
-    Verify the events were logged with the following command:
-      $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
+  $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+  -p <Password> --set --rbac-username janedoe --rbac-password doe_cbP@ssw0rd2020 \\
+  --rbac-name \"Jane Doe\" --roles replication_admin \\
+  --auth-domain local
+
+  Then, as the John Doe, grant the Jane Doe user a new role:
+    $ cbq -u jdoe -p doe_cbP@ssw0rd2020 -engine=http://<host>:<port>/ --script=\"GRANT
+    cluster_admin TO janedoe\"
+  Verify the events were logged with the following command:
+    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
       Output:
       {\"description\":\"A N1QL GRANT ROLE statement was executed\",\"id\":28685,
       \"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"476.925\xC2\xB5s\",\"errorCount\":1,
@@ -44,10 +45,9 @@ control "V-58073" do
       cluster_admin TO janedoe;\",\"status\":\"fatal\",\"timestamp\":\"2020-08-21T17:23:55.427Z\",
       \"userAgent\":\"Go-http-client/1.1 (CBQ/2.0)\"}
 
-    If the above steps cannot verify that audit records are produced when
-    privileges/permissions/role memberships are unsuccessfully added, this is a
-    finding."
-
+  If the above steps cannot verify that audit records are produced when
+  privileges/permissions/role memberships are unsuccessfully added, this is a
+  finding."
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce audit records
   when privileges/permissions are unsuccessfully added.

@@ -1,38 +1,30 @@
-#description: Couchbase service user
+#description: Couchbase Service User
 cb_service_user: 'couchbase' 
 
-#description: Couchbase service group
+#description: Couchbase Service Group
 cb_service_group: 'couchbase' 
 
- 
-#description: Couchbase full admin
-cb_full_admin: 'admin' 
+#description: Couchbase Full Admin Account
+cb_full_admin: 'admin'
 
-#description: Couchbase full admin password
+#description: Couchbase Full Admin Account Password
 cb_full_admin_password: '@dminP@asswd2020'
 
- 
+
 #description: list of Couchbase admin users
 cb_admin_users: [ 
-
   'cbadmin' 
-
-  ] 
+]
 
  #description: list of Couchbase users
 cb_users: [ 
-
   'cbuser' 
-
   ] 
  
 #description: list of Couchbase user roles
 cb_roles: [ 
-
   'admin', 
-
   'bucket_admin' 
-
 ] 
 
 #description: true/false - Couchbase uses saslauthd
@@ -60,10 +52,10 @@ cb_home_dir: '/opt/couchbase'
 cb_bin_dir: '/opt/couchbase/bin'
 
 #description: Couchbase configuration directory
-cb_config_dir: 'opt/couchbase/etc/couchbase' 
+cb_config_dir: '/opt/couchbase/etc/couchbase' 
 
 #description: Couchbase static configuration directory
-cb_static_conf: 'opt/couchbase/etc/couchbase/static_config' 
+cb_static_conf: '/opt/couchbase/etc/couchbase/static_config' 
 
 #description: Couchbase data directory
 cb_data_dir: '/opt/couchbase/var/lib/couchbase/data' 
@@ -86,26 +78,15 @@ sample_buckets: [
 
 #description: list of Couchbase required audit events
 cb_required_audit_events: [ 
-
   'Service configuration change', 
-
   'authentication succeeded', 
-
   'session terminated' 
-
 ] 
 
 #description: list of Couchbase required audit event ids
 cb_required_audit_event_ids: [ 
-
   '36865', 
-
-  '20485', 
-
-  '20493',  
-
-  '20489' 
-
+  '20493'  
 ] 
 
 #description: Couchbase cluster host

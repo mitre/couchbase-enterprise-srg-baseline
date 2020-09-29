@@ -45,8 +45,9 @@ control "V-58051" do
   tag "cci": ["CCI-001844"]
   tag "nist": ["AU-3 (2)", "Rev_4"]
 
-
-  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") do
+  describe "The security setting" do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
     its('disableUIOverHttps') { should eq false }
   end 
 end

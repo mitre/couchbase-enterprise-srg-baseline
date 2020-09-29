@@ -16,21 +16,24 @@ control "V-58081" do
   desc  "check", "
   Couchbase auditing is capable of logging all reads, creations,
   modifications, and deletions.
-    First, as the Full Admin, create two user accounts by executing the
-    following commands:
-      $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-      -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
-      --rbac-name \"John Doe\" --roles replication_admin \\
-      --auth-domain local
-      $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-      -p <Password> --set --rbac-username janedoe --rbac-password cbpass \\
-      --rbac-name \"Jane Doe\" --roles replication_admin,cluster_admin \\
-      --auth-domain local
-    Then, as the John Doe user, revoke the \"cluster_admin\" role from Jane Doe:
-      $ cbq -u jdoe -p cbpass -engine=http://<host>:<port>/ --script=\"REVOKE
-      cluster_admin FROM janedoe\"
-    Verify the events were logged with the following command:
-      $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
+
+  First, as the Full Admin, create two user accounts by executing the
+  following commands:
+    $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+    -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020\\
+    --rbac-name \"John Doe\" --roles replication_admin \\
+    --auth-domain local
+    $couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+    -p <Password> --set --rbac-username janedoe --rbac-password doe_cbP@ssw0rd2020 \\
+    --rbac-name \"Jane Doe\" --roles replication_admin,cluster_admin \\
+    --auth-domain local
+
+  Then, as the John Doe user, revoke the \"cluster_admin\" role from Jane Doe:
+    $ cbq -u jdoe -p cbpass -engine=http://<host>:<port>/ --script=\"REVOKE
+    cluster_admin FROM janedoe\"
+
+  Verify the events were logged with the following command:
+    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
       Output:
       {\"description\":\"A N1QL REVOKE ROLE statement was executed\",\"id\":28686,
       \"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"12.61108ms\",\"errorCount\":1,
@@ -46,23 +49,24 @@ control "V-58081" do
   finding."
   
   desc  "fix", "
-    Enable session auditing on the Couchbase cluster to produce audit records
-when privileges/permissions are unsuccessfully deleted.
-    Couchbase Server 6.5.0 and earlier -
-      As the Full Admin, execute the following command to enable auditing:
-       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
---password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
---audit-log-path /opt/couchbase/var/lib/couchbase/logs
-    Couchbase Server Version 6.5.1 and later -
-      As the Full Admin, execute the following command to enable auditing:
-       $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
---password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
-604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
-    Enable the required set of auditable events by doing the following:
-      As the Full Admin, log into the cluster and use  the following
-documentation to enable all on the \"Query and Index Services Event:
-      -
-https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
+  Enable session auditing on the Couchbase cluster to produce audit records
+  when privileges/permissions are unsuccessfully deleted.
+  Couchbase Server 6.5.0 and earlier -
+  As the Full Admin, execute the following command to enable auditing:
+    $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+  --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+  --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+    
+  Couchbase Server Version 6.5.1 and later -
+  As the Full Admin, execute the following command to enable auditing:
+    $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+  --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+  604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+
+  Enable the required set of auditable events by doing the following:
+  As the Full Admin, log into the cluster and use  the following
+  documentation to enable all on the \"Query and Index Services Event:
+    - https://docs.couchbase.com/server/current/manage/manage-security/manage-auditing.html
   "
   impact 0.5
   tag "severity": "medium"

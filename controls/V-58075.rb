@@ -17,19 +17,22 @@ control "V-58075" do
   If there is no distinction in the Couchbase's security architecture between
   modifying permissions on the one hand, and adding and deleting permissions on
   the other hand, this is not a finding.
-    Couchbase auditing is capable of logging all reads, creations,
-    modifications, and deletions.
-    First, as the Full Admin, create a user account by executing the following
-    command:
-      $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
-      -p <Password> --set --rbac-username jdoe --rbac-password cbpass \\
-      --rbac-name \"John Doe\" --roles replication_admin \\
-      --auth-domain local
-    Then, as the Full Admin, grant the John Doe user a new role:
-      $ cbq -u <Full Admin> -p <Password> -engine=http://<host>:<port>/
-      --script=\"GRANT cluster_admin TO jdoe\"
-    Verify the events were logged with the following command:
-      $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
+  Couchbase auditing is capable of logging all reads, creations,
+  modifications, and deletions.
+  
+  First, as the Full Admin, create a user account by executing the following
+  command:
+    $ couchbase-cli user-manage -c <host>:<port> -u <Full Admin> \\
+    -p <Password> --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \\
+    --rbac-name \"John Doe\" --roles replication_admin \\
+    --auth-domain local
+
+  Then, as the Full Admin, grant the John Doe user a new role:
+    $ cbq -u <Full Admin> -p <Password> -engine=http://<host>:<port>/
+    --script=\"GRANT cluster_admin TO jdoe\"
+
+  Verify the events were logged with the following command:
+    $ cat <Couchbase Home>/var/lib/couchbase/logs/audit.log
       Output:
       {\"description\":\"A N1QL GRANT ROLE statement was
       executed\",\"id\":28685,\"isAdHoc\":true,\"metrics\":{\"elapsedTime\":\"163.459219ms\",
@@ -39,6 +42,7 @@ control "V-58075" do
       \"a3344468-e5a2-44ba-af49-0fd858f20f7b\",\"statement\":\"GRANT cluster_admin TO
       jdoe;;\",\"status\":\"success\",\"timestamp\":\"2020-08-21T16:37:40.312Z\",\"userAgent\":
       \"Go-http-client/1.1 (CBQ/2.0)\"}
+
   If the above steps cannot verify that audit records are produced when privileges/permissions/role 
   memberships are modified, this is a finding."
 
