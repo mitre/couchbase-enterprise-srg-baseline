@@ -164,7 +164,10 @@
   --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enable-auto-failover 1 --auto-failover-timeout 120”  
 
 - name: Configure Couchbase to implement email alerts 
-  shell: "/opt/couchbase/bin/couchbase-cli setting-alert --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enable-email-alert 1 --email-user tester --email-password tester_485 --email-host tester@couchbase.com --email-port 8091 --email-recipients recipient@couchbase.com --email-sender noreply@couchbase.com --alert-audit-msg-dropped --alert-disk-space"
-  
+  shell: "/opt/couchbase/bin/couchbase-cli setting-alert --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \
+  --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enable-email-alert 1 --email-user tester --email-password tester_485 \
+  --email-host tester@couchbase.com --email-port 8091 --email-recipients recipient@couchbase.com --email-sender noreply@couchbase.com \
+  --alert-audit-msg-dropped --alert-disk-space"
+
 
 # # Add steps to harden
