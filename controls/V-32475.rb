@@ -31,7 +31,7 @@ control "V-32475" do
     $ couchbase-cli ssl-manage -c <host>:<port> -u <Full Admin> -p <Password> 
     --client-auth --extended
 
-  Review the output. If \"state\" is not set to \"enabled\" or \"mandatory\", 
+  Review the output. If \"state\" is not set to \"enable\" or \"mandatory\", 
   this is a finding.
   "
   desc  "fix", "
@@ -69,7 +69,7 @@ control "V-32475" do
       -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
       -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}  \
       --client-auth --extended") do
-        its('state') { should eq "enabled" }
+        its('state') { should eq "enable" }
       end
 
       describe json( command: "#{input('cb_bin_dir')}/couchbase-cli ssl-manage \

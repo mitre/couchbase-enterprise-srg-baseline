@@ -1,4 +1,9 @@
 ---
+- name: Start service couchbase-server, if not started	
+  service:	
+    name: couchbase-server	
+    state: started
+    
 - name: Setup new cluster
   shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
   --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
@@ -9,12 +14,12 @@
 
 - name: Create Admin User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set --rbac-username cbadmin --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'Admin User' \
+  -p {{ cb_full_admin_password }} --set --rbac-username cbadmin --rbac-password admin_cbP@ssw0rd2020 --rbac-name 'Admin User' \
   --roles {{ cb_full_admin }} --auth-domain local"
 
 - name: Create Regular User
   shell: "/opt/couchbase/bin/couchbase-cli user-manage -c {{ cb_cluster_host }}:{{ cb_cluster_port }} -u {{ cb_full_admin }} \
-  -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'CB User' \
+  -p {{ cb_full_admin_password }} --set --rbac-username cbuser --rbac-password user_cbP@ssw0rd2020 --rbac-name 'CB User' \
   --roles bucket_admin[test-bucket] --auth-domain local"
 
 - name: Check version of Couchbase Server
@@ -85,9 +90,51 @@
   shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
   -d disableUIOverHttp=true"
 
-- name: Enable UI Access Over HTTPS
+- name: Disable UI Access Over HTTP
   shell: "curl -X POST -u {{ cb_full_admin }}:{{ cb_full_admin_password }} http://{{ cb_cluster_host }}:{{ cb_cluster_port }}/settings/security \
   -d disableUIOverHttps=false"
+
+- name: Set Ownership/Permissions on Couchbase Home Directory
+  file:
+    path: "{{ cb_home_dir }}"
+    mode: "700"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on for Couchbase README
+  file:
+    path: "{{ cb_home_dir }}/README.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Home LICENSE
+  file:
+    path: "{{ cb_home_dir }}/LICENSE.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Home VARIANT
+  file:
+    path: "{{ cb_home_dir }}/VARIANT.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on Couchbase Home VERSION
+  file:
+    path: "{{ cb_home_dir }}/VERSION.txt"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"    
+
+- name: Set Ownership/Permissions on Couchbase Home manifest
+  file:
+    path: "{{ cb_home_dir }}/manifest.xml"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"        
 
 - name: Set Ownership/Permissions on all Couchbase Config Files
   file:
@@ -115,6 +162,21 @@
 - name: Set Ownership/Permissions on Log Directory
   file:
     path: "{{ cb_log_dir }}"
+    mode: "700"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on all Couchbase Data Files
+  file:
+    path: "{{ cb_data_dir }}"
+    recurse: yes
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"
+
+- name: Set Ownership/Permissions on Couchbase Data Directory
+  file:
+    path: "{{ cb_data_dir }}"
     mode: "700"
     owner: "couchbase"
     group: "couchbase"
@@ -159,15 +221,10 @@
   --password {{ cb_full_admin_password }} --set-client-auth {{ cb_client_auth_config }}"
   when: "use_pki.stdout == 'true'"
 
-- name: Configure Couchbase to enable auto failover  
-  shell: “/opt/couchbase/bin/couchbase-cli setting-autofailover --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \
-  --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enable-auto-failover 1 --auto-failover-timeout 120”  
-
-- name: Configure Couchbase to implement email alerts 
-  shell: "/opt/couchbase/bin/couchbase-cli setting-alert --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \
-  --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --enable-email-alert 1 --email-user tester --email-password tester_485 \
-  --email-host tester@couchbase.com --email-port 8091 --email-recipients recipient@couchbase.com --email-sender noreply@couchbase.com \
-  --alert-audit-msg-dropped --alert-disk-space"
-
-
-# # Add steps to harden
+- name: Set Ownership/Permissions on Couchbase Home clientauthconfig
+  file:
+    path: "{{ cb_home_dir }}/client-auth-config.json"
+    mode: "600"
+    owner: "couchbase"
+    group: "couchbase"    
+# # # Add steps to harden
