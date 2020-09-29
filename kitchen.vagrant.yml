@@ -31,7 +31,7 @@
     - name: rhel-7-couchbase-6.0.2-enterprise
       lifecycle:
         post_create:
-          - remote: curl -O -k https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
+          - remote: curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo yum install -y couchbase-server-6.0.2-2413
           - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
@@ -43,7 +43,7 @@
     - name: rhel-7-couchbase-6.6.0-enterprise
       lifecycle:
         post_create:
-          - remote: curl -O -k https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
+          - remote: curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm
           - remote: sudo yum install -y couchbase-server-6.6.0-7909
           - remote: echo 'export PATH=$PATH:/opt/couchbase/bin/' >> ~/.bashrc && source ~/.bashrc
