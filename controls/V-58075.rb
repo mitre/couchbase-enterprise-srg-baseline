@@ -80,16 +80,15 @@ control "V-58075" do
   end
 
   describe "Grant permissions to jdoe user. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
-    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}\
-     --set --roles admin --rbac-username jdoe --auth-domain local") }
+    subject { command("cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}
+    --script='GRANT cluster_admin TO jdoe'")}
     its('exit_status') { should eq 0 }
   end
 
   describe "The logged event should contain required fields. The" do
-    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match "updated"}
+    subject { command("grep 'A N1QL GRANT ROLE' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"success"/}
   end
 
   describe "Delete the jdoe user. The" do 

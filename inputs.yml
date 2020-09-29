@@ -114,6 +114,9 @@ cb_cluster_host: 'localhost'
 #description: Couchbase cluster port
 cb_cluster_port: '8091' 
 
+#Couchbase query port
+cb_query_port: '8093'
+
 #description: true/false - Couchbase is run as a docker container
 is_docker: 'true' 
 

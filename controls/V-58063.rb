@@ -76,12 +76,12 @@ control "V-58063" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 
-  describe "The logged event should contain required fields. The" do
+  describe "The logged event should contain record of user creation. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
     its('stdout') { should match /"timestamp"/}
   end
@@ -92,5 +92,5 @@ control "V-58063" do
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
     --delete --rbac-username jdoe --auth-domain local") }
     its('exit_status') { should eq 0 }
-  end
+  end 
 end

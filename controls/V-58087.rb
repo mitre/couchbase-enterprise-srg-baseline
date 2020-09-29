@@ -86,4 +86,12 @@ control "V-58087" do
     subject { command("grep 'bucket' #{input('cb_audit_log')} | tail -1") }
     its('stdout') { should match "modified"}
   end
+
+  describe "Edit bucket. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-delete \ 
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --bucket test-data") } 
+    its('exit_status') { should eq 0 }
+  end
 end
