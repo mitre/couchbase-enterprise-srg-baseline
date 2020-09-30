@@ -32,20 +32,23 @@ control "V-58063" do
       - \"ip\" - Remote IP address
       - \"port\" - Remote port
       - \"bucket_name\" - Name of Bucket
-  Couchbase Server 6.5.0 and earlier -
-      As root or a sudo user, verify that the \"audit.log\" file exists in the
-      var/lib/couchbase/logs directory of the Couchbase application home (example:
-      /opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
-      
-      Review the audit.log file. If it does not exist or not populated with
-      data captured, this is a finding.
-      Couchbase Server Version 6.5.1 and later -
-      As the Full Admin, verify that auditing is enabled by executing the
-      following command:
-         $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
-        <Password> --get-settings
-      Review the output of the command. If \"Audit enabled\" is not set to
-      \"true\", this is finding."
+	Review the system documentation for a description of how audit records are
+	off-loaded and how local audit log space is managed.
+	If Couchbase audit records are not written directly to or systematically
+	transferred to a centralized log management system, this is a finding.
+	Couchbase Server 6.5.0 and earlier -
+	As root or a sudo user, verify that the \"audit.log\" file exists in the
+	var/lib/couchbase/logs directory of the Couchbase application home (example:
+	/opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
+
+	Review the audit.log file. If it does not exist or not populated with
+	data captured, this is a finding.
+	
+
+	As the Full Admin, verify that auditing is enabled by executing the following command:
+	$ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
+	Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
+	is not set to \"true\", this is finding."
 
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to enable the use of

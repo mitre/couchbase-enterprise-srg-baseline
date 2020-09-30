@@ -33,27 +33,13 @@ control "V-58061" do
   situations."
 
   desc  "check", "
-  If the application owner has determined that the need for system
-  availability does not outweigh the need for a complete audit trail, this is not
-  applicable (NA).
-  Once enabled on the cluster, Couchbase auditing provides log rotation (i.e.
-  Rotate interval and Rotate size) option by default. This ensures that the audit
-  log does not consume too much disk space.
-
-  Couchbase Server 6.5.0 and earlier -
-    As root or a sudo user, verify that the \"audit.log\" file exists in the
-    var/lib/couchbase/logs directory of the Couchbase application home (example:
-    /opt/couchbase/var/lib/couchbase/logs) and is populated with data captured.
-    Review the audit.log file. If it does not exist or is not populated with
-    data captured, this is a finding.
-  Couchbase Server Version 6.5.1 and later -
-    As the Full Admin, verify that auditing is enabled by executing the
-    following command:
-    $ couchbase-cli setting-audit -c <host>:<port> -u <Full Admin> -p
-    <Password> --get-settings
-
-  Review the output of the command. If \"Audit enabled\" is not set to
-  \"true\", this is finding."
+  Review system documentation to determine the data and the actions on data
+  that need to be protected from repudiation by means of audit trails.
+  When enabled, Couchbase can identify a unique user for each record.
+  As the Full Admin, verify that auditing is enabled by executing the following command:
+  $ curl -v -X GET -u <Full Admin>:<Password> http://<host>:<port>/settings/audit
+  Verify from the output that \"auditEnabled\" is set to \"true\". If  \"auditEnabled\" 
+  is not set to \"true\", this is finding."
 
   desc  "fix", "
   Enable session auditing on the Couchbase cluster.

@@ -64,7 +64,7 @@ addressed, and must document what has been discovered.
   tag "cci": ["CCI-001314"]
   tag "nist": ["SI-11 b", "Rev_4"]
 
-  describe file(input('cb_static_conf')) do
+  describe file(input('cb_log_dir')) do
     its('owner') { should be_in input('cb_service_user') }
     its('group') { should be_in input('cb_service_group') }
     it { should_not be_more_permissive_than('0600') }

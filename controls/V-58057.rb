@@ -38,9 +38,11 @@ control "V-58057" do
   tag "cci": ["CCI-001855"]
   tag "nist": ["AU-5 (1)", "Rev_4"]
   
-  describe "This test requires a Manual Review: Review system configuration for a script/tool to monitor the partition for the Couchbase log
+  describe "This test requires a Manual Review: Review system configuration for a \
+  script/tool to monitor the partition for the Couchbase log
   directories." do
-    skip "This test requires a Manual Review: Review system configuration for a script/tool to monitor the partition for the Couchbase log
+    skip "This test requires a Manual Review: Review system configuration for a script/tool \
+    to monitor the partition for the Couchbase log
     directories."  
   end
 end

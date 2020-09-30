@@ -84,8 +84,8 @@ control "V-58071" do
   end
 
   describe "The logged event should contain required fields. The" do
-    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match "User was added or updated"}
+    subject { command("grep 'N1QL GRANT ROLE' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match '\"success\"'}
   end
 
   describe "Delete the jdoe user. The" do 
