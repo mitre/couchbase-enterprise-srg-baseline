@@ -67,7 +67,7 @@ addressed, and must document what has been discovered.
   describe file(input('cb_log_dir')) do
     its('owner') { should be_in input('cb_service_user') }
     its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0600') }
+    it { should_not be_more_permissive_than('0700') }
   end
   
   describe file(input('cb_audit_log')) do
