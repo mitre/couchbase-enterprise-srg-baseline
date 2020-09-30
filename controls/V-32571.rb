@@ -62,14 +62,15 @@ using the following commands:
   tag "cci": ["CCI-001314"]
   tag "nist": ["SI-11 b", "Rev_4"]
 
-  if file(input('cb_audit_log')).exist?
-    describe file(input('cb_audit_log')) do
-      its ('mode') { should be 0640 }
-      its ('owner') { should eq input('couchdb_owner') }
-    end
-  else
-    describe "The #{input('cb_audit_log')} file is missing, we cannot test this control" do
-    skip "The input('cb_audit_log') file is missing, please restore the file and rerun the test"
-    end
+  describe file(input('cb_static_conf')) do
+    its('owner') { should be_in input('cb_service_user') }
+    its('group') { should be_in input('cb_service_group') }
+    it { should_not be_more_permissive_than('0600') }
+    
+  describe file(input('cb_audit_log')) do
+    its('owner') { should be_in input('cb_service_user') }
+    its('group') { should be_in input('cb_service_group') }
+    it { should_not be_more_permissive_than('0600') }
+  end
   end
 end
