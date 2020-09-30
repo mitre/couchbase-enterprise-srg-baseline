@@ -74,24 +74,23 @@ control "V-58075" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "Add the jdoe user. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \ 
+  describe "Create the jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
-    --roles replication_admin --auth-domain local") } 
+    --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'John Doe' \
+    --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 
-  describe "Grant permissions to jdoe user. The" do 
-    subject { command("#{input('cb_bin_dir')}/cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+  describe "GRANT permissions from jdoe. The" do 
+    subject { command("#{input('cb_bin_dir')}/cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
     --script='GRANT cluster_admin TO jdoe'")}
     its('exit_status') { should eq 0 }
   end
 
   describe "The logged event should contain required fields. The" do
-    subject { command("grep 'A N1QL GRANT ROLE' #{input('cb_audit_log')} | tail -1") }
+    subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
     its('stdout') { should match /"success"/}
   end
 

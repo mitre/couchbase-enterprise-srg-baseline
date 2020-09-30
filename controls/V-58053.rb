@@ -51,9 +51,9 @@ standards:
   tag "cci": ["CCI-001849"]
   tag "nist": ["AU-4", "Rev_4"]
 
-  describe "Couchbase log auditing should be enabled." do
-    subject { json( command("#{input('cb_bin_dir')}/couchbase-cli setting-audit -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --get-settings | grep 'Rotate size:'")) }
-    its('stdout') { should be > 0 }
+  describe "Couchbase should allocate audit record storage capacity." do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+    its('rotateSize') { should be > 0} 
   end 
 end
