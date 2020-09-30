@@ -85,7 +85,7 @@ control "V-58077" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \ 
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password cbpass --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") } 
     its('exit_status') { should eq 0 }
   end
@@ -94,13 +94,13 @@ control "V-58077" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \ 
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username janedoe --rbac-password cbpass --rbac-name 'Jane Doe' \
+    --set --rbac-username janedoe --rbac-password @dminP@asswd2020 --rbac-name 'Jane Doe' \
     --roles replication_admin --auth-domain local") } 
     its('exit_status') { should eq 0 }
   end
 
   describe "Grant permissions to janedoe user by jdoe. The" do 
-    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p cbpass --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p @dminP@asswd2020 --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
     --script='GRANT cluster_admin TO janedoe'")}
     its('exit_status') { should eq 0 }
   end
@@ -118,7 +118,7 @@ control "V-58077" do
     its('exit_status') { should eq 0 }
   end
 
-  describe "Delete the jdoe user. The" do 
+  describe "Delete the janedoe user. The" do 
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \

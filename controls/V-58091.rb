@@ -70,7 +70,10 @@ control "V-58091" do
 
 
   describe "Create bucket. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --bucket test-data --bucket-type couchbase --bucket-ramsize 256") } 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create -c \
+    #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')}\
+    --bucket test-data --bucket-type couchbase --bucket-ramsize 256") } 
     its('exit_status') { should eq 0 }
   end
 

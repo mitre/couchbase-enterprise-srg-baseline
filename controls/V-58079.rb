@@ -79,7 +79,7 @@ control "V-58079" do
     its('exit_status') { should eq 0 }
   end
 
-  describe "revoke permissions from jdoe. The" do 
+  describe "Revoke permissions from jdoe. The" do 
     subject { command("#{input('cb_bin_dir')}/cbq -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
     --script='REVOKE replication_admin FROM jdoe'")}
     its('exit_status') { should eq 0 }
