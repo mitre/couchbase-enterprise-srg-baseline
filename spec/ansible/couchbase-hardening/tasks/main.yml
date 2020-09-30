@@ -253,9 +253,9 @@
   --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --bucket bucket2 \ 
   --bucket-type couchbase --bucket-ramsize 200" 
 
-- name: Configure Couchbase to fail to a secure state (xdcr replicate). 
-  shell: "/opt/couchbase/bin/couchbase-cli xdcr-replicate --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \ 
-  --username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --create --xdcr-cluster-name xdcrTest \  
-  --xdcr-from-bucket bucket1 --xdcr-to-bucket bucket1 --xdcr-replication-mode xmem"
+#- name: Configure Couchbase to fail to a secure state (xdcr replicate). 
+ # shell: "/opt/couchbase/bin/couchbase-cli xdcr-replicate --cluster {{ cb_cluster_host }}:{{ cb_cluster_port }} \ 
+  #--username {{ cb_full_admin }} --password {{ cb_full_admin_password }} --create --xdcr-cluster-name xdcrTest \  
+  #--xdcr-from-bucket bucket1 --xdcr-to-bucket bucket2 --xdcr-replication-mode xmem"
 
 # # # Add steps to harden
