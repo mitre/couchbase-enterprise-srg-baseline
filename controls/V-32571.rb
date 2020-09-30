@@ -38,19 +38,21 @@ to obtain assurances from the development organization that this issue has been
 addressed, and must document what has been discovered.
   "
   desc  "check", "
-    Check Couchbase settings and custom database code to determine if detailed
-error messages are ever displayed to unauthorized individuals.
-    Review the ownership and permissions of the audit logs:
-      $ ls \xE2\x80\x93ald /opt/couchbase/var/lib/couchbase/logs
-    If the logs are not owned by both the \"couchbase\" user and group, this is
-a finding. If the file permission are not 600, this is a finding.
+  Check Couchbase settings and custom database code to determine if detailed
+  error messages are ever displayed to unauthorized individuals.
+
+  Review the ownership and permissions of the audit logs:
+    $ ls ald /opt/couchbase/var/lib/couchbase/logs
+
+  If the logs are not owned by both the \"couchbase\" user and group, this is
+  a finding. If the file permission are not 600, this is a finding.
   "
   desc  "fix", "
-    As the root or sudo user, change the permissions/ownership of the logs
-using the following commands:
-      $ chown -R couchbase:couchbase /opt/couchbase/var/lib/couchbase/logs
-      $ chmod 700 /opt/couchbase/var/lib/couchbase/logs
-      $ chmod 600 /opt/couchbase/var/lib/couchbase/*.logs
+  As the root or sudo user, change the permissions/ownership of the logs
+  using the following commands:
+    $ chown -R couchbase:couchbase /opt/couchbase/var/lib/couchbase/logs
+    $ chmod 700 /opt/couchbase/var/lib/couchbase/logs
+    $ chmod 600 /opt/couchbase/var/lib/couchbase/*.logs
   "
   impact 0.5
   tag "severity": "medium"
@@ -66,11 +68,12 @@ using the following commands:
     its('owner') { should be_in input('cb_service_user') }
     its('group') { should be_in input('cb_service_group') }
     it { should_not be_more_permissive_than('0600') }
-    
+  end
+  
   describe file(input('cb_audit_log')) do
     its('owner') { should be_in input('cb_service_user') }
     its('group') { should be_in input('cb_service_group') }
     it { should_not be_more_permissive_than('0600') }
   end
-  end
+  
 end

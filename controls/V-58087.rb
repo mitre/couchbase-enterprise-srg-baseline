@@ -28,7 +28,7 @@ control "V-58087" do
   As the John Doe user, create a bucket in the cluster by executing the
   following command:
     $ couchbase-cli bucket-create -c <host>:<port> --username jdoe --password
-    doe_cbP@ssw0rd2020 --bucket test-data --bucket-type couchbase  --bucket-ramsize 256
+    doe_cbP@ssw0rd2020 --bucket test-data --bucket-type couchbase --bucket-ramsize 200
     
   As the John Doe user, edit memory allocated for the bucket created by
   executing the following command:
@@ -49,16 +49,16 @@ control "V-58087" do
   desc  "fix", "
   Enable session auditing on the Couchbase cluster to produce audit records
   when security objects are modified.
-    Couchbase Server 6.5.0 and earlier -
-      As the Full Admin, execute the following command to enable auditing:
-        $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
-        --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
-        --audit-log-path /opt/couchbase/var/lib/couchbase/logs
-    Couchbase Server Version 6.5.1 and later -
-      As the Full Admin, execute the following command to enable auditing:
-        $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
-        --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
-        604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
+  Couchbase Server 6.5.0 and earlier -
+    As the Full Admin, execute the following command to enable auditing:
+      $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+      --password <Password> --audit-enabled 1 --audit-log-rotate-interval 604800
+      --audit-log-path /opt/couchbase/var/lib/couchbase/logs
+  Couchbase Server Version 6.5.1 and later -
+    As the Full Admin, execute the following command to enable auditing:
+      $ couchbase-cli setting-audit --cluster <host>:<port> --u <Full Admin>
+      --password <Password> --set  --audit-enabled 1 --audit-log-rotate-interval
+      604800 --audit-log-path /opt/couchbase/var/lib/couchbase/logs"
 
   impact 0.5
   tag "severity": "medium"
@@ -70,22 +70,33 @@ control "V-58087" do
   tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
 
-  describe "Create a Bucket. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create \
+  describe "Create the jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    --username #{input('cb_full_admin')} --password #{input('cb_full_admin_password')} \
-    --bucket test-data --bucket-type couchbase --bucket-ramsize 100") }
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 \
+    --rbac-name 'John Doe' --roles cluster_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 
-  describe "Edit bucket. The" do 
-    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-edit -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --bucket test-data --bucket-ramsize 100") } 
+  describe "Create a Bucket as jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-create \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    --username jdoe --password doe_cbP@ssw0rd2020 \
+    --bucket test-data --bucket-type couchbase --bucket-ramsize 200") }
+    its('exit_status') { should eq 0 }
+  end
+
+  describe "Edit bucket as jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli bucket-edit \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} -u jdoe \
+    -p doe_cbP@ssw0rd2020 --bucket test-data --bucket-ramsize 100") } 
     its('exit_status') { should eq 0 }
   end
   
-  describe "The logged event should contain required fields. The" do
-    subject { command("grep 'Bucket was created' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"bucket_name"/}
+  describe "The logged event should be logged. The" do
+    subject { command("grep 'modify bucket' #{input('cb_audit_log')} | tail -1") }
+    its('stdout') { should match /"jdoe"/}
   end
 
   describe "Delete the Bucket. The" do 
@@ -95,4 +106,13 @@ control "V-58087" do
     --bucket test-data") }
     its('exit_status') { should eq 0 }
   end
+
+  describe "Delete the jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
+    -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+    -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --delete --rbac-username jdoe --auth-domain local") }
+    its('exit_status') { should eq 0 }
+  end
+
 end
