@@ -6,7 +6,7 @@
     
 - name: Setup new cluster
   shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c {{ cb_cluster_host }} --cluster-username {{ cb_full_admin }} \
-  --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 4096 --cluster-index-ramsize 2048"
+  --cluster-password {{ cb_full_admin_password }} --services data,index,query --cluster-ramsize 4096"
 
 - name: Create a Bucket
   shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c {{ cb_cluster_host }}:{{ cb_cluster_port }} --username {{ cb_full_admin }} \
