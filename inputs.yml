@@ -86,9 +86,7 @@ sample_buckets: [
 
 #description: Couchbase Sample Buckets
 cb_required_audit_events: [
-  'Service configuration change',
-  'authentication succeeded',
-  'session terminated'
+  'Service configuration change'
 ]
 
 #description: Couchbase Sample Buckets
@@ -121,8 +119,13 @@ approved_ciphers: [
 cb_audit_categories_of_information: 'false'
 cb_audit_access_to_objects: 'false'
 
+
 #description: Couchbase Requires Encryption at Rest - True/False
 cb_require_encryption_at_rest: 'false'
 
+#description: Couchbase Requires Security Labeling - True/False
+cb_require_security_labeling: 'false'
+
 #description: Couchbase Uses Standard Ports - True/False
 cb_use_standard_ports: 'true'
+

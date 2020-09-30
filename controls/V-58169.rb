@@ -58,10 +58,8 @@ control "V-58169" do
   tag "nist": ["SC-28 (1)", "Rev_4"]
 
   if input('cb_require_encryption_at_rest') == 'true'
-    describe "This test requires a Manual Review: Verify if encryption at rest is required 
-    that encryption tools are installed on the server" do
-      skip "This test requires a Manual Review: Verify if encryption at rest is required 
-      that encryption tools are installed on the server"
+    describe "This test requires a Manual Review: Verify encryption tools are installed on the server" do
+      skip "This test requires a Manual Review: Verify encryption tools are installed on the server"
     end
   else
     describe "No information is identified as requiring such protection, this is not a finding." do

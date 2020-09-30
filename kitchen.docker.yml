@@ -56,12 +56,3 @@
         reporter:
           - cli
           - json:spec/results/%{platform}-vanilla-test-result.json
-  
-      
-  
-  
-  
-
-    
-
-

@@ -50,4 +50,10 @@ standards:
   tag "fix_id": "F-63261r1_fix"
   tag "cci": ["CCI-001849"]
   tag "nist": ["AU-4", "Rev_4"]
+
+  describe "Couchbase should allocate audit record storage capacity." do
+    subject { json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/audit") }
+    its('rotateSize') { should be > 0} 
+  end 
 end
