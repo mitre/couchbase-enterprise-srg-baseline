@@ -99,15 +99,16 @@ control "V-58077" do
     its('exit_status') { should eq 0 }
   end
 
-  describe "Grant permissions from jdoe. The" do 
-    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p doe_cbP@ssw0rd2020 --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+  describe "Grant permissions to janedoe as the jdoe user. The" do 
+    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p doe_cbP@ssw0rd2020 \
+    --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     --script='GRANT cluster_admin TO janedoe'")}
     its('exit_status') { should eq 0 }
   end
 
-  describe "The logged event should contain required fields. The" do
+  describe "The unsuccessful event should be logged. The" do
     subject { command("grep 'jdoe' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"fatal"/}
+    its('stdout') { should match /"fatal"||"stopped"/}
   end
 
   describe "Delete the jdoe user. The" do 
