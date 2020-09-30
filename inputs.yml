@@ -86,9 +86,7 @@ sample_buckets: [
 
 #description: Couchbase Sample Buckets
 cb_required_audit_events: [
-  'Service configuration change',
-  'authentication succeeded',
-  'session terminated'
+  'Service configuration change'
 ]
 
 #description: Couchbase Sample Buckets
