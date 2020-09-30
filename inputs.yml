@@ -91,8 +91,7 @@ cb_required_audit_events: [
 
 #description: Couchbase Sample Buckets
 cb_required_audit_event_ids: [
-  '36865',
-  '20493'
+  '36865'
 ]
 
 #description: Couchbase Approved Packages - Redhat
