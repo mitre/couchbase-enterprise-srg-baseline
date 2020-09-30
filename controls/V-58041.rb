@@ -45,7 +45,16 @@ control "V-58041" do
   tag "cci": ["CCI-002264"]
   tag "nist": ["AC-16 a", "Rev_4"]
   
-  describe "This test requires a Manual Review: Review Couchbase documentation and check if security labeling is required" do
-    skip "This test requires a Manual Review: Review Couchbase documentation and check if security labeling is required" 
+  if input('cb_require_security_labeling') == 'true'
+    describe "This test requires a Manual Review: Verify that security labeling is bing implemented
+    according to the requirements specified." do
+      skip "This test requires a Manual Review: Verify that security labeling is bing implemented
+      according to the requirements specified."
+    end
+  else
+    describe "Security labeling is not required, therefore this is not a finding." do
+      subject { input('cb_require_security_labeling') } 
+      it { should eq 'false'}
+    end
   end
 end

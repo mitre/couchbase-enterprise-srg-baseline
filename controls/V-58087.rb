@@ -94,7 +94,7 @@ control "V-58087" do
     its('exit_status') { should eq 0 }
   end
   
-  describe "The logged event should be logged. The" do
+  describe "The modify event should be logged. The" do
     subject { command("grep 'modify bucket' #{input('cb_audit_log')} | tail -1") }
     its('stdout') { should match /"jdoe"/}
   end

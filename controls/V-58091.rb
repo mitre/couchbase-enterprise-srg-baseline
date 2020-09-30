@@ -94,7 +94,7 @@ control "V-58091" do
     its('exit_status') { should eq 0 }
   end
 
-  describe "The logged event should contain required fields. The" do
+  describe "The delete event should be logged. The" do
     subject { command("grep 'delete bucket' #{input('cb_audit_log')} | tail -1") }
     its('stdout') { should match /"jdoe"/ }
   end

@@ -120,10 +120,13 @@ approved_ciphers: [
 #description: Couchbase Capabilities - True/False
 cb_audit_categories_of_information: 'false'
 cb_audit_access_to_objects: 'false'
-cb_require_encryption_at_rest: 'false'
+
 
 #description: Couchbase Requires Encryption at Rest - True/False
 cb_require_encryption_at_rest: 'false'
+
+#description: Couchbase Requires Security Labeling - True/False
+cb_require_security_labeling: 'false'
 
 #description: Couchbase Uses Standard Ports - True/False
 cb_use_standard_ports: 'true'

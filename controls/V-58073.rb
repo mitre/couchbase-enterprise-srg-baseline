@@ -81,7 +81,7 @@ control "V-58073" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username jdoe --rbac-password @dminP@asswd2020 --rbac-name 'John Doe' \
+    --set --rbac-username jdoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'John Doe' \
     --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
@@ -90,20 +90,21 @@ control "V-58073" do
     subject { command("#{input('cb_bin_dir')}/couchbase-cli user-manage \
     -c #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-    --set --rbac-username janedoe --rbac-password @dminP@asswd2020 --rbac-name 'Jane Doe' \
+    --set --rbac-username janedoe --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'Jane Doe' \
     --roles replication_admin --auth-domain local") }
     its('exit_status') { should eq 0 }
   end
 
   describe "Grant permissions to janedoe user by jdoe. The" do 
-    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p @dminP@asswd2020 --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}\
+    subject { command("#{input('cb_bin_dir')}/cbq -u jdoe -p doe_cbP@ssw0rd2020 \
+    --engine=http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     --script='GRANT cluster_admin TO janedoe'")}
     its('exit_status') { should eq 0 }
   end
 
-  describe "The logged event should contain required fields. The" do
+  describe "The unsuccessful event should be logged. The" do
     subject { command("grep 'A N1QL GRANT ROLE' #{input('cb_audit_log')} | tail -1") }
-    its('stdout') { should match /"fatal"/}
+    its('stdout') { should match /"fatal"||"stopped"/}
   end
 
   describe "Delete the jdoe user. The" do 

@@ -39,10 +39,16 @@ control "V-32534" do
   tag "fix_id": "F-36449r2_fix"
   tag "cci": ["CCI-001199"]
   tag "nist": ["SC-28", "Rev_4"]
-  
-  describe "This test requires a Manual Review: Review the system documentation to determine whether the organization has protected
-   the defined confidentiality and integrity of all information at rest." do
-    skip "This test requires a Manual Review: Review the system documentation to determine whether the organization has protected
-   the defined confidentiality and integrity of all information at rest."
+
+  if input('cb_require_encryption_at_rest') == 'true'
+    describe "This test requires a Manual Review: Verify encryption tools are installed on the server" do
+      skip "This test requires a Manual Review: Verify encryption tools are installed on the server"
+    end
+  else
+    describe "The application owner and Authorizing Official have determined that
+    encryption of data at rest is NOT required, therefore this is not a finding." do
+      subject { input('cb_require_encryption_at_rest') } 
+      it { should eq 'false'}
+    end
   end
 end
