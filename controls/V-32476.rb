@@ -87,8 +87,10 @@ control "V-32476" do
         its('group') { should eq 'couchbase' }
       end
     else
-      describe 'This test is skipped because the private key is not found.' do
-        skip 'This test is skipped because the private key is not found.'
+      describe 'This control must be reviewed manually because the private
+      key was not found at the location specified.' do
+        skip 'This control must be reviewed manually because the private
+        key was not found at the location specified.'
       end 
     end
 
@@ -99,8 +101,10 @@ control "V-32476" do
         its('group') { should eq 'couchbase' }
       end
     else
-      describe 'This test is skipped because the CA file is not found.' do
-        skip 'This test is skipped because the CA file is not found.'
+      describe 'This control must be reviewed manually because the CA
+      file was not found at the location specified.' do
+        skip 'This control must be reviewed manually because the CA
+        file was not found at the location specified.'
       end 
     end
   else

@@ -51,8 +51,9 @@ control "V-32412" do
   --list | grep 'id'").stdout.split("\n")
 
   if json_output.empty?
-    describe 'This test is skipped because there are no users found.' do
-      skip 'This test is skipped because there are no users found.'
+    describe 'The list of authorized database users is expected to be documented or' do
+      subject { json_output }
+      it { should be_empty }
     end 
   else
     json_output.each do |output|

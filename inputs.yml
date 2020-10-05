@@ -84,12 +84,12 @@ sample_buckets: [
   'beer-sample'
 ]
 
-#description: Couchbase Sample Buckets
+#description: Couchbase Audit Events
 cb_required_audit_events: [
   'Service configuration change'
 ]
 
-#description: Couchbase Sample Buckets
+#description: Couchbase Audit Event IDs
 cb_required_audit_event_ids: [
   '36865'
 ]

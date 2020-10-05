@@ -62,35 +62,58 @@ control "V-32415" do
   tag "nist": ["CM-5 (6)", "Rev_4"]
 
   admin_users = []
+  
   json_output = command("#{input('cb_bin_dir')}/couchbase-cli user-manage -u #{input('cb_full_admin')} \
   -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
   --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
-  json_output.each do |output|
-    user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    admin_users.push(user)
-  end
-
-  admin_users.each do |user|
-    describe "Each admin user in the list should be documented. #{user}" do
-      subject { user }
-      it { should be_in input('cb_admin_users').uniq.flatten }
+  if json_output.empty?
+    describe 'The list of additional admin users is expected to be documented or' do
+      subject { json_output }
+      it { should be_empty }
+    end 
+  else
+    json_output.each do |output|
+      user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      admin_users.push(user)
+    end
+    admin_users.each do |user|
+      describe "Each admin user in the list should be documented. #{user}" do
+        subject { user }
+        it { should be_in input('cb_admin_users').uniq.flatten }
+      end
     end
   end
 
-  describe file(input('cb_config_dir')) do
-    its('owner') { should be_in input('cb_service_user') }
-    its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0700') }
-  end
-
-  log_files = command("ls -p #{input('cb_config_dir')} | grep -v '/'").stdout.split("\n")
-
-  log_files.each do |file|
-    describe file("#{input('cb_config_dir')}/#{file}") do
+  if file(input('cb_log_dir')).exist?
+    describe file(input('cb_log_dir')) do
       its('owner') { should be_in input('cb_service_user') }
       its('group') { should be_in input('cb_service_group') }
-      it { should_not be_more_permissive_than('0600') }
+      it { should_not be_more_permissive_than('0700') }
     end
-  end 
+      
+    log_files = command("ls -p #{input('cb_log_dir')} | grep -v '/'").stdout.split("\n")
+
+    if log_files.empty?
+      describe 'This control must be reviewed manually because no log files are found 
+      at the location specified.' do
+        skip 'This control must be reviewed manually because no log files are found 
+        at the location specified.'
+      end 
+    else
+      log_files.each do |file|
+        describe file("#{input('cb_log_dir')}/#{file}") do
+          its('owner') { should be_in input('cb_service_user') }
+          its('group') { should be_in input('cb_service_group') }
+          it { should_not be_more_permissive_than('0600') }
+        end
+      end
+    end
+  else
+    describe 'This control must be reviewed manually because no log directory is found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because no log directory is found 
+      at the location specified.'
+    end 
+  end
 end

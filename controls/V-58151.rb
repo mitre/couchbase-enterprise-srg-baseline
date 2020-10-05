@@ -56,38 +56,68 @@ control "V-58151" do
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
 
-  describe directory(input('cb_config_dir')) do
-    it { should be_directory }
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-    it { should_not be_more_permissive_than('0700') }
+  if file(input('cb_config_dir')).exist?
+    describe file(input('cb_config_dir')) do
+      its('owner') { should eq 'couchbase' }
+      its('group') { should eq 'couchbase' }
+      it { should_not be_more_permissive_than('0700') }
+    end
+
+    config_files = command("ls -p #{input('cb_config_dir')} | grep -v '/'").stdout.split("\n")
+
+    if config_files.empty?
+      describe 'This control must be reviewed manually because no configuration files 
+      are found at the location specified.' do
+        skip 'This control must be reviewed manually because no configuration files 
+        are found at the location specified.'
+      end 
+    else
+      config_files.each do |file|
+        describe file("#{input('cb_config_dir')}/#{file}") do
+        its('owner') { should eq 'couchbase' }
+        its('group') { should eq 'couchbase' }
+        it { should_not be_more_permissive_than('0600') }
+        end
+      end
+    end
+  else
+    describe 'This control must be reviewed manually because no config directory is found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because no config directory is found 
+      at the location specified.'
+    end 
+  end 
+
+  if file(input('cb_log_dir')).exist?
+    describe file(input('cb_log_dir')) do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0700') }
+    end
+      
+    log_files = command("ls -p #{input('cb_log_dir')} | grep -v '/'").stdout.split("\n")
+
+    if log_files.empty?
+      describe 'This control must be reviewed manually because no log files are found 
+      at the location specified.' do
+        skip 'This control must be reviewed manually because no log files are found 
+        at the location specified.'
+      end 
+    else
+      log_files.each do |file|
+        describe file("#{input('cb_log_dir')}/#{file}") do
+          its('owner') { should be_in input('cb_service_user') }
+          its('group') { should be_in input('cb_service_group') }
+          it { should_not be_more_permissive_than('0600') }
+        end
+      end
+    end
+  else
+    describe 'This control must be reviewed manually because no log directory is found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because no log directory is found 
+      at the location specified.'
+    end 
   end
-
-  config_files = command("ls -p #{input('cb_config_dir')} | grep -v '/'").stdout.split("\n")
-
-  config_files.each do |file|
-    describe file("#{input('cb_config_dir')}/#{file}") do
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-      it { should_not be_more_permissive_than('0600') }
-    end
-  end 
-
-  describe directory(input('cb_log_dir')) do
-    it { should be_directory }
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-    it { should_not be_more_permissive_than('0700') }
-  end  
-
-  log_files = command("ls -p #{input('cb_log_dir')} | grep -v '/'").stdout.split("\n")
-
-  log_files.each do |file|
-    describe file("#{input('cb_log_dir')}/#{file}") do
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-      it { should_not be_more_permissive_than('0600') }
-    end
-  end 
 end
 

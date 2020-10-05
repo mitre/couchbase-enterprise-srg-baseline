@@ -72,42 +72,24 @@ control "V-32192" do
   tag "nist": ["AC-2 (1)", "Rev_4"]
 
   if input('cb_auth_domain') == "external"
-    domain_list = []
-
-    json_output = command("#{input('cb_bin_dir')}/couchbase-cli user-manage -u #{input('cb_full_admin')} \
-    -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-    --list | grep 'domain'").stdout.split("\n")
-
-    if json_output.empty?
-      describe 'This test is skipped because there are no users found.' do
-        skip 'This test is skipped because there are no users found.'
-      end 
-    else
-      json_output.each do |output|
-        domain = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-        domain_list.push(domain)
-      end
-
-      domain_list.each do |domain|
-        describe "All accounts are authenticated by the organization-level authentication/access 
-        mechanism and not by Couchbase, therefore this is not a finding. Each domain in the list" do
-          subject { domain }
-          it { should cmp "external" }
-        end
-      end
+    describe "All accounts are authenticated by the organization-level authentication/access 
+    mechanism and not by Couchbase. The domain" do
+      subject { input('cb_auth_domain') }
+      it { should cmp "external" }
     end
   else
     rbac_accounts = input('cb_admin_users').clone << input('cb_users')
 
     user_accounts = []
-
+  
     json_output = command("#{input('cb_bin_dir')}/couchbase-cli user-manage -u #{input('cb_full_admin')} \
     -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     --list | grep 'id'").stdout.split("\n")
-
+  
     if json_output.empty?
-      describe 'This test is skipped because there are no users found.' do
-        skip 'This test is skipped because there are not users found.'
+      describe 'The list of authorized database users is expected to be documented or' do
+        subject { json_output }
+        it { should be_empty }
       end 
     else
       json_output.each do |output|
@@ -116,11 +98,11 @@ control "V-32192" do
       end
       
       user_accounts.each do |user|
-        describe "Each user in the list should be a documented user. #{user}" do
+        describe "Each user in the list should be documented. #{user}" do
           subject { user }
           it { should be_in rbac_accounts.uniq.flatten }
         end
       end
-    end 
+    end
   end 
 end

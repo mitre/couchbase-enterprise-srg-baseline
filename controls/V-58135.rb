@@ -62,21 +62,23 @@ control "V-58135" do
   tag "nist": ["CM-11 (2)", "Rev_4"]
 
   admin_users = []
-  json_output = command("#{input('cb_bin_dir')}/couchbase-cli user-manage -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
-  --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
+  
+  json_output = command("#{input('cb_bin_dir')}/couchbase-cli user-manage -u #{input('cb_full_admin')} \
+  -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
+  --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
   if json_output.empty?
-    describe 'This test is skipped because there are no users found.' do
-      skip 'This test is skipped because there are no users found.'
+    describe 'The list of additional admin users is expected to be documented or' do
+      subject { json_output }
+      it { should be_empty }
     end 
   else
     json_output.each do |output|
       user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
       admin_users.push(user)
     end
-
     admin_users.each do |user|
-      describe 'Each admin user in the list' do
+      describe "Each admin user in the list should be documented. #{user}" do
         subject { user }
         it { should be_in input('cb_admin_users').uniq.flatten }
       end

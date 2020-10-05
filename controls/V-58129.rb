@@ -44,25 +44,29 @@ control "V-58129" do
   tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
 
-  admin_users = []
+  rbac_accounts = input('cb_admin_users').clone << input('cb_users')
+
+  user_accounts = []
+
   json_output = command("#{input('cb_bin_dir')}/couchbase-cli user-manage -u #{input('cb_full_admin')} \
   -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
-  --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
-  
+  --list | grep 'id'").stdout.split("\n")
+
   if json_output.empty?
-    describe 'This test is skipped because there are no users found.' do
-      skip 'This test is skipped because there are no users found.'
+    describe 'The list of authorized database users is expected to be documented or' do
+      subject { json_output }
+      it { should be_empty }
     end 
   else
     json_output.each do |output|
-      user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-      admin_users.push(user)
+      user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      user_accounts.push(user_id)
     end
-
-    admin_users.each do |user|
-      describe 'Each user in the list should be an Admin.' do
+    
+    user_accounts.each do |user|
+      describe "Each user in the list should be documented. #{user}" do
         subject { user }
-        it { should be_in input('cb_admin_users').uniq.flatten }
+        it { should be_in rbac_accounts.uniq.flatten }
       end
     end
   end

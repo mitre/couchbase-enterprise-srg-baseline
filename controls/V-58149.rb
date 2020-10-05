@@ -53,37 +53,68 @@ control "V-58149" do
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
 
-  describe directory(input('cb_data_dir')) do
-    it { should be_directory }
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-    it { should_not be_more_permissive_than('0700') }
-  end  
+  if file(input('cb_data_dir')).exist?
+    describe directory(input('cb_data_dir')) do
+      it { should be_directory }
+      its('owner') { should eq 'couchbase' }
+      its('group') { should eq 'couchbase' }
+      it { should_not be_more_permissive_than('0700') }
+    end  
 
-  data_files = command("ls -p #{input('cb_data_dir')} | grep -v '/'").stdout.split("\n")
+    data_files = command("ls -p #{input('cb_data_dir')} | grep -v '/'").stdout.split("\n")
 
-  data_files.each do |file|
-    describe file("#{input('cb_data_dir')}/#{file}") do
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-      it { should_not be_more_permissive_than('0600') }
+    if data_files.empty?
+      describe 'This control must be reviewed manually because no data files 
+      are found at the location specified.' do
+        skip 'This control must be reviewed manually because no data files 
+        are found at the location specified.'
+      end 
+    else
+      data_files.each do |file|
+        describe file("#{input('cb_data_dir')}/#{file}") do
+        its('owner') { should eq 'couchbase' }
+        its('group') { should eq 'couchbase' }
+          it { should_not be_more_permissive_than('0600') }
+        end
+      end
     end
+  else
+    describe 'This control must be reviewed manually because no data directory is found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because no data directory is found 
+      at the location specified.'
+    end 
   end 
-  
-  describe directory(input('cb_home_dir')) do
-    it { should be_directory }
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-    it { should_not be_more_permissive_than('0700') }
+
+  if file(input('cb_home_dir')).exist?
+    describe file(input('cb_home_dir')) do
+      its('owner') { should eq 'couchbase' }
+      its('group') { should eq 'couchbase' }
+      it { should_not be_more_permissive_than('0700') }
+    end
+
+    home_files = command("ls -p #{input('cb_home_dir')} | grep -v '/'").stdout.split("\n")
+
+    if home_files.empty?
+      describe 'This control must be reviewed manually because no files 
+      are found at the location specified.' do
+        skip 'This control must be reviewed manually because no files 
+        are found at the location specified.'
+      end 
+    else
+      home_files.each do |file|
+        describe file("#{input('cb_home_dir')}/#{file}") do
+        its('owner') { should eq 'couchbase' }
+        its('group') { should eq 'couchbase' }
+          it { should_not be_more_permissive_than('0600') }
+        end
+      end 
+    end
+  else
+    describe 'This control must be reviewed manually because couchbase home directory is found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because couchbase home directory is found 
+      at the location specified.'
+    end 
   end
-
-  home_files = command("ls -p #{input('cb_home_dir')} | grep -v '/'").stdout.split("\n")
-
-  home_files.each do |file|
-    describe file("#{input('cb_home_dir')}/#{file}") do
-    its('owner') { should eq 'couchbase' }
-    its('group') { should eq 'couchbase' }
-      it { should_not be_more_permissive_than('0600') }
-    end
-  end 
 end
