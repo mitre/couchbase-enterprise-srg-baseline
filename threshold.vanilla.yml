@@ -1,2 +1,4 @@
+error:
+  total: 0
 compliance:
-    min: 0
+  min: 1
