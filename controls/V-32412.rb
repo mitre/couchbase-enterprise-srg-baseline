@@ -50,15 +50,21 @@ control "V-32412" do
   -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
   --list | grep 'id'").stdout.split("\n")
 
-  json_output.each do |output|
-    user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    user_accounts.push(user_id)
-  end
-  
-  user_accounts.each do |user|
-    describe "Each user in the list should be documented. #{user}" do
-      subject { user }
-      it { should be_in rbac_accounts.uniq.flatten }
+  if json_output.empty?
+    describe 'This test is skipped because there are no users found.' do
+      skip 'This test is skipped because there are no users found.'
+    end 
+  else
+    json_output.each do |output|
+      user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      user_accounts.push(user_id)
+    end
+    
+    user_accounts.each do |user|
+      describe "Each user in the list should be documented. #{user}" do
+        subject { user }
+        it { should be_in rbac_accounts.uniq.flatten }
+      end
     end
   end
 end

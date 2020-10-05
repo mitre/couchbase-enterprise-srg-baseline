@@ -67,27 +67,45 @@ control "V-58019" do
   -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
   --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
-  json_output.each do |output|
-    user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    admin_users.push(user)
-  end
-
-  admin_users.each do |user|
-    describe "Each admin user in the list should have the correct privileges. #{user}"  do
-      subject { user }
-      it { should be_in input('cb_admin_users').uniq.flatten }
+  if json_output.empty?
+    describe 'This test is skipped because there are no users found.' do
+      skip 'This test is skipped because there are no users found.'
+    end 
+  else
+    json_output.each do |output|
+      user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      admin_users.push(user)
     end
-  end
 
-  describe file(input('cb_static_conf')) do
-    its('owner') { should be_in input('cb_service_user') }
-    its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0600') }
+    admin_users.each do |user|
+      describe "Each admin user in the list should have the correct privileges. #{user}"  do
+        subject { user }
+        it { should be_in input('cb_admin_users').uniq.flatten }
+      end
+    end
+  end 
+
+  if file(input('cb_static_conf')).exist?
+    describe file(input('cb_static_conf')) do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0600') }
+    end
+  else
+    describe 'This test is skipped because no static configuration was found.' do
+      skip 'This test is skipped because no static configuration was found.'
+    end 
   end
   
-  describe file(input('cb_audit_log')) do
-    its('owner') { should be_in input('cb_service_user') }
-    its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0600') }
+  if file(input('cb_audit_log')).exist?
+    describe file(input('cb_audit_log')) do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0600') }
+    end
+  else
+    describe 'This test is skipped because no audit log was found.' do
+      skip 'This test is skipped because no audit log was found.'
+    end 
   end
 end

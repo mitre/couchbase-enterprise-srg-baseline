@@ -64,16 +64,27 @@ addressed, and must document what has been discovered.
   tag "cci": ["CCI-001314"]
   tag "nist": ["SI-11 b", "Rev_4"]
 
-  describe file(input('cb_log_dir')) do
-    its('owner') { should be_in input('cb_service_user') }
-    its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0700') }
+  if file(input('cb_log_dir')).exist?
+    describe file(input('cb_log_dir')) do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0700') }
+    end
+  else
+    describe 'This test is skipped because the log directory was not found.' do
+      skip 'This test is skipped because the log directory was not found.'
+    end 
   end
   
-  describe file(input('cb_audit_log')) do
-    its('owner') { should be_in input('cb_service_user') }
-    its('group') { should be_in input('cb_service_group') }
-    it { should_not be_more_permissive_than('0600') }
+  if file(input('cb_audit_log')).exist?
+    describe file(input('cb_audit_log')) do
+      its('owner') { should be_in input('cb_service_user') }
+      its('group') { should be_in input('cb_service_group') }
+      it { should_not be_more_permissive_than('0600') }
+    end
+  else
+    describe 'This test is skipped because no audit log was found.' do
+      skip 'This test is skipped because no audit log was found.'
+    end 
   end
-  
 end

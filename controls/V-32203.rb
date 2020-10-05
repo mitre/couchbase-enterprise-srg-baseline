@@ -70,15 +70,21 @@ control "V-32203" do
   -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
   --list | grep '\"role\":'").stdout.split("\n")
 
-  json_output.each do |output|
-    role = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    user_roles.push(role)
-  end
-  
-  user_roles.each do |role|
-    describe "Each role in the list should be documented. #{role}" do
-      subject { role }
-      it { should be_in input('cb_roles').uniq.flatten }
+  if json_output.empty?
+    describe 'This test is skipped because there are no roles found.' do
+      skip 'This test is skipped because there are no roles found.'
+    end 
+  else
+    json_output.each do |output|
+      role = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      user_roles.push(role)
+    end
+    
+    user_roles.each do |role|
+      describe "Each role in the list should be documented. #{role}" do
+        subject { role }
+        it { should be_in input('cb_roles').uniq.flatten }
+      end
     end
   end
 end

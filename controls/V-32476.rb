@@ -80,15 +80,28 @@ control "V-32476" do
   tag "nist": ["IA-5 (2) (b)", "Rev_4"]
 
   if input('cb_use_pki') == "true"
-    describe file(input('cb_private_key_path')) do
+    if file(input('cb_private_key_path')).exist?
+      describe file(input('cb_private_key_path')) do
         it { should_not be_more_permissive_than('0600') }
         its('owner') { should eq 'couchbase' }
         its('group') { should eq 'couchbase' }
+      end
+    else
+      describe 'This test is skipped because the private key is not found.' do
+        skip 'This test is skipped because the private key is not found.'
+      end 
     end
-    describe file(input('cb_ca_file_path')) do
+
+    if file(input('cb_ca_file_path')).exist?
+      describe file(input('cb_ca_file_path')) do
         it { should_not be_more_permissive_than('0600') }
         its('owner') { should eq 'couchbase' }
         its('group') { should eq 'couchbase' }
+      end
+    else
+      describe 'This test is skipped because the CA file is not found.' do
+        skip 'This test is skipped because the CA file is not found.'
+      end 
     end
   else
     impact 0.0

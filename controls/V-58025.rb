@@ -54,7 +54,9 @@ control "V-58025" do
   tag "cci": ["CCI-002361"]
   tag "nist": ["AC-12", "Rev_4"]
 
-  describe json( command: "curl -v -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") do
+  describe 'The session timeout should be set to a value greater than zero.' do
+    subject { json( command: "curl -X GET -u #{input('cb_full_admin')}:#{input('cb_full_admin_password')} \
+    http://#{input('cb_cluster_host')}:#{input('cb_cluster_port')}/settings/security") }
     its('uiSessionTimeout') { should be > 0 }
   end 
 end

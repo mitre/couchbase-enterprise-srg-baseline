@@ -78,16 +78,22 @@ control "V-32192" do
     -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     --list | grep 'domain'").stdout.split("\n")
 
-    json_output.each do |output|
-      domain = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-      domain_list.push(domain)
-    end
+    if json_output.empty?
+      describe 'This test is skipped because there are no users found.' do
+        skip 'This test is skipped because there are no users found.'
+      end 
+    else
+      json_output.each do |output|
+        domain = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+        domain_list.push(domain)
+      end
 
-    domain_list.each do |domain|
-      describe "All accounts are authenticated by the organization-level authentication/access 
-      mechanism and not by Couchbase, therefore this is not a finding. Each domain in the list" do
-        subject { domain }
-        it { should cmp "external" }
+      domain_list.each do |domain|
+        describe "All accounts are authenticated by the organization-level authentication/access 
+        mechanism and not by Couchbase, therefore this is not a finding. Each domain in the list" do
+          subject { domain }
+          it { should cmp "external" }
+        end
       end
     end
   else
@@ -99,16 +105,22 @@ control "V-32192" do
     -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
     --list | grep 'id'").stdout.split("\n")
 
-    json_output.each do |output|
-      user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-      user_accounts.push(user_id)
-    end
-    
-    user_accounts.each do |user|
-      describe "Each user in the list should be a documented user. #{user}" do
-        subject { user }
-        it { should be_in rbac_accounts.uniq.flatten }
+    if json_output.empty?
+      describe 'This test is skipped because there are no users found.' do
+        skip 'This test is skipped because there are not users found.'
+      end 
+    else
+      json_output.each do |output|
+        user_id = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+        user_accounts.push(user_id)
       end
-    end
+      
+      user_accounts.each do |user|
+        describe "Each user in the list should be a documented user. #{user}" do
+          subject { user }
+          it { should be_in rbac_accounts.uniq.flatten }
+        end
+      end
+    end 
   end 
 end

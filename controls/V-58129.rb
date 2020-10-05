@@ -49,15 +49,21 @@ control "V-58129" do
   -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} \
   --list | grep -B7 -A3 '\"role\": \"admin\"' | grep 'id'").stdout.split("\n")
   
-  json_output.each do |output|
-    user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
-    admin_users.push(user)
-  end
+  if json_output.empty?
+    describe 'This test is skipped because there are no users found.' do
+      skip 'This test is skipped because there are no users found.'
+    end 
+  else
+    json_output.each do |output|
+      user = command("echo '#{output}' | awk -F '\"' '{print $4}'").stdout.strip
+      admin_users.push(user)
+    end
 
-  admin_users.each do |user|
-    describe 'Each user in the list should be an Admin.' do
-      subject { user }
-      it { should be_in input('cb_admin_users').uniq.flatten }
+    admin_users.each do |user|
+      describe 'Each user in the list should be an Admin.' do
+        subject { user }
+        it { should be_in input('cb_admin_users').uniq.flatten }
+      end
     end
   end
 end
