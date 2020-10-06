@@ -69,8 +69,9 @@ control "V-32528" do
   tag "cci": ["CCI-001190"]
   tag "nist": ["SC-24", "Rev_4"]
 
-  describe command("#{input('cb_bin_dir')}/couchbase-cli xdcr-replicate -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} --cluster #{input('cb_cluster_host')}\
-  :#{input('cb_cluster_port')} --list") do
+  describe 'The list should include XDCR replications being utilized by the cluster. The' do
+    subject { command("#{input('cb_bin_dir')}/couchbase-cli xdcr-replicate -u #{input('cb_full_admin')} -p #{input('cb_full_admin_password')} \
+    --cluster #{input('cb_cluster_host')}:#{input('cb_cluster_port')} --list") }
     its('stdout') { should_not eq "" }
   end
 end

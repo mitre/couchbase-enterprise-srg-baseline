@@ -35,11 +35,13 @@ control "V-58161" do
   tag "cci": ["CCI-002450"]
   tag "nist": ["SC-13", "Rev_4"]
 
-  describe command('openssl version') do
+  describe 'OpenSSL should be FIPS compliant. The' do
+    subject { command('openssl version') }
     its('stdout') { should include 'fips' }
   end
   
-  describe kernel_parameter('crypto.fips_enabled') do
+  describe 'The OS should be FIPS compliant. The' do
+    subject { kernel_parameter('crypto.fips_enabled') }
     its('value') { should cmp 1 }
-  end 
+  end
 end

@@ -46,7 +46,9 @@ control "V-32480" do
   tag "cci": ["CCI-000803"]
   tag "nist": ["IA-7", "Rev_4"]
   
-  describe command('openssl version') do
-    its('stdout') { should match 'fips' }
+  describe 'OpenSSL should be FIPS compliant. The' do
+    subject { command('openssl version') }
+    its('stdout') { should include 'fips' }
   end
+
 end
