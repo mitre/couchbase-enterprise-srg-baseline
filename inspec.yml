@@ -4,72 +4,76 @@ maintainer: The MITRE SAF Team
 copyright: (c) 2020, The MITRE Corporation
 copyright_email: saf@groups.mitre.org
 license: Apache-2.0
-summary: "The Database Security Requirements Guide (SRG) is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the NIST 800-53 and related documents. Comments or proposed revisions to this document should be sent via e-mail to the following address: disa.stig_spt@mail.mil."
+summary: "The Database Security Requirements Guide (SRG) is published as a tool to improve the security of Department of Defense 
+(DoD) information systems. The requirements are derived from the NIST 800-53 and related documents. Comments or proposed revisions 
+to this document should be sent via e-mail to the following address: disa.stig_spt@mail.mil."
 version: 0.1.0
+inspec_version: ">= 4.0"
 supports:
   - os-family: linux
 
 inputs:
+  - name: is_docker
+    description: "Couchbase is Running in Docker Environment - True/False"
+    type: string
+    value: "true"
+    required: true 
+    
   - name: cb_service_user
     description: "Couchbase Service Account"
     type: string
     value: "couchbase"
     required: true
+    sensitive: true 
 
   - name: cb_service_group
     description: "Couchbase Service Group"
     type: string
     value: "couchbase"
     required: true
+    sensitive: true 
 
   - name: cb_full_admin
     description: "Couchbase Full Admin Account"
     type: string
     value: "admin"
     required: true
+    sensitive: true 
 
   - name: cb_full_admin_password
     description: "Couchbase Full Admin Password"
     type: string
     value: "@dminP@asswd2020"
     required: true   
+    sensitive: true 
 
   - name: cb_cluster_host
     description: "Couchbase Cluster Host"
     type: string
     value: "localhost"
     required: true
+    sensitive: true 
     
   - name: cb_cluster_port
     description: "Couchbase Cluster Port"
     type: string
     value: "8091"
     required: true 
+    sensitive: true 
 
   - name: cb_query_port
     description: "Couchbase Cluster Query Port"
     type: string
     value: "8093"
     required: true 
-
-  - name: cb_latest_version
-    description: "Couchbase Latest Version"
-    type: string
-    value: "6.6"
-    required: true 
-
-  - name: is_docker
-    description: "Couchbase is Running in Docker Environment - True/False"
-    type: string
-    value: "true"
-    required: true 
-
+    sensitive: true 
   - name: cb_admin_users
     description: "Couchbase Admin User Accounts"
     type: array
     value: 
       - "cbadmin"
     required: true 
+    sensitive: true 
 
   - name: cb_users
     description: "Couchbase User Accounts"
@@ -77,6 +81,7 @@ inputs:
     value: 
       - "cbuser"
     required: true 
+    sensitive: true 
 
   - name: cb_roles
     description: "Couchbase Roles"
@@ -84,6 +89,27 @@ inputs:
     value: 
       - "admin"
       - "bucket_admin"
+    required: true 
+    sensitive: true 
+
+  - name: cb_private_key_path
+    description: "Path to Server Private Key File"
+    type: string
+    value: "/etc/ssl/ca.key"
+    required: true 
+    sensitive: true 
+
+  - name: cb_ca_file_path
+    description: "Path to Server CA File"
+    type: string
+    value: "/etc/ssl/ca.pem"
+    required: true 
+    sensitive: true 
+
+  - name: cb_latest_version
+    description: "Couchbase Latest Version"
+    type: string
+    value: "6.6"
     required: true 
 
   - name: cb_use_saslauthd
@@ -114,18 +140,6 @@ inputs:
     description: "Couchbase Unclassified Env - True/False"
     type: string
     value: "true"
-    required: true 
-
-  - name: cb_private_key_path
-    description: "Path to Server Private Key File"
-    type: string
-    value: "/etc/ssl/ca.key"
-    required: true 
-
-  - name: cb_ca_file_path
-    description: "Path to Server CA File"
-    type: string
-    value: "/etc/ssl/ca.pem"
     required: true 
 
   - name: cb_home_dir
