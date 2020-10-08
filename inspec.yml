@@ -1,0 +1,273 @@
+name: CouchBase Server Enterprise 6.x SRG InSpec Baseline
+title: CouchBase Server Enterprise 6.x SRG InSpec Baseline
+maintainer: The MITRE SAF Team
+copyright: (c) 2020, The MITRE Corporation
+copyright_email: saf@groups.mitre.org
+license: Apache-2.0
+summary: "The Database Security Requirements Guide (SRG) is published as a tool to improve the security of Department of Defense 
+(DoD) information systems. The requirements are derived from the NIST 800-53 and related documents. Comments or proposed revisions 
+to this document should be sent via e-mail to the following address: disa.stig_spt@mail.mil."
+version: 0.1.0
+inspec_version: ">= 4.0"
+supports:
+  - os-family: linux
+
+inputs:
+  - name: is_docker
+    description: "Couchbase is Running in Docker Environment - True/False"
+    type: string
+    value: "true"
+    required: true 
+    
+  - name: cb_service_user
+    description: "Couchbase Service Account"
+    type: string
+    value: "couchbase"
+    required: true
+    sensitive: true 
+
+  - name: cb_service_group
+    description: "Couchbase Service Group"
+    type: string
+    value: "couchbase"
+    required: true
+    sensitive: true 
+
+  - name: cb_full_admin
+    description: "Couchbase Full Admin Account"
+    type: string
+    value: "admin"
+    required: true
+    sensitive: true 
+
+  - name: cb_full_admin_password
+    description: "Couchbase Full Admin Password"
+    type: string
+    value: "@dminP@asswd2020"
+    required: true   
+    sensitive: true 
+
+  - name: cb_cluster_host
+    description: "Couchbase Cluster Host"
+    type: string
+    value: "localhost"
+    required: true
+    sensitive: true 
+    
+  - name: cb_cluster_port
+    description: "Couchbase Cluster Port"
+    type: string
+    value: "8091"
+    required: true 
+    sensitive: true 
+
+  - name: cb_query_port
+    description: "Couchbase Cluster Query Port"
+    type: string
+    value: "8093"
+    required: true 
+    sensitive: true 
+  - name: cb_admin_users
+    description: "Couchbase Admin User Accounts"
+    type: array
+    value: 
+      - "cbadmin"
+    required: true 
+    sensitive: true 
+
+  - name: cb_users
+    description: "Couchbase User Accounts"
+    type: array
+    value: 
+      - "cbuser"
+    required: true 
+    sensitive: true 
+
+  - name: cb_roles
+    description: "Couchbase Roles"
+    type: array
+    value: 
+      - "admin"
+      - "bucket_admin"
+    required: true 
+    sensitive: true 
+
+  - name: cb_private_key_path
+    description: "Path to Server Private Key File"
+    type: string
+    value: "/etc/ssl/ca.key"
+    required: true 
+    sensitive: true 
+
+  - name: cb_ca_file_path
+    description: "Path to Server CA File"
+    type: string
+    value: "/etc/ssl/ca.pem"
+    required: true 
+    sensitive: true 
+
+  - name: cb_latest_version
+    description: "Couchbase Latest Version"
+    type: string
+    value: "6.6"
+    required: true 
+
+  - name: cb_use_saslauthd
+    description: "Couchbase Authentication Options - saslauthd"
+    type: string
+    value: "true"
+    required: true 
+
+  - name: cb_use_ldap
+    description: "Couchbase Authentication Options - LDAP"
+    type: string
+    value: "false"
+    required: true 
+
+  - name: cb_use_pki
+    description: "Couchbase Authentication Options"
+    type: string
+    value: "true"
+    required: true 
+
+  - name: cb_auth_domain
+    description: "Couchbase Domain - local/external"
+    type: string
+    value: "local"
+    required: true 
+
+  - name: cb_unclassified_environment
+    description: "Couchbase Unclassified Env - True/False"
+    type: string
+    value: "true"
+    required: true 
+
+  - name: cb_home_dir
+    description: "Path to Couchbase Home Directory"
+    type: string
+    value: "/opt/couchbase"
+    required: true 
+
+  - name: cb_data_dir
+    description: "Path to Couchbase Data Directory"
+    type: string
+    value: "/opt/couchbase/var/lib/couchbase/data"
+    required: true 
+
+  - name: cb_bin_dir
+    description: "Path to Couchbase Bin Directory "
+    type: string
+    value: "/opt/couchbase/bin"
+    required: true 
+
+  - name: cb_config_dir
+    description: "Path to Couchbase Configuration Directory "
+    type: string
+    value: "/opt/couchbase/etc/couchbase"
+    required: true 
+
+  - name: cb_static_conf
+    description: "Path to Couchbase Static Configuration File"
+    type: string
+    value: "/opt/couchbase/etc/couchbase/static_config"
+    required: true 
+
+  - name: cb_log_dir
+    description: "Path to Couchbase Log Directory "
+    type: string
+    value: "/opt/couchbase/var/lib/couchbase/logs"
+    required: true 
+
+  - name: cb_audit_log
+    description: "Path to Couchbase Audit Log File"
+    type: string
+    value: "/opt/couchbase/var/lib/couchbase/logs/audit.log"
+    required: true 
+
+  - name: cb_samples_dir
+    description: "Path to Couchbase Bucket Samples Directory"
+    type: string
+    value: "/opt/couchbase/samples"
+    required: true 
+
+  - name: sample_buckets
+    description: "Couchbase Sample Buckets"
+    type: array
+    value: 
+      - "travel-sample"
+      - "gamesim-sample"
+      - "beer-same"
+    required: true 
+
+  - name: cb_required_audit_events
+    description: "Couchbase Audit Events"
+    type: array
+    value:
+      - "Service configuration change"
+    required: true
+
+  - name: cb_required_audit_event_ids
+    description: "Couchbase Audit Event IDs"
+    type: array
+    value:
+      - "36865"
+    required: true 
+
+  - name: cb_redhat_approved_packages
+    description: "Couchbase Approved Packages - Redhat"
+    type: array
+    value:
+      - "couchbase-release"
+      - "couchbase-server"
+    required: true 
+
+  - name: cb_debian_approved_packages
+    description: "Couchbase Approved Packages - Debian"
+    type: array
+    value:
+      - "couchbase-server"
+    required: true 
+
+  - name: approved_ssl_protocol
+    description: "Couchbase Approved TLS Protocol"
+    type: string
+    value: "tlsv1.2"
+    required: true 
+
+  - name: approved_ciphers
+    description: "Couchbase Approved Ciphers"
+    type: array
+    value: 
+      - "TLS_RSA_WITH_AES_128_CBC_SHA"
+      - "TLS_RSA_WITH_AES_256_CBC_SHA"
+    required: true 
+
+  - name: cb_audit_categories_of_information
+    description: "Couchbase Audit Categories - True/False"
+    type: string
+    value: "false"
+    required: true 
+
+  - name: cb_audit_access_to_objects
+    description: "Couchbase Audit Access to Objects - True/False"
+    type: string
+    value: "false"
+    required: true 
+
+  - name: cb_require_encryption_at_rest
+    description: "Couchbase Requires Encryption at Rest - True/False"
+    type: string
+    value: "false"
+    required: true 
+
+  - name: cb_require_security_labeling
+    description: "Couchbase Requires Security Labeling - True/False"
+    type: string
+    value: "false"
+    required: true 
+
+  - name: cb_use_standard_ports
+    description: "Couchbase Uses Standard Ports - True/False"
+    type: string
+    value: "true"
+    required: true 

@@ -1,0 +1,12 @@
+#ignore kitchen files
+.kitchen/kitchen-vagrant/vanilla-rhel-7-couchbase-602-enterprise/.vagrant/rgloader/loader.rb
+.kitchen/logs/hardened-rhel-7-couchbase-660-enterprise.log
+.kitchen/logs/kitchen.log
+.kitchen/logs/vanilla-rhel-7-couchbase-602-enterprise.log
+.kitchen/vanilla-rhel-7-couchbase-602-enterprise.yml
+Gemfile.lock
+spec/results/rhel-7-couchbase-6.0.2-enterprise-vanilla-test-result.json
+spec/results/rhel-7-couchbase-6.0.2-enterprise-hardened-test-result.json
+.kitchen/
+Dockerfile*
+results

@@ -1,0 +1,15 @@
+- hosts: localhost
+  tasks:
+    - name: Start service couchbase-server, if not started
+      service:
+        name: couchbase-server
+        state: started
+    - name: Setup new cluster
+      shell: "/opt/couchbase/bin/couchbase-cli cluster-init -c 127.0.0.1 --cluster-username admin --cluster-password password --services data,index,query --cluster-ramsize 512 --cluster-index-ramsize 256"
+    - name: Create a Bucket
+      shell: "/opt/couchbase/bin/couchbase-cli bucket-create -c 127.0.0.1:8091 --username admin --password password --bucket test-data --bucket-type couchbase --bucket-ramsize 100"
+    - name: Create Admin User
+      shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbadmin --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'Admin User' --roles admin --auth-domain local"
+    - name: Create Regular User
+      shell: "/opt/couchbase/bin/couchbase-cli user-manage -c 127.0.0.1:8091 -u admin -p password --set --rbac-username cbuser --rbac-password doe_cbP@ssw0rd2020 --rbac-name 'CB User' --roles bucket_admin[test-data] --auth-domain local"
+
