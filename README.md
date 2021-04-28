@@ -1,4 +1,4 @@
-# Database SRG Verson 2 Release 10 InSpec profile for CouchBase Server Enterprise 6.x
+# Database SRG Version 2 Release 10 InSpec profile for CouchBase Server Enterprise 6.x
 
 InSpec profile testing secure configuration of CouchBase Server Enterprise 6.x
 
