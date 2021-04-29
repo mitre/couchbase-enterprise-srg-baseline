@@ -1,13 +1,11 @@
-name: CouchBase Server Enterprise 6.x SRG InSpec Baseline
-title: CouchBase Server Enterprise 6.x SRG InSpec Baseline
+name: couchbase-enterprise-srg-baseline
+title: couchbase-enterprise-srg-baseline
 maintainer: The MITRE SAF Team
 copyright: (c) 2020, The MITRE Corporation
 copyright_email: saf@groups.mitre.org
 license: Apache-2.0
-summary: "The Database Security Requirements Guide (SRG) is published as a tool to improve the security of Department of Defense 
-(DoD) information systems. The requirements are derived from the NIST 800-53 and related documents. Comments or proposed revisions 
-to this document should be sent via e-mail to the following address: disa.stig_spt@mail.mil."
-version: 0.1.0
+summary: "Inspec Validation Profile for Couchbase Enterprise SRG"
+version: 6.0.0
 inspec_version: ">= 4.0"
 supports:
   - os-family: linux
@@ -66,7 +64,8 @@ inputs:
     type: string
     value: "8093"
     required: true 
-    sensitive: true 
+    sensitive: true
+    
   - name: cb_admin_users
     description: "Couchbase Admin User Accounts"
     type: array
