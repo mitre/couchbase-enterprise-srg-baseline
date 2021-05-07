@@ -1,81 +1,175 @@
-# Database SRG Version 2 Release 10 InSpec profile for CouchBase Server Enterprise 6.x
+# couchbase-enterprise-srg-baseline
 
-InSpec profile testing secure configuration of CouchBase Server Enterprise 6.x
+InSpec Profile to validate the secure configuration of couchbase-enterprise-srg-baseline, against SRG Version 2 Release 10 InSpec profile for CouchBase Server Enterprise 6.x
 
-## Description
+## Getting Started  
+It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.
 
-This InSpec compliance profile is a collection of automated tests for secure configuration of CouchBase Server Enterprise 6.x. (6.0.2 and 6.6.0)
+The latest versions and installation options are available at the [InSpec](http://inspec.io/) site.
 
-InSpec is an open-source run-time framework and rule language used to specify compliance, security, and policy requirements for testing any node in your infrastructure.
+## Tailoring to Your Environment
+The following inputs must be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
-## Versioning and State of Development
+```yaml
+# Couchbase is Running in Docker Environment - True/False
+is_docker: ''
 
-This project uses the [Semantic Versioning Policy](https://semver.org/).
+# Couchbase Service Account
+cb_service_user: ''
 
-### Branches
+# Couchbase Service Group
+cb_service_group: ''
 
-The master branch contains the latest version of the software leading up to a new release. Other branches contain feature-specific updates.
+# Couchbase Full Admin Account
+cb_full_admin: ''
 
-### Tags
+# Couchbase Full Admin Password
+cb_full_admin_password: ''
 
-Tags indicate official releases of the project.
+# Couchbase Cluster Host
+cb_cluster_host: ''
 
-Please note 0.x releases are works in progress (WIP) and may change at any time.
+# Couchbase Cluster Port
+cb_cluster_port: ''
 
-## Requirements
+# Couchbase Cluster Query Port
+cb_query_port: ''
 
-- [ruby](https://www.ruby-lang.org/en/) version 2.6 or greater
-- [InSpec](http://inspec.io/) version 4.x or greater
-- Install via ruby gem: `gem install inspec`
+# Couchbase Admin User Accounts
+cb_admin_users: []
 
-## Usage
+# Couchbase User Accounts
+cb_users: []
 
-InSpec makes it easy to run tests wherever you need. More options
-listed here: [InSpec cli](http://inspec.io/docs/reference/cli/)
+# Couchbase Roles
+cb_roles: []
 
-### Run with remote profile:
+# Path to Server Private Key File
+cb_private_key_path: ''
 
-You may choose to run the profile via a remote url, this has the
-advantage of always being up to date. The disadvantage is you may wish
-to modify controls, which is only possible when downloaded. Also, the
-remote profile is unintuitive for passing in attributes, which modify
-the default values of the profile.
+# Path to Server CA File
+cb_ca_file_path: ''
 
-```bash
-inspec exec https://github.com/mitre/couchbase-enterprise-srg-baseline/archive/master.tar.gz
+# Couchbase Latest Version
+cb_latest_version: ''
+
+# Couchbase Authentication Options - saslauthd
+cb_use_saslauthd: ''
+
+# Couchbase Authentication Options - LDAP
+cb_use_ldap: ''
+
+# Couchbase Authentication Options
+cb_use_pki: ''
+
+# Couchbase Domain - local/external
+cb_auth_domain: ''
+
+# Couchbase Unclassified Env - True/False
+cb_unclassified_environment: ''
+
+# Path to Couchbase Home Directory
+cb_home_dir: ''
+
+# Path to Couchbase Data Directory
+cb_data_dir: ''
+
+# Path to Couchbase Bin Directory
+cb_bin_dir: ''
+
+# Path to Couchbase Configuration Directory
+cb_config_dir: ''
+
+# Path to Couchbase Static Configuration File
+cb_static_conf: ''
+
+# Path to Couchbase Log Directory
+cb_log_dir: ''
+
+# Path to Couchbase Audit Log File
+cb_audit_log: ''
+
+# Path to Couchbase Bucket Samples Directory
+cb_samples_dir: ''
+
+# Couchbase Sample Buckets
+sample_buckets: []
+
+# Couchbase Audit Events
+cb_required_audit_events: []
+
+# Couchbase Audit Event IDs
+cb_required_audit_event_ids: []
+
+# Couchbase Approved Packages - Redhat
+cb_redhat_approved_packages: []
+
+# Couchbase Approved Packages - Debian
+cb_debian_approved_packages: []
+
+# Couchbase Approved TLS Protocol
+approved_ssl_protocol: ''
+
+# Couchbase Approved Ciphers
+approved_ciphers: []
+
+# Couchbase Audit Categories - True/False
+cb_audit_categories_of_information: ''
+
+# Couchbase Audit Access to Objects - True/False
+cb_audit_access_to_objects: ''
+
+# Couchbase Requires Encryption at Rest - True/False
+cb_require_encryption_at_rest: ''
+
+# Couchbase Requires Security Labeling - True/False
+cb_require_security_labeling: ''
+
+# Couchbase Uses Standard Ports - True/False
+cb_use_standard_ports: ''
 ```
 
-Another option is to download the profile then run it, this allows
-you to edit specific instructions and view the profile code.
+# Running This Baseline Directly from Github
 
-```bash
-# Clone Inspec Profile
-$ git clone https://github.com/mitre/couchbase-enterprise-srg-baseline.git
-
-# Run profile locally (assuming you have not changed directories since cloning)
-# This will display compliance level at the prompt, and generate a JSON file
-# for export called output.json
-$ inspec exec couchbase-enterprise-srg-baseline --reporter cli json:output.json
-
-# Run profile with custom settings defined in inputs.yml against the target
-# server example.com.
-$ inspec exec couchbase-enterprise-srg-baseline -t example.com --user root --password=Pa55w0rd --input-file=inputs.yml --reporter cli json:output.json
-
-# Run profile with: custom attributes, ssh keyed into a custom target, and sudo.
-$ inspec exec couchbase-enterprise-srg-baseline -t ssh://user@hostname -i /path/to/key --sudo --input-file=inputs.yml --reporter cli json:output.json
-
-# Run profile with: custom attributes and a Docker container target.
-$ inspec exec couchbase-enterprise-srg-baseline -t docker://52a949b41213 --input-file=inputs.yml --reporter cli json:output.json
+```
+# How to run
+inspec exec https://github.com/mitre/couchbase-enterprise-srg-baseline/archive/master.tar.gz -t ssh:// --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
-## Testing with Kitchen
+### Different Run Options
 
-### Dependencies
+  [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
 
-- Ruby 2.6.0 or later
-- [Virtualbox](https://www.virtualbox.org)
-- [Vagrant](https://www.vagrantup.com)
-- [Docker](https://docs.docker.com)
+## Running This Baseline from a local Archive copy 
+
+If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this baseline and all of its dependent tests:
+
+(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.)
+
+When the __"runner"__ host uses this profile baseline for the first time, follow these steps: 
+
+```
+mkdir profiles
+cd profiles
+git clone https://github.com/mitre/couchbase-enterprise-srg-baseline
+inspec archive couchbase-enterprise-srg-baseline
+inspec exec <name of generated archive> -t ssh:// --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+```
+For every successive run, follow these steps to always have the latest version of this baseline:
+
+```
+cd couchbase-enterprise-srg-baseline
+git pull
+cd ..
+inspec archive couchbase-enterprise-srg-baseline --overwrite
+inspec exec <name of generated archive> -t ssh:// --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+```
+
+## Viewing the JSON Results
+
+The JSON results output file can be loaded into __[heimdall-lite](https://heimdall-lite.mitre.org/)__ for a user-interactive, graphical view of the InSpec results. 
+
+The JSON InSpec results file may also be loaded into a __[full heimdall server](https://github.com/mitre/heimdall)__, allowing for additional functionality such as to store and compare multiple profile runs.
 
 ### Setup Environment
 
@@ -97,17 +191,15 @@ $ inspec exec couchbase-enterprise-srg-baseline -t docker://52a949b41213 --input
 4. Run `bundle exec kitchen list` - your should see your hosts with status "converged"
 5. Run `bundle exec kitchen verify` - Once finished, the results should be in the 'results' directory.
 
-## Contribution
+## Authors
+* MITRE SAF Team
 
-Please feel free to submit a PR or Issue on the board. To get an idea of our style and best practices, please see our InSpec training at:
+## Special Thanks 
+* Mohamed El-Sharkawi - [HackerShark](https://github.com/HackerShark)
+* Shivani Karikar - [karikarshivani](https://github.com/karikarshivani)
 
-- https://mitre-inspec-developer.netlify.com/
-- https://mitre-inspec-advanced-developer.netlify.com/
-
-## Useful References
-
-- <https://lonesysadmin.net/2017/08/10/fix-winrm-client-issues/>
-- <https://www.hurryupandwait.io/blog/understanding-and-troubleshooting-winrm-connection-and-authentication-a-thrill-seekers-guide-to-adventure>
+## Contributing and Getting Help
+To report a bug or feature request, please open an [issue](https://github.com/mitre/couchbase-enterprise-srg-baseline/issues/new).
 
 ### NOTICE
 
